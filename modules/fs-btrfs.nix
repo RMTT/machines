@@ -25,9 +25,13 @@ in {
 
   config = {
     fileSystems = mapAttrs (_: options: {
-      device = cfg.device;
+      device = "/dev/disk/by-uuid/${cfg.device}";
       fsType = "btrfs";
       options = options;
     }) cfg.volumes;
+
+    virtualisation.docker.storageDriver =
+      mkIf config.virtualisation.docker.enable "btrfs";
   };
+
 }

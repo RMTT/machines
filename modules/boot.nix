@@ -31,6 +31,8 @@ in {
       "sd_mod"
       "rtsx_pci_sdmmc"
       "btrfs"
+      "iwlwifi"
+      "iwlmvm"
     ];
   };
 }

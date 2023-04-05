@@ -3,23 +3,49 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11";
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+
+    nur.url = "github:nix-community/NUR";
 
     flake-utils.url = "github:numtide/flake-utils";
+
+    home-manager.url = "github:nix-community/home-manager";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, flake-utils, ... }:
+  outputs =
+    { self, nixpkgs, nixpkgs-unstable, flake-utils, home-manager, nur, ... }:
     with flake-utils.lib;
-    eachSystem [ system.x86_64-linux ] (system:
+    let
+      mkSystem = name: system: nixosVersion: extraModules:
+        nixpkgs.lib.nixosSystem {
+          system = system;
+          specialArgs.pkgs-unstable = nixpkgs-unstable.legacyPackages.${system};
+          specialArgs.ownpkgs = self.packages.${system};
+          modules = [
+            ./nixos/${name}.nix
+            nur.nixosModules.nur
+            { system.stateVersion = nixosVersion; }
+            { networking.hostName = name; }
+          ] ++ extraModules;
+        };
+    in {
+      nixosConfigurations.mtswork =
+        mkSystem "mtswork" system.x86_64-linux "22.11" [
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.extraSpecialArgs.pkgs-unstable =
+              nixpkgs-unstable.legacyPackages.${system.x86_64-linux};
+          }
+        ];
+    } // eachSystem [ system.x86_64-linux ] (system:
       let
-        pkgs = import nixpkgs { system = system; };
-        pkgs-unstable = import nixpkgs-unstable { system = system; };
+        pkgs = import nixpkgs {
+          system = system;
+          config.allowUnfree = true;
+        };
       in {
         formatter = pkgs.nixfmt;
-        nixosConfigurations.vmw-laptop = pkgs.lib.nixosSystem {
-          system = system;
-          modules = [ ./nixos/vmw-laptop.nix ];
-        };
+        packages.apple-fonts = pkgs.callPackage ./packages/apple-fonts.nix { };
       });
-
 }
