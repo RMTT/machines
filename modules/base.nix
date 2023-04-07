@@ -67,6 +67,9 @@
   # cpu governor
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 
+  # enable acpid
+  services.acpid.enable = true;
+
   # hardware related
   hardware.enableRedistributableFirmware = true;
   hardware.enableAllFirmware = true;

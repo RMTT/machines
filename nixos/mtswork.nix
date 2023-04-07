@@ -25,6 +25,7 @@
 
   # hardware settings
   hardware.opengl.enable = true;
+  hardware.opengl.driSupport = true;
   hardware.opengl.extraPackages = with pkgs; [
     mesa.drivers
     intel-ocl
@@ -33,6 +34,7 @@
     vaapiVdpau
     libvdpau-va-gl
   ];
+
   hardware.cpu.intel.updateMicrocode = true;
 
   # additional kernel modules

@@ -1,7 +1,12 @@
-{ pkgs, ... }: {
+{ pkgs, plasma-manager, ... }: {
 
-  imports =
-    [ ./modules/shell.nix ./modules/alacritty.nix ./modules/neovim.nix ];
+  imports = [
+    ./modules/shell.nix
+    ./modules/alacritty.nix
+    ./modules/neovim.nix
+    ./modules/plasma.nix
+    plasma-manager
+  ];
 
   home.stateVersion = "23.05";
 

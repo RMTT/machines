@@ -15,6 +15,8 @@
     alacritty
     tdrop
     libsForQt5.bismuth
+    libsForQt5.xdg-desktop-portal-kde
+    libsForQt5.kconfig
     tela-icon-theme
     keepassxc
   ];
@@ -61,4 +63,8 @@
       fcitx5-chinese-addons
     ];
   };
+
+  # enable bluetooth
+  hardware.bluetooth.enable = true;
+  services.blueman.enable = true;
 }

@@ -11,10 +11,14 @@
 
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
+    plasma-manager.url = "github:pjones/plasma-manager";
+    plasma-manager.inputs.nixpkgs.follows = "nixpkgs";
+    plasma-manager.inputs.home-manager.follows = "home-manager";
   };
 
-  outputs =
-    { self, nixpkgs, nixpkgs-unstable, flake-utils, home-manager, nur, ... }:
+  outputs = { self, nixpkgs, nixpkgs-unstable, flake-utils, home-manager, nur
+    , ... }@inputs:
     with flake-utils.lib;
     let
       mkSystem = name: system: nixosVersion: extraModules:
@@ -36,6 +40,8 @@
           {
             home-manager.extraSpecialArgs.pkgs-unstable =
               nixpkgs-unstable.legacyPackages.${system.x86_64-linux};
+            home-manager.extraSpecialArgs.plasma-manager =
+              inputs.plasma-manager.homeManagerModules.plasma-manager;
           }
         ];
     } // eachSystem [ system.x86_64-linux ] (system:
