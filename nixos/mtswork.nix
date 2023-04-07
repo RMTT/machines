@@ -66,6 +66,10 @@
     Theme.CursorTheme = "breeze_cursors";
   };
 
+  # enable tlp
+  services.power-profiles-daemon.enable = false;
+  services.tlp.enable = true;
+
   # enable home-manager for users
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;

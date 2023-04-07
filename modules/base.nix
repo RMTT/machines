@@ -22,7 +22,8 @@
 
   # console
   console = {
-    font = "Lat2-Terminus16";
+    font = "${pkgs.terminus_font}/share/consolefonts/ter-132n.psf.gz";
+    packages = with pkgs; [ terminus_font ];
     useXkbConfig = true;
   };
 
@@ -34,8 +35,6 @@
     gh
     wget
     curl
-    terminus_font
-    linux-firmware
     pciutils
     usbutils
     neofetch
@@ -48,6 +47,8 @@
     nftables
     man-pages
     gnupg
+    bitwarden-cli
+    rclone
   ];
 
   # set default editor to nvim

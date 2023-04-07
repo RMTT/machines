@@ -18,6 +18,10 @@
     enable = true;
     userName = "RMT";
     userEmail = "d.rong@outlook.com";
+    signing = {
+      signByDefault = true;
+      key = "407C5B126B1A1895";
+    };
     extraConfig = {
       init.defaultBranch = "main";
       credential."https://github.com".helper =
@@ -27,6 +31,8 @@
     };
   };
 
+  # configure gpg
+  programs.gpg = { enable = true; };
   # enable gpg agent
   services.gpg-agent = {
     enable = true;

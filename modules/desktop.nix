@@ -18,7 +18,11 @@
     libsForQt5.xdg-desktop-portal-kde
     libsForQt5.kconfig
     tela-icon-theme
-    keepassxc
+    bitwarden-cli
+    bitwarden
+    yubikey-manager
+    yubikey-manager-qt
+    yubikey-touch-detector
   ];
 
   # fonts
