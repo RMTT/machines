@@ -11,7 +11,7 @@
   home.stateVersion = "23.05";
 
   # additional packages
-  home.packages = with pkgs; [ exa zoom-us ];
+  home.packages = with pkgs; [ exa zoom-us slack jetbrains.idea-community ];
 
   # configure git
   programs.git = {
