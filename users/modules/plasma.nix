@@ -63,5 +63,7 @@
     };
 
     files."kwinrc"."Plugins"."bismuthEnabled" = true;
+    files."kwinrc"."Script-bismuth"."floatingClass" =
+      "Wine,telegram-desktop,slack,yesplaymusic,discord,jetbrains-toolbox,Wine,GoldenDict,netease-cloud-music,tim.exe,wechat.exe,qq.exe,feeluown,icalingua,qq,QQ,virt-manager,looking-glass-client,weixin,netease-cloud-music-gtk4,dropdown";
   };
 }
