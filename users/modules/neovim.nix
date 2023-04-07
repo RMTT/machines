@@ -8,6 +8,7 @@ in {
   home.packages = with pkgs-unstable; [
     sumneko-lua-language-server
     nodePackages.pyright
+    nil
   ];
 
   programs.neovim = {

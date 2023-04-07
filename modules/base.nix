@@ -23,12 +23,14 @@
   # console
   console = {
     font = "Lat2-Terminus16";
-    keyMap = "us";
+    useXkbConfig = true;
   };
 
   # system packages
   environment.systemPackages = with pkgs; [
-    git
+    htop
+    gitFull
+    pgcli
     gh
     wget
     curl
@@ -45,6 +47,7 @@
     iptables
     nftables
     man-pages
+    gnupg
   ];
 
   # set default editor to nvim

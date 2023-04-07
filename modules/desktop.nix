@@ -4,6 +4,9 @@
   services.xserver.desktopManager.plasma5.enable = true;
   services.xserver.displayManager.sddm.theme = "breeze";
 
+  # swap keys
+  services.xserver.xkbOptions = "caps:escape";
+
   # desktop apps
   environment.systemPackages = with pkgs; [
     firefox
@@ -13,6 +16,7 @@
     tdrop
     libsForQt5.bismuth
     tela-icon-theme
+    keepassxc
   ];
 
   # fonts

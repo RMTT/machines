@@ -37,4 +37,10 @@
     enable = true;
     nix-direnv.enable = true;
   };
+
+  # configure gitui
+  xdg.configFile.gitui = {
+    source = ./modules/config/gitui;
+    recursive = true;
+  };
 }
