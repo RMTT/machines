@@ -64,7 +64,7 @@
   systemd.services."cloudflare-ddns" = {
     script = ''
       set -eu
-      /home/mt/services/cloudflare-ddns.sh
+      /home/mt/services/cloudflare-ddns/cloudflare-ddns.sh
     '';
     serviceConfig = {
       Type = "oneshot";
