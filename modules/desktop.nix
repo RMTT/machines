@@ -4,6 +4,12 @@
   services.xserver.desktopManager.plasma5.enable = true;
   services.xserver.displayManager.sddm.theme = "breeze";
 
+  # configure SDDM
+  services.xserver.displayManager.sddm.settings = {
+    X11.ServerArguments = "-nolisten tcp -dpi 144";
+    Theme.CursorTheme = "breeze_cursors";
+  };
+
   # swap keys
   services.xserver.xkbOptions = "caps:escape";
 
@@ -23,6 +29,7 @@
     yubikey-manager
     yubikey-manager-qt
     yubikey-touch-detector
+    solaar
   ];
 
   # fonts

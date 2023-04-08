@@ -34,8 +34,8 @@
           ] ++ extraModules;
         };
     in {
-      nixosConfigurations.mtswork =
-        mkSystem "mtswork" system.x86_64-linux "22.11" [
+      nixosConfigurations = {
+        mtswork = mkSystem "mtswork" system.x86_64-linux "22.11" [
           home-manager.nixosModules.home-manager
           {
             home-manager.extraSpecialArgs.pkgs-unstable =
@@ -44,6 +44,10 @@
               inputs.plasma-manager.homeManagerModules.plasma-manager;
           }
         ];
+
+        homeserver = mkSystem "homeserver" system.x86_64-linux "22.11"
+          [ home-manager.nixosModules.home-manager ];
+      };
     } // eachSystem [ system.x86_64-linux ] (system:
       let
         pkgs = import nixpkgs {
