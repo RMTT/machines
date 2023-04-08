@@ -30,6 +30,7 @@
     yubikey-manager-qt
     yubikey-touch-detector
     solaar
+    libreoffice-fresh
   ];
 
   # fonts
