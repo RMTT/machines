@@ -5,5 +5,6 @@
     llvmPackages_15.libclang
     gdb
     poetry
+    jdk
   ];
 }

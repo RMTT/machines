@@ -53,6 +53,8 @@
     bitwarden-cli
     rclone
     nixos-option
+    sops
+    pkgs-unstable.v2raya
   ];
 
   # set default editor to nvim

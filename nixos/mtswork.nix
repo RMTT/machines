@@ -52,13 +52,7 @@
 
   services.xserver.videoDrivers = [ "intel" ];
 
-  security.sudo.extraRules = [{
-    users = [ "mt" ];
-    commands = [{
-      command = "ALL";
-      options = [ "SETENV" "NOPASSWD" ];
-    }];
-  }];
+  security.sudo = { wheelNeedsPassword = false; };
 
   # enable tlp
   services.power-profiles-daemon.enable = false;

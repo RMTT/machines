@@ -5,8 +5,6 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
-    nur.url = "github:nix-community/NUR";
-
     flake-utils.url = "github:numtide/flake-utils";
 
     home-manager.url = "github:nix-community/home-manager";
@@ -15,10 +13,14 @@
     plasma-manager.url = "github:pjones/plasma-manager";
     plasma-manager.inputs.nixpkgs.follows = "nixpkgs";
     plasma-manager.inputs.home-manager.follows = "home-manager";
+
+    sops-nix.url = "github:Mic92/sops-nix";
+    sops-nix.inputs.nixpkgs.follows = "nixpkgs-unstable";
+    sops-nix.inputs.nixpkgs-stable.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, flake-utils, home-manager, nur
-    , ... }@inputs:
+  outputs =
+    { self, nixpkgs, nixpkgs-unstable, flake-utils, home-manager, ... }@inputs:
     with flake-utils.lib;
     let
       mkSystem = name: system: nixosVersion: extraModules:
@@ -28,7 +30,7 @@
           specialArgs.ownpkgs = self.packages.${system};
           modules = [
             ./nixos/${name}.nix
-            nur.nixosModules.nur
+            inputs.sops-nix.nixosModules.sops
             { system.stateVersion = nixosVersion; }
             { networking.hostName = name; }
           ] ++ extraModules;
