@@ -35,6 +35,7 @@
   fonts.fontDir.enable = true;
   fonts.enableDefaultFonts = true;
   fonts.fonts = with pkgs; [
+    noto-fonts
     sarasa-gothic
     noto-fonts-emoji
     ownpkgs.apple-fonts
