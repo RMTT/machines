@@ -8,6 +8,7 @@
     ../modules/nvidia.nix
     ../modules/pipewire.nix
     ../modules/developments.nix
+    ../modules/services.nix
   ];
 
   # set filesystems mount
@@ -57,6 +58,9 @@
   # enable tlp
   services.power-profiles-daemon.enable = false;
   services.tlp.enable = true;
+
+  # enable v2ray
+  services.v2raya.enable = true;
 
   # enable home-manager for users
   home-manager.useGlobalPkgs = true;

@@ -54,12 +54,12 @@
     rclone
     nixos-option
     sops
-    pkgs-unstable.v2raya
     bitwarden-cli
     yubikey-manager
     yubikey-touch-detector
     yubikey-personalization
     pam_u2f
+    jq
   ];
 
   # set default editor to nvim
