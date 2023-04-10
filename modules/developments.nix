@@ -10,5 +10,6 @@
     nix-direnv
     cmake
     gradle
+    gnumake
   ];
 }
