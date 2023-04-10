@@ -6,5 +6,7 @@
     gdb
     poetry
     jdk
+    direnv
+    nix-direnv
   ];
 }

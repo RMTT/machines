@@ -91,9 +91,7 @@
     description = "mt";
     extraGroups = [ "wheel" "networkmanager" "docker" "video" ];
     shell = pkgs.zsh;
-    openssh.authorizedKeys.keys = [
-      "ecdsa-sha2-nistp521 AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1MjEAAACFBAELAVVWvq1uDn9SxZt+tL+CpbsPvUElnUNe29VnDHccurfc8wDkPBqwqo9oaaweTkPQ8orI38uPG68OCeaMEKm6FgDt68f0B+yp8YTQ8nS0pL5JAnxyHZfa+98N/TBF/Wlm/Ns1oJAv5ru3BNT6FQ4jXp9IuNxDF9S8ZtmpYxhrPd2vfQ== cardno:16 808 981"
-    ];
+    openssh.authorizedKeys.keyFiles = [ ../secrets/ssh_key.pub ];
   };
   environment.pathsToLink = [ "/share/zsh" ];
 

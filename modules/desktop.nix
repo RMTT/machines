@@ -31,6 +31,7 @@
     yubikey-touch-detector
     solaar
     libreoffice-fresh
+    obsidian
   ];
 
   # fonts
