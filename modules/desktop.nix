@@ -24,11 +24,8 @@
     libsForQt5.xdg-desktop-portal-kde
     libsForQt5.kconfig
     tela-icon-theme
-    bitwarden-cli
     bitwarden
-    yubikey-manager
     yubikey-manager-qt
-    yubikey-touch-detector
     solaar
     libreoffice-fresh
     obsidian

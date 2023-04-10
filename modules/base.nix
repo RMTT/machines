@@ -55,6 +55,11 @@
     nixos-option
     sops
     pkgs-unstable.v2raya
+    bitwarden-cli
+    yubikey-manager
+    yubikey-touch-detector
+    yubikey-personalization
+    pam_u2f
   ];
 
   # set default editor to nvim
@@ -105,5 +110,11 @@
       setw -g mode-keys vi
       bind -T copy-mode-vi y send-keys -X copy-pipe-and-cancel 'xclip -in -selection clipboard'
     '';
+  };
+
+  # enable u2f login
+  security.pam.services = {
+    login.u2fAuth = true;
+    sudo.u2fAuth = true;
   };
 }

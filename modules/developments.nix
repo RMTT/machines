@@ -8,5 +8,7 @@
     jdk
     direnv
     nix-direnv
+    cmake
+    gradle
   ];
 }
