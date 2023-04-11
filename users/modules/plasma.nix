@@ -34,7 +34,8 @@
 
       "org.kde.krunner.desktop"."_launch" = [ "Meta+R" "Search" ];
 
-      "org.kde.spectacle.desktop"."RectangularRegionScreenShot" = "Meta+Shift+S";
+      "org.kde.spectacle.desktop"."RectangularRegionScreenShot" =
+        "Meta+Shift+S";
     };
 
     hotkeys.commands = {

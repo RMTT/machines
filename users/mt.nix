@@ -59,4 +59,21 @@
     source = ./modules/config/gitui;
     recursive = true;
   };
+
+  # firefox related
+  programs.firefox = {
+    enable = true;
+    profiles.default = {
+      isDefault = true;
+      settings = {
+        "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+      };
+      userChrome = ''
+        #TabsToolbar
+        {
+            visibility: collapse;
+        }
+      '';
+    };
+  };
 }
