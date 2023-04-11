@@ -65,12 +65,7 @@
     };
 
     # ssh disable password
-    services.openssh = {
-      settings = {
-        PasswordAuthentication = false;
-        KbdInteractiveAuthentication = false;
-      };
-    };
+    services.openssh = { passwordAuthentication = false; };
 
     # enable home-manager for users
     home-manager.useGlobalPkgs = true;
