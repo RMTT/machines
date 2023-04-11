@@ -112,9 +112,13 @@
     '';
   };
 
+  # yubikey related
+  services.udev.packages = with pkgs; [ yubikey-personalization ];
+
   # enable u2f login
   security.pam.services = {
     login.u2fAuth = true;
     sudo.u2fAuth = true;
   };
+  services.pcscd.enable = true;
 }
