@@ -33,6 +33,8 @@
       "kwin"."Window to Desktop 4" = "Meta+$";
 
       "org.kde.krunner.desktop"."_launch" = [ "Meta+R" "Search" ];
+
+      "org.kde.spectacle.desktop"."RectangularRegionScreenShot" = "Meta+Shift+S";
     };
 
     hotkeys.commands = {
