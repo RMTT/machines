@@ -53,6 +53,8 @@
       nixosConfigurations = {
         mtswork = mkSystem "mtswork" system.x86_64-linux "22.11" [ ];
 
+        mtspc = mkSystem "mtspc" system.x86_64-linux "22.11" [ ];
+
         homeserver = mkSystem "homeserver" system.x86_64-linux "22.11" [ ];
       };
     } // eachSystem [ system.x86_64-linux ] (system:
