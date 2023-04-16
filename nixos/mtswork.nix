@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ config, pkgs, lib, ... }: {
   imports = [
     ../modules/base.nix
     ../modules/boot.nix
@@ -63,9 +63,7 @@
   services.v2raya.enable = true;
 
   # enable home-manager for users
-  home-manager.useGlobalPkgs = true;
-  home-manager.useUserPackages = true;
-  home-manager.users.mt = import ../users/mt.nix;
+  home-manager.users.mt = { imports = [ ../users/mt.nix ]; };
 
   virtualisation.docker.storageDriver = "btrfs";
 }

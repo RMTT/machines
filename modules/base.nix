@@ -58,9 +58,20 @@
     yubikey-manager
     yubikey-touch-detector
     yubikey-personalization
-    pam_u2f
+    yubico-pam
     jq
   ];
+
+  # set XDG viarables
+  environment.sessionVariables = rec {
+    XDG_CACHE_HOME = "$HOME/.cache";
+    XDG_CONFIG_HOME = "$HOME/.config";
+    XDG_BIN_HOME = "$HOME/.local/bin";
+    XDG_DATA_HOME = "$HOME/.local/share";
+    XDG_STATE_HOME = "$HOME/.local/state";
+
+    PATH = [ "${XDG_BIN_HOME}" ];
+  };
 
   # set default editor to nvim
   programs.neovim = {
@@ -114,11 +125,12 @@
 
   # yubikey related
   services.udev.packages = with pkgs; [ yubikey-personalization ];
-
-  # enable u2f login
-  security.pam.services = {
-    login.u2fAuth = true;
-    sudo.u2fAuth = true;
-  };
   services.pcscd.enable = true;
+
+  # enable yubikey otp
+  security.pam.yubico = {
+    enable = true;
+    debug = true;
+    mode = "challenge-response";
+  };
 }

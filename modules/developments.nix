@@ -11,5 +11,6 @@
     cmake
     gradle
     gnumake
+    bear
   ];
 }

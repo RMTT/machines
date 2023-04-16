@@ -33,22 +33,27 @@
             inputs.sops-nix.nixosModules.sops
             { system.stateVersion = nixosVersion; }
             { networking.hostName = name; }
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+
+              home-manager.extraSpecialArgs.pkgs-unstable =
+                nixpkgs-unstable.legacyPackages.${system};
+
+              home-manager.extraSpecialArgs.plasma-manager =
+                inputs.plasma-manager.homeManagerModules.plasma-manager;
+
+              home-manager.extraSpecialArgs.sops =
+                inputs.sops-nix.homeManagerModules.sops;
+            }
           ] ++ extraModules;
         };
     in {
       nixosConfigurations = {
-        mtswork = mkSystem "mtswork" system.x86_64-linux "22.11" [
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.extraSpecialArgs.pkgs-unstable =
-              nixpkgs-unstable.legacyPackages.${system.x86_64-linux};
-            home-manager.extraSpecialArgs.plasma-manager =
-              inputs.plasma-manager.homeManagerModules.plasma-manager;
-          }
-        ];
+        mtswork = mkSystem "mtswork" system.x86_64-linux "22.11" [ ];
 
-        homeserver = mkSystem "homeserver" system.x86_64-linux "22.11"
-          [ home-manager.nixosModules.home-manager ];
+        homeserver = mkSystem "homeserver" system.x86_64-linux "22.11" [ ];
       };
     } // eachSystem [ system.x86_64-linux ] (system:
       let

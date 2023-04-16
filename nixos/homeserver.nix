@@ -68,8 +68,6 @@
     services.openssh = { passwordAuthentication = false; };
 
     # enable home-manager for users
-    home-manager.useGlobalPkgs = true;
-    home-manager.useUserPackages = true;
     home-manager.users.mt = {
       imports = [ ../users/modules/shell.nix ];
       home.stateVersion = "23.05";

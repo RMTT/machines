@@ -17,7 +17,7 @@ end
 function module.mkdir(path)
     if vim.fn.isdirectory(path) == 0 then
         vim.fn.printf('%s does\'t exist, try to create...', path)
-        cmd = vim.fn.system({'mkdir', path})
+        local cmd = vim.fn.system({'mkdir', path})
         if cmd then
             cmd.sync()
         end
