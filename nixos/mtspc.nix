@@ -43,9 +43,9 @@
 
   # nvidia related
   hardware.nvidia.prime = {
-    amdgpuBusId = "PCI:24:0:0";
+    amdgpuBusId = "PCI:36:0:0";
 
-    nvidiaBusId = "PCI:2d:0:0";
+    nvidiaBusId = "PCI:45:0:0";
   };
 
   services.xserver.videoDrivers = [ "amdgpu" ];
