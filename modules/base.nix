@@ -22,7 +22,7 @@
 
   # console
   console = {
-    font = "${pkgs.terminus_font}/share/consolefonts/ter-132n.psf.gz";
+    font = "${pkgs.terminus_font}/share/consolefonts/ter-v32n.psf.gz";
     packages = with pkgs; [ terminus_font ];
     useXkbConfig = true;
   };
@@ -60,6 +60,8 @@
     yubikey-personalization
     yubico-pam
     jq
+    unzip
+    zip
   ];
 
   # set XDG viarables
@@ -100,6 +102,8 @@
   # enable unfree pkgs
   nixpkgs.config.allowUnfree = true;
 
+  # enable zsh
+  programs.zsh.enable = true;
   # main user
   users.users.mt = {
     isNormalUser = true;
@@ -133,4 +137,7 @@
     debug = true;
     mode = "challenge-response";
   };
+
+  # enable onedrive
+  services.onedrive.enable = true;
 }

@@ -4,7 +4,7 @@
     ../modules/boot.nix
     ../modules/fs.nix
     ../modules/networking.nix
-    ../modules/desktop.nix
+    ../modules/gnome.nix
     ../modules/nvidia.nix
     ../modules/pipewire.nix
     ../modules/developments.nix

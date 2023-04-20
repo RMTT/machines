@@ -1,17 +1,16 @@
-{ pkgs, plasma-manager, ... }: {
+{ pkgs, ... }: {
 
   imports = [
     ./modules/shell.nix
     ./modules/alacritty.nix
     ./modules/neovim.nix
-    ./modules/plasma.nix
-    plasma-manager
+    ./modules/gnome.nix
   ];
 
   home.stateVersion = "23.05";
 
   # additional packages
-  home.packages = with pkgs; [ exa zoom-us slack jetbrains.idea-community ];
+  home.packages = with pkgs; [ exa jetbrains.idea-community ];
 
   # configure git
   programs.git = {
@@ -67,6 +66,8 @@
       isDefault = true;
       settings = {
         "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+        "security.webauthn.ctap2" = true;
+        "media.ffmpeg.vaapi.enabled" = true;
       };
       userChrome = ''
         #TabsToolbar
