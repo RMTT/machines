@@ -1,4 +1,20 @@
-{ pkgs, ownpkgs, ... }: {
+{ pkgs, config, ownpkgs, lib, ... }:
+let cfg = config.desktop;
+in with lib; {
+  options = {
+    desktop.gdm.scale = lib.mkOption {
+      type = types.int;
+      default = 1;
+      description = "GDM scale factor";
+    };
+
+    desktop.gdm.avatar = lib.mkOption {
+      type = types.str;
+      default = "";
+      description = "user which need set $HOME/.face to GDM avatar";
+    };
+  };
+
   config = {
     nixpkgs.config.permittedInsecurePackages = [ "electron-21.4.0" ];
 
@@ -71,5 +87,29 @@
     # enable logitech
     hardware.logitech.wireless.enable = true;
     hardware.logitech.wireless.enableGraphical = true;
+
+    # set gdm scale
+    home-manager.users = mkIf (cfg.gdm.scale != 1) {
+      gdm = { lib, stateVersion, ... }: {
+        home.stateVersion = stateVersion;
+        home.file.".cache/.keep".enable = lib.mkForce false;
+        dconf.settings = {
+          "org/gnome/desktop/interface" = {
+            scaling-factor = lib.hm.gvariant.mkUint32 2;
+          };
+        };
+      };
+    };
+
+    # set gdm avatar
+    boot.postBootCommands = mkIf (cfg.gdm.avatar != "") (let
+      gdm_user_conf = ''
+        [User]
+        Icon=/home/${cfg.gdm.avatar}/.face
+        SystemAccount=false
+      '';
+    in ''
+      echo '${gdm_user_conf}' > /var/lib/AccountsService/users/${cfg.gdm.avatar}
+    '');
   };
 }

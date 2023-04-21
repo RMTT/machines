@@ -46,14 +46,16 @@
 
               home-manager.extraSpecialArgs.sops =
                 inputs.sops-nix.homeManagerModules.sops;
+
+              home-manager.extraSpecialArgs.stateVersion = nixosVersion;
             }
           ] ++ extraModules;
         };
     in {
       nixosConfigurations = {
-        mtswork = mkSystem "mtswork" system.x86_64-linux "22.11" [ ];
+        mtswork = mkSystem "mtswork" system.x86_64-linux "23.05" [ ];
 
-        mtspc = mkSystem "mtspc" system.x86_64-linux "22.11" [ ];
+        mtspc = mkSystem "mtspc" system.x86_64-linux "23.05" [ ];
 
         homeserver = mkSystem "homeserver" system.x86_64-linux "22.11" [ ];
       };

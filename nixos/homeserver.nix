@@ -25,16 +25,6 @@
     fs.swap.device = "@swap";
     fs.boot.device = "@boot";
 
-    # hardware settings
-    hardware.opengl.enable = true;
-    hardware.opengl.driSupport = true;
-    hardware.opengl.driSupport32Bit = true;
-    hardware.opengl.extraPackages = with pkgs; [
-      libva
-      vaapiVdpau
-      libvdpau-va-gl
-    ];
-
     hardware.cpu.amd.updateMicrocode = true;
 
     # additional system packages

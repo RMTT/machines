@@ -4,7 +4,7 @@
     ../modules/boot.nix
     ../modules/fs.nix
     ../modules/networking.nix
-    ../modules/desktop.nix
+    ../modules/gnome.nix
     ../modules/nvidia.nix
     ../modules/pipewire.nix
     ../modules/developments.nix
@@ -24,16 +24,10 @@
   boot.kernelPackages = pkgs.linuxKernel.packages.linux_zen;
 
   # hardware settings
-  hardware.opengl.enable = true;
-  hardware.opengl.driSupport = true;
-  hardware.opengl.driSupport32Bit = true;
   hardware.opengl.extraPackages = with pkgs; [
-    mesa.drivers
     intel-ocl
     intel-media-driver # LIBVA_DRIVER_NAME=iHD
     vaapiIntel # LIBVA_DRIVER_NAME=i965 (older but works better for Firefox/Chromium)
-    vaapiVdpau
-    libvdpau-va-gl
   ];
 
   hardware.cpu.intel.updateMicrocode = true;

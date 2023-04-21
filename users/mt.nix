@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, stateVersion, ... }: {
 
   imports = [
     ./modules/shell.nix
@@ -7,7 +7,7 @@
     ./modules/gnome.nix
   ];
 
-  home.stateVersion = "23.05";
+  home.stateVersion = stateVersion;
 
   # additional packages
   home.packages = with pkgs; [ exa zoom-us jetbrains.idea-community ];

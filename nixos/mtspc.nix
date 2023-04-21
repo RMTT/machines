@@ -23,16 +23,6 @@
   # kernel version
   boot.kernelPackages = pkgs.linuxKernel.packages.linux_zen;
 
-  # hardware settings
-  hardware.opengl.enable = true;
-  hardware.opengl.driSupport = true;
-  hardware.opengl.driSupport32Bit = true;
-  hardware.opengl.extraPackages = with pkgs; [
-    mesa.drivers
-    vaapiVdpau
-    libvdpau-va-gl
-  ];
-
   hardware.cpu.amd.updateMicrocode = true;
 
   # additional kernel modules
@@ -58,6 +48,11 @@
   # enable home-manager for users
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
+
+  # set gdm scale
+  desktop.gdm.scale = 2;
+  desktop.gdm.avatar = "mt";
+
   home-manager.users.mt = import ../users/mt.nix;
 
   virtualisation.docker.storageDriver = "btrfs";

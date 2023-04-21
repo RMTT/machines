@@ -63,7 +63,7 @@
 
     # pop shell
     "org/gnome/shell/extensions/pop-shell" = {
-      active-hint = true;
+      active-hint = false;
       active-hint-border-radius = mkUint32 2;
       fullscreen-launcher = true;
       gap-inner = mkUint32 2;
@@ -107,12 +107,16 @@
 
     "org/gnome/desktop/wm/preferences" = {
       num-workspaces = 4;
-      titlebar-font = "SF Compact Display 11";
+      titlebar-font = "SF Pro Display 11";
       workspace-names = [ "Daily" "Browser" "Code" "Fun" ];
     };
 
     # guake related
     "apps/guake/keybindings/global" = { show-hide = "<Super>grave"; };
+    "apps/guake/style/font" = {
+      palette-name = "Nord";
+      style = "FiraCode Nerd Font Mono weight=450 10";
+    };
 
     # interface settings
     "org/gnome/desktop/interface" = {

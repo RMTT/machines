@@ -143,6 +143,17 @@
     mode = "challenge-response";
   };
 
+  # opengl and hardware acc
+  hardware.opengl.enable = true;
+  hardware.opengl.driSupport = true;
+  hardware.opengl.driSupport32Bit = true;
+  hardware.opengl.extraPackages = with pkgs; [
+    libva
+    mesa.drivers
+    vaapiVdpau
+    libvdpau-va-gl
+  ];
+
   # enable onedrive
   services.onedrive.enable = true;
 }
