@@ -20,6 +20,9 @@
     "ja_JP.UTF-8/UTF-8"
   ];
 
+  # swap caps and escape
+  services.xserver.xkbOptions = "caps:swapescape";
+
   # console
   console = {
     font = "${pkgs.terminus_font}/share/consolefonts/ter-v32n.psf.gz";

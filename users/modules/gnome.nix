@@ -114,14 +114,14 @@
     # guake related
     "apps/guake/keybindings/global" = { show-hide = "<Super>grave"; };
     "apps/guake/style/font" = {
-      palette-name = "Nord";
+      palette-name = "One Dark";
       style = "FiraCode Nerd Font Mono weight=450 10";
     };
 
     # interface settings
     "org/gnome/desktop/interface" = {
       clock-show-date = true;
-      color-scheme = "prefer-dark";
+			color-scheme = "prefer-dark";
       cursor-theme = "Adwaita";
       document-font-name = "SF Pro Text 11";
       font-antialiasing = "rgba";
