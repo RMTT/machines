@@ -20,23 +20,25 @@
       gnomeExtensions.appindicator
       gnomeExtensions.arcmenu
       gnome.gnome-tweaks
-      xdg-desktop-portal-gnome
-      gnomeExtensions.customize-ibus
+      gnomeExtensions.kimpanel
+      gnomeExtensions.pop-shell
+      gnome.gnome-themes-extra
+      pop-launcher
       guake
       wl-clipboard
       libsForQt5.qt5ct
       adwaita-qt
+      dconf2nix
     ];
 
-    # fcitx5
-    i18n.inputMethod = {
-      enabled = "fcitx5";
-      fcitx5.addons = with pkgs; [
-        fcitx5-mozc
-        fcitx5-gtk
-        fcitx5-chinese-addons
-      ];
-    };
-
+    environment.gnome.excludePackages = (with pkgs.gnome; [
+      gnome-terminal
+      epiphany
+      tali
+      iagno
+      hitori
+      atomix
+      gedit
+    ]);
   };
 }

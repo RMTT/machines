@@ -1,5 +1,7 @@
 { pkgs, ownpkgs, ... }: {
   config = {
+    nixpkgs.config.permittedInsecurePackages = [ "electron-21.4.0" ];
+
     # desktop apps
     environment.systemPackages = with pkgs; [
       firefox
@@ -10,7 +12,7 @@
       yubikey-manager-qt
       solaar
       libreoffice-fresh
-      #      obsidian
+      obsidian
     ];
 
     # fonts
@@ -50,6 +52,16 @@
           "Sarasa Mono K"
         ];
       };
+    };
+
+    # fcitx5
+    i18n.inputMethod = {
+      enabled = "fcitx5";
+      fcitx5.addons = with pkgs; [
+        fcitx5-mozc
+        fcitx5-gtk
+        fcitx5-chinese-addons
+      ];
     };
 
     # enable bluetooth

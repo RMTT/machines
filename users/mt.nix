@@ -10,7 +10,7 @@
   home.stateVersion = "23.05";
 
   # additional packages
-  home.packages = with pkgs; [ exa jetbrains.idea-community ];
+  home.packages = with pkgs; [ exa zoom-us jetbrains.idea-community ];
 
   # configure git
   programs.git = {

@@ -103,7 +103,12 @@
   nixpkgs.config.allowUnfree = true;
 
   # enable zsh
-  programs.zsh.enable = true;
+  programs.zsh = {
+    enable = true;
+    enableCompletion = false;
+    enableGlobalCompInit = false;
+  };
+
   # main user
   users.users.mt = {
     isNormalUser = true;
