@@ -10,32 +10,64 @@ let
   '';
 
   cfg = config.nvidia;
+  nvidia-package = config.boot.kernelPackages.nvidiaPackages.stable;
+  full = (cfg.usage == "full");
+  onlyCompute = (cfg.usage == "compute");
 in {
 
   options = {
     nvidia.prime.enable = mkOption {
       type = types.bool;
-      default = true;
+      default = false;
     };
+
+    nvidia.usage = mkOption {
+      type = types.str;
+      default = "full";
+      description = ''
+        full: use nvidia for render and compute
+        				compute: use nvidia for only compute'';
+    };
+
   };
 
   config = {
+    virtualisation.docker.enableNvidia = config.virtualisation.docker.enable;
+
     # system packages for this machine
     environment.systemPackages = with pkgs; [
       nvtop
-      (mkIf cfg.prime.enable nvidia-offload)
+      (mkIf onlyCompute nvidia-package.bin)
+      (mkIf (full && cfg.prime.enable) nvidia-offload)
     ];
 
-    hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
-    hardware.nvidia.modesetting.enable = true;
-    hardware.nvidia.nvidiaPersistenced = true;
+    hardware.nvidia.package = nvidia-package;
 
-    hardware.nvidia.prime.offload.enable = mkIf cfg.prime.enable true;
-    hardware.nvidia.powerManagement.finegrained = mkIf cfg.prime.enable true;
+    # full part
+    hardware.nvidia.prime.offload.enable = mkIf full cfg.prime.enable;
+    hardware.nvidia.modesetting.enable = mkIf full true;
+    hardware.nvidia.nvidiaPersistenced = mkIf full true;
+    hardware.nvidia.powerManagement.enable = mkIf full true;
 
-    services.xserver.videoDrivers = [ "nvidia" ];
+    # only compute part
+    boot.extraModulePackages = mkIf onlyCompute [ nvidia-package ];
+    boot.blacklistedKernelModules =
+      mkIf onlyCompute [ "nouveau" "nvidia_drm" "nvidia_modeset" "nvidia_uvm" ];
 
-    virtualisation.docker.enableNvidia =
-      mkIf config.virtualisation.docker.enable true;
+    systemd.services = mkIf onlyCompute {
+      "nvidia-persistenced" = {
+        description = "NVIDIA Persistence Daemon";
+        wantedBy = [ "multi-user.target" ];
+        serviceConfig = {
+          Type = "forking";
+          Restart = "always";
+          PIDFile = "/var/run/nvidia-persistenced/nvidia-persistenced.pid";
+          ExecStart =
+            "${nvidia-package.persistenced}/bin/nvidia-persistenced --verbose";
+          ExecStopPost =
+            "${pkgs.coreutils}/bin/rm -rf /var/run/nvidia-persistenced";
+        };
+      };
+    };
   };
 }

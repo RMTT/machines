@@ -1,7 +1,6 @@
 { pkgs, ... }: {
   imports = [
     ../modules/base.nix
-    ../modules/boot.nix
     ../modules/fs.nix
     ../modules/networking.nix
     ../modules/gnome.nix
@@ -25,18 +24,8 @@
 
   hardware.cpu.amd.updateMicrocode = true;
 
-  # additional kernel modules
-  boot.kernelModules = [ "kvm-amd" ];
-
   # additional system packages
   environment.systemPackages = with pkgs; [ glxinfo ];
-
-  # nvidia related
-  hardware.nvidia.prime = {
-    amdgpuBusId = "PCI:36:0:0";
-
-    nvidiaBusId = "PCI:45:0:0";
-  };
 
   services.xserver.videoDrivers = [ "amdgpu" ];
 
@@ -56,4 +45,12 @@
   home-manager.users.mt = import ../users/mt.nix;
 
   virtualisation.docker.storageDriver = "btrfs";
+
+  # nvidia setting
+  nvidia.usage = "compute";
+
+  # kvm settings
+  boot.kernelModules = [ "kvm_amd" ];
+
+  libvirt.qemuHook = ./scripts/vfio_auto_bind.sh;
 }

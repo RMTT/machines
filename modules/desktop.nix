@@ -18,6 +18,9 @@ in with lib; {
   config = {
     nixpkgs.config.permittedInsecurePackages = [ "electron-21.4.0" ];
 
+    # many gtk apps need dconf
+    programs.dconf.enable = true;
+
     # desktop apps
     environment.systemPackages = with pkgs; [
       firefox
@@ -29,6 +32,8 @@ in with lib; {
       solaar
       libreoffice-fresh
       obsidian
+      virt-manager
+			looking-glass-client
     ];
 
     # fonts
