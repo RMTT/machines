@@ -147,7 +147,7 @@ in with lib; {
       extraGroups =
         [ "wheel" "networkmanager" "docker" "video" "libvirtd" "kvm" ];
       shell = pkgs.zsh;
-      openssh.authorizedKeys.keyFiles = [ ../secrets/ssh_key.pub ];
+      openssh.authorizedKeys.keyFiles = [ ../../secrets/ssh_key.pub ];
     };
     environment.pathsToLink = [ "/share/zsh" ];
 
