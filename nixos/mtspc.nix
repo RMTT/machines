@@ -1,13 +1,13 @@
 { pkgs, ... }: {
   imports = [
-    ../modules/base.nix
-    ../modules/fs.nix
-    ../modules/networking.nix
-    ../modules/gnome.nix
-    ../modules/nvidia.nix
-    ../modules/pipewire.nix
-    ../modules/developments.nix
-    ../modules/services.nix
+    ./modules/base.nix
+    ./modules/fs.nix
+    ./modules/networking.nix
+    ./modules/gnome.nix
+    ./modules/nvidia.nix
+    ./modules/pipewire.nix
+    ./modules/developments.nix
+    ./modules/services.nix
   ];
 
   # set filesystems mount
@@ -42,7 +42,7 @@
   desktop.gdm.scale = 2;
   desktop.gdm.avatar = "mt";
 
-  home-manager.users.mt = import ../users/mt.nix;
+  home-manager.users.mt = import ../home/mt.nix;
 
   virtualisation.docker.storageDriver = "btrfs";
 
@@ -52,5 +52,5 @@
   # kvm settings
   boot.kernelModules = [ "kvm_amd" ];
 
-  libvirt.qemuHook = ./scripts/vfio_auto_bind.sh;
+  base.libvirt.qemuHook = ./scripts/vfio_auto_bind.sh;
 }

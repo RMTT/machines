@@ -1,7 +1,8 @@
 # Base configuration
 { pkgs, pkgs-unstable, lib, config, ... }:
-with lib; {
-  options = {
+let cfg = config.base;
+in with lib; {
+  options.base = {
     libvirt.qemuHook = mkOption {
       type = types.path;
       default = null;
@@ -143,7 +144,8 @@ with lib; {
       isNormalUser = true;
       home = "/home/mt";
       description = "mt";
-      extraGroups = [ "wheel" "networkmanager" "docker" "video" "libvirtd" "kvm" ];
+      extraGroups =
+        [ "wheel" "networkmanager" "docker" "video" "libvirtd" "kvm" ];
       shell = pkgs.zsh;
       openssh.authorizedKeys.keyFiles = [ ../secrets/ssh_key.pub ];
     };
@@ -186,15 +188,14 @@ with lib; {
     # enable libvirt
     virtualisation.libvirtd = { enable = true; };
     virtualisation.spiceUSBRedirection.enable = true;
-    systemd.services.libvirtd.path = [ pkgs.bash pkgs.libvirt ];
-    systemd.services.libvirtd.preStart =
-      mkIf (config.libvirt.qemuHook != null) ''
-        mkdir -p /var/lib/libvirt/hooks
-        chmod 755 /var/lib/libvirt/hooks
+    systemd.services.libvirtd.path = [ pkgs.bash ];
+    systemd.services.libvirtd.preStart = mkIf (cfg.libvirt.qemuHook != null) ''
+      mkdir -p /var/lib/libvirt/hooks
+      chmod 755 /var/lib/libvirt/hooks
 
-        # Copy hook files
-        ln -sf ${config.libvirt.qemuHook} /var/lib/libvirt/hooks/qemu
-      '';
+      # Copy hook files
+      ln -sf ${cfg.libvirt.qemuHook} /var/lib/libvirt/hooks/qemu
+    '';
 
     # enable onedrive
     services.onedrive.enable = true;

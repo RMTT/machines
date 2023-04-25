@@ -1,14 +1,14 @@
 { config, pkgs, lib, ... }: {
   imports = [
-    ../modules/base.nix
-    ../modules/boot.nix
-    ../modules/fs.nix
-    ../modules/networking.nix
-    ../modules/gnome.nix
-    ../modules/nvidia.nix
-    ../modules/pipewire.nix
-    ../modules/developments.nix
-    ../modules/services.nix
+    ./modules/base.nix
+    ./modules/boot.nix
+    ./modules/fs.nix
+    ./modules/networking.nix
+    ./modules/gnome.nix
+    ./modules/nvidia.nix
+    ./modules/pipewire.nix
+    ./modules/developments.nix
+    ./modules/services.nix
   ];
 
   # set filesystems mount
@@ -57,7 +57,7 @@
   services.v2raya.enable = true;
 
   # enable home-manager for users
-  home-manager.users.mt = { imports = [ ../users/mt.nix ]; };
+  home-manager.users.mt = { imports = [ ../home/mt.nix ]; };
 
   virtualisation.docker.storageDriver = "btrfs";
 }

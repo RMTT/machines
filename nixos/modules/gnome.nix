@@ -23,12 +23,12 @@
       gnomeExtensions.kimpanel
       gnomeExtensions.pop-shell
       gnome.gnome-themes-extra
+      gnome.dconf-editor
       pop-launcher
       guake
       wl-clipboard
       libsForQt5.qt5ct
       adwaita-qt
-      dconf2nix
     ];
 
     environment.gnome.excludePackages = (with pkgs.gnome; [
@@ -40,5 +40,10 @@
       atomix
       gedit
     ]);
+
+    environment.sessionVariables = {
+      GUAKE_ENABLE_WAYLAND = "1";
+      XCURSOR_THEME = "Adwaita";
+    };
   };
 }

@@ -77,6 +77,8 @@
       tile-by-default = true;
       tile-enter = [ "<Super><Shift>Enter" ];
       toggle-floating = [ "<Super>f" ];
+      toggle-stacking = [ "<Super>d" ];
+      toggle-stacking-global = [ "<Super>d" ];
     };
 
     # global keybindings
@@ -93,15 +95,24 @@
     # wm related
     "org/gnome/desktop/wm/keybindings" = {
       close = [ "<Shift><Super>c" ];
+      maximize = "@as []";
+      minimize = [ "<Control><Super>h" ];
       move-to-workspace-1 = [ "<Shift><Super>1" ];
       move-to-workspace-2 = [ "<Shift><Super>2" ];
       move-to-workspace-3 = [ "<Shift><Super>3" ];
       move-to-workspace-4 = [ "<Shift><Super>4" ];
+      switch-applications = [ "<Super>Tab" ];
+      switch-applications-backward = [ "<Shift><Super>Tab" ];
+			switch-group = [ "<Alt>grave" ];
+      switch-group-backward = "@as []";
       switch-input-source = [ "<Super>space" ];
+      switch-input-source-backward = [ "<Shift><Super>space" ];
       switch-to-workspace-1 = [ "<Super>1" ];
       switch-to-workspace-2 = [ "<Super>2" ];
       switch-to-workspace-3 = [ "<Super>3" ];
       switch-to-workspace-4 = [ "<Super>4" ];
+      switch-windows = [ "<Alt>Tab" ];
+      switch-windows-backward = [ "<Shift><Alt>Tab" ];
       toggle-maximized = [ "<Super>m" ];
     };
 
@@ -117,6 +128,7 @@
       palette-name = "One Dark";
       style = "FiraCode Nerd Font Mono weight=450 10";
     };
+    "apps/guake/style/background" = { transparency = 96; };
 
     # interface settings
     "org/gnome/desktop/interface" = {

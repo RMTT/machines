@@ -5,7 +5,6 @@
     gdb
     poetry
     jdk
-    direnv
     cmake
     gradle
     gnumake
@@ -14,5 +13,6 @@
     cmake-language-server
     tree-sitter
     nodejs
+    ccls
   ];
 }

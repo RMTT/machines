@@ -1,12 +1,12 @@
 { config, pkgs, ... }: {
   imports = [
-    ../modules/base.nix
-    ../modules/boot.nix
-    ../modules/fs.nix
-    ../modules/networking.nix
-    ../modules/nvidia.nix
-    ../modules/secrets.nix
-    ../modules/services.nix
+    ./modules/base.nix
+    ./modules/boot.nix
+    ./modules/fs.nix
+    ./modules/networking.nix
+    ./modules/nvidia.nix
+    ./modules/secrets.nix
+    ./modules/services.nix
   ];
 
   config = {
@@ -59,7 +59,7 @@
 
     # enable home-manager for users
     home-manager.users.mt = {
-      imports = [ ../users/modules/shell.nix ];
+      imports = [ ../home/modules/shell.nix ];
       home.stateVersion = "23.05";
     };
   };

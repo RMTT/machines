@@ -33,7 +33,7 @@ in with lib; {
       libreoffice-fresh
       obsidian
       virt-manager
-			looking-glass-client
+      moonlight-qt
     ];
 
     # fonts
@@ -88,6 +88,7 @@ in with lib; {
     # enable bluetooth
     hardware.bluetooth.enable = true;
     services.blueman.enable = true;
+    hardware.bluetooth.package = pkgs.bluezFull;
 
     # enable logitech
     hardware.logitech.wireless.enable = true;
