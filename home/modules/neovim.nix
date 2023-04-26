@@ -1,5 +1,5 @@
 { pkgs-unstable, ... }:
-let configPath = ./config/nvim;
+let configPath = ../config/nvim;
 in {
   xdg.configFile.nvim.source = configPath;
   xdg.configFile.nvim.recursive = true;

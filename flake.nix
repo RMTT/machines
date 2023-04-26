@@ -28,6 +28,7 @@
           system = system;
           specialArgs.pkgs-unstable = nixpkgs-unstable.legacyPackages.${system};
           specialArgs.ownpkgs = self.packages.${system};
+          specialArgs.inputs = inputs;
           modules = [
             ./nixos/${name}.nix
             inputs.sops-nix.nixosModules.sops

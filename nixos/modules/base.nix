@@ -1,5 +1,5 @@
 # Base configuration
-{ pkgs, pkgs-unstable, lib, config, ... }:
+{ pkgs, pkgs-unstable, lib, config, inputs, ... }:
 let cfg = config.base;
 in with lib; {
   options.base = {
@@ -19,6 +19,16 @@ in with lib; {
 
     # enable flakes
     nix.settings.experimental-features = [ "nix-command" "flakes" ];
+    nix.registry = {
+      self.flake = inputs.self;
+      nixpkgs.flake = inputs.nixpkgs;
+
+      nixpkgs-unstable.flake = inputs.nixpkgs-unstable;
+
+      home-manager.flake = inputs.home-manager;
+
+      flake-utils.flake = inputs.flake-utils;
+    };
 
     # bootloader
     boot.loader.systemd-boot.enable = true;

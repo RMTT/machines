@@ -190,7 +190,7 @@ lspconfig.efm.setup {
 lspconfig.cmake.setup { on_attach = on_attach, capabilities = capabilities }
 
 ---- ccls ----
-lspconfig.ccls.setup { on_attach = on_attach, capabilities = capabilities }
+lspconfig.clangd.setup { on_attach = on_attach, capabilities = capabilities }
 ---- end ----
 
 ---- go ----

@@ -103,7 +103,7 @@
       move-to-workspace-4 = [ "<Shift><Super>4" ];
       switch-applications = [ "<Super>Tab" ];
       switch-applications-backward = [ "<Shift><Super>Tab" ];
-			switch-group = [ "<Alt>grave" ];
+      switch-group = [ "<Alt>grave" ];
       switch-group-backward = "@as []";
       switch-input-source = [ "<Super>space" ];
       switch-input-source-backward = [ "<Shift><Super>space" ];

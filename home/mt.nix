@@ -55,7 +55,7 @@
 
   # configure gitui
   xdg.configFile.gitui = {
-    source = ./modules/config/gitui;
+    source = ./config/gitui;
     recursive = true;
   };
 

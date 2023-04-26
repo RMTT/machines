@@ -1,5 +1,5 @@
 { ... }:
-let configFile = ./config/alacritty.json;
+let configFile = ../config/alacritty.json;
 in {
   programs.alacritty = {
     enable = true;

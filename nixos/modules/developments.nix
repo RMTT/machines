@@ -14,5 +14,7 @@
     tree-sitter
     nodejs
     ccls
+    clang-tools
+    pkg-config
   ];
 }
