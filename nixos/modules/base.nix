@@ -12,10 +12,15 @@ in with lib; {
     };
   };
   config = {
+    # enable unfree pkgs
+    nixpkgs.config.allowUnfree = true;
+		nixpkgs.config.joypixels.acceptLicense = true;
+
     # binary cache
     nix.settings.substituters =
       [ "https://mirrors.ustc.edu.cn/nix-channels/store" ];
     nix.settings.trusted-users = [ "root" "mt" ];
+		nix.optimise.automatic = true;
 
     # enable flakes
     nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -80,6 +85,7 @@ in with lib; {
       curl
       pciutils
       usbutils
+			inetutils
       neofetch
       zsh
       python3Full
@@ -91,7 +97,6 @@ in with lib; {
       man-pages
       gnupg
       bitwarden-cli
-      rclone
       nixos-option
       sops
       bitwarden-cli
@@ -102,6 +107,8 @@ in with lib; {
       jq
       unzip
       zip
+			libcgroup
+
     ];
 
     # set XDG viarables
@@ -121,6 +128,7 @@ in with lib; {
       package = pkgs-unstable.neovim-unwrapped;
       defaultEditor = true;
       vimAlias = true;
+      viAlias = true;
     };
 
     # enable ssh
@@ -138,9 +146,6 @@ in with lib; {
     # hardware related
     hardware.enableRedistributableFirmware = true;
     hardware.enableAllFirmware = true;
-
-    # enable unfree pkgs
-    nixpkgs.config.allowUnfree = true;
 
     # enable zsh
     programs.zsh = {

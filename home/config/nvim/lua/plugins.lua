@@ -3,7 +3,7 @@ local util = require('lspconfig/util')
 ---- setting for lualine ----
 require('lualine').setup {
     options = { icon_enabled = true, theme = 'tokyonight' },
-    sections = { lualine_c = { require('auto-session-library').current_session_name } } }
+    sections = { lualine_c = { require('auto-session.lib').current_session_name } } }
 ---- end ----
 
 ---- setting for rainbow ----
@@ -206,7 +206,7 @@ require 'lspconfig'.rust_analyzer.setup { on_attach = on_attach, capabilities = 
 --- end ---
 
 ---- nix ----
-require'lspconfig'.nil_ls.setup{}
+require 'lspconfig'.nil_ls.setup {}
 --- end ----
 
 ---- end for lsp server ----
@@ -217,7 +217,37 @@ vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 vim.opt.termguicolors = true
 
+local function nvim_tree_on_attach(bufnr)
+    local api = require('nvim-tree.api')
+
+    local function opts(desc)
+        return { desc = 'nvim-tree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+    end
+
+    api.config.mappings.default_on_attach(bufnr)
+
+    vim.keymap.set('n', 'O', '', { buffer = bufnr })
+    vim.keymap.del('n', 'O', { buffer = bufnr })
+    vim.keymap.set('n', '<2-RightMouse>', '', { buffer = bufnr })
+    vim.keymap.del('n', '<2-RightMouse>', { buffer = bufnr })
+    vim.keymap.set('n', 'D', '', { buffer = bufnr })
+    vim.keymap.del('n', 'D', { buffer = bufnr })
+    vim.keymap.set('n', 'E', '', { buffer = bufnr })
+    vim.keymap.del('n', 'E', { buffer = bufnr })
+
+    vim.keymap.set('n', 'A', api.tree.expand_all, opts('Expand All'))
+    vim.keymap.set('n', '?', api.tree.toggle_help, opts('Help'))
+    vim.keymap.set('n', 'C', api.tree.change_root_to_node, opts('CD'))
+    vim.keymap.set('n', 'P', function()
+        local node = api.tree.get_node_under_cursor()
+        print(node.absolute_path)
+    end, opts('Print Node Path'))
+
+    vim.keymap.set('n', 'Z', api.node.run.system, opts('Run System'))
+end
+
 require('nvim-tree').setup {
+    on_attach = nvim_tree_on_attach,
     sort_by = "case_sensitive",
     sync_root_with_cwd = true,
     view = {
@@ -249,7 +279,7 @@ require('nvim-tree').setup {
         }
     },
 }
-vim.api.nvim_set_keymap('n', '<A-d>', '<cmd>NvimTreeToggle<CR>',
+vim.keymap.set('n', '<A-d>', '<cmd>NvimTreeToggle<CR>',
     { silent = true, noremap = true })
 ---- end ----
 
@@ -331,6 +361,18 @@ require 'nvim-treesitter.configs'.setup {
         -- Using this option may slow down your editor, and you may see some duplicate highlights.
         -- Instead of true it can also be a list of languages
         additional_vim_regex_highlighting = false,
+    },
+}
+---- end ----
+
+---- setting for auto-session ----
+require("auto-session").setup {
+    log_level = "error",
+
+    cwd_change_handling = {
+        post_cwd_changed_hook = function()
+            require("lualine").refresh()
+        end,
     },
 }
 ---- end ----

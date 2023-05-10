@@ -42,6 +42,7 @@ in with lib; {
     fonts.fonts = with pkgs; [
       noto-fonts
       sarasa-gothic
+			joypixels
       noto-fonts-emoji
       ownpkgs.apple-fonts
       (nerdfonts.override { fonts = [ "FiraCode" ]; })
@@ -49,7 +50,7 @@ in with lib; {
     fonts.fontconfig = {
       allowBitmaps = false;
       defaultFonts = {
-        emoji = [ "Noto Color Emoji" ];
+        emoji = [ "JoyPixels" ];
         serif = [
           "SF Pro Text"
           "Sarasa Mono Slab SC"
@@ -87,8 +88,13 @@ in with lib; {
 
     # enable bluetooth
     hardware.bluetooth.enable = true;
-    services.blueman.enable = true;
     hardware.bluetooth.package = pkgs.bluezFull;
+    hardware.bluetooth.settings = {
+      General = {
+        Experimental = true;
+        KernelExperimental = true;
+      };
+    };
 
     # enable logitech
     hardware.logitech.wireless.enable = true;

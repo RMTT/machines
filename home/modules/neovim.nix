@@ -4,20 +4,14 @@ in {
   xdg.configFile.nvim.source = configPath;
   xdg.configFile.nvim.recursive = true;
 
-  # install luanguage servers
-  home.packages = with pkgs-unstable; [
-    sumneko-lua-language-server
-    nodePackages.pyright
-    nil
-  ];
-
   programs.neovim = {
     enable = true;
     defaultEditor = true;
     vimAlias = true;
+    viAlias = true;
     package = pkgs-unstable.neovim-unwrapped;
     withPython3 = true;
-    withNodeJs = false;
+    withNodeJs = true;
     plugins = with pkgs-unstable.vimPlugins; [
       nvim-lspconfig
       nvim-web-devicons
@@ -43,6 +37,16 @@ in {
       auto-session
       vim-better-whitespace
       neodev-nvim
+    ];
+    # install luanguage servers
+    extraPackages = with pkgs-unstable; [
+      sumneko-lua-language-server
+      nodePackages.pyright
+      nil
+      cmake-language-server
+      tree-sitter
+      clang-tools
+			efm-langserver
     ];
   };
 }
