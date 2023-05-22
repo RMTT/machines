@@ -55,7 +55,5 @@
   base.libvirt.qemuHook = ./scripts/vfio_auto_bind.sh;
 
   # tmpfile for looking-glass
-	systemd.tmpfiles.rules = [
-		"f /dev/shm/looking-glass 0660 mt kvm -"
-	];
+  systemd.tmpfiles.rules = [ "f /dev/shm/looking-glass 0660 mt kvm -" ];
 }

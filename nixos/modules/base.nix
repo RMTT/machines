@@ -14,13 +14,13 @@ in with lib; {
   config = {
     # enable unfree pkgs
     nixpkgs.config.allowUnfree = true;
-		nixpkgs.config.joypixels.acceptLicense = true;
+    nixpkgs.config.joypixels.acceptLicense = true;
 
     # binary cache
     nix.settings.substituters =
       [ "https://mirrors.ustc.edu.cn/nix-channels/store" ];
     nix.settings.trusted-users = [ "root" "mt" ];
-		nix.optimise.automatic = true;
+    nix.optimise.automatic = true;
 
     # enable flakes
     nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -85,7 +85,7 @@ in with lib; {
       curl
       pciutils
       usbutils
-			inetutils
+      inetutils
       neofetch
       zsh
       python3Full
@@ -107,7 +107,7 @@ in with lib; {
       jq
       unzip
       zip
-			libcgroup
+      libcgroup
 
     ];
 

@@ -42,7 +42,7 @@ in with lib; {
     fonts.fonts = with pkgs; [
       noto-fonts
       sarasa-gothic
-			joypixels
+      joypixels
       noto-fonts-emoji
       ownpkgs.apple-fonts
       (nerdfonts.override { fonts = [ "FiraCode" ]; })

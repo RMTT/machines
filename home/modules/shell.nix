@@ -5,13 +5,6 @@
 
   # zsh configuration
   programs.zsh.enable = true;
-  programs.zsh.initExtraFirst = ''
-    autoload -Uz add-zsh-hook
-    auto_rehash () {
-        rehash
-    }
-    add-zsh-hook precmd auto_rehash
-  '';
   programs.zsh.shellAliases = { "ls" = "exa"; };
   programs.zsh.zplug.enable = true;
   programs.zsh.zplug.plugins = [
@@ -26,7 +19,7 @@
       name = "plugins/git";
       tags = [ "from:oh-my-zsh" ];
     }
-		{ name = "jeffreytse/zsh-vi-mode"; }
+    { name = "jeffreytse/zsh-vi-mode"; }
   ];
   programs.zsh.defaultKeymap = "viins";
 
@@ -37,10 +30,10 @@
       add_newline = false;
       character.success_symbol = "[>](bold green)";
       character.error_symbol = "[>](bold red)";
-			character.vimcmd_symbol = "[<](bold green)";
-			character.vimcmd_replace_one_symbol = "[<](bold purple)";
-			character.vimcmd_replace_symbol = "[<](bold purple)";
-			character.vimcmd_visual_symbol = "[<](bold yellow)";
+      character.vimcmd_symbol = "[<](bold green)";
+      character.vimcmd_replace_one_symbol = "[<](bold purple)";
+      character.vimcmd_replace_symbol = "[<](bold purple)";
+      character.vimcmd_visual_symbol = "[<](bold yellow)";
     };
   };
 }

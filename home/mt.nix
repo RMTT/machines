@@ -40,8 +40,8 @@
     enable = true;
     defaultCacheTtl = 1800;
     enableSshSupport = true;
-    pinentryFlavor = "qt";
     enableExtraSocket = true;
+    enableZshIntegration = true;
   };
 
   # Let Home Manager install and manage itself.

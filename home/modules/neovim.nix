@@ -46,7 +46,7 @@ in {
       cmake-language-server
       tree-sitter
       clang-tools
-			efm-langserver
+      efm-langserver
     ];
   };
 }
