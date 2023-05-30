@@ -1,5 +1,9 @@
-local util = require('lspconfig/util')
-
+---- setting for neodev ----
+-- IMPORTANT: make sure to setup neodev BEFORE lspconfig
+require("neodev").setup({
+})
+---- end ----
+--
 ---- setting for lualine ----
 require('lualine').setup {
     options = { icon_enabled = true, theme = 'tokyonight' },
@@ -16,7 +20,19 @@ vim.cmd('highlight Normal ctermbg=none guibg=none')
 vim.cmd('highlight NonText ctermbg=none guibg=none')
 ---- end ----
 
+---- setting for window picker ----
+require 'window-picker'.setup {
+    include_current_win = true
+}
+---- end ----
+
 ---- setting for telescope ----
+require('telescope').setup {
+    defaults = {
+        get_selection_window = require('window-picker').pick_window
+    },
+}
+
 local builtin = require('telescope.builtin')
 vim.keymap.set('n', '<space>ff', builtin.find_files, {})
 vim.keymap.set('n', '<space>fg', builtin.live_grep, {})
