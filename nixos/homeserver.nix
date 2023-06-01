@@ -1,7 +1,6 @@
 { config, pkgs, ... }: {
   imports = [
     ./modules/base.nix
-    ./modules/boot.nix
     ./modules/fs.nix
     ./modules/networking.nix
     ./modules/nvidia.nix
@@ -32,11 +31,7 @@
 
     # gpu setting
     services.xserver.videoDrivers = [ "amdgpu" ];
-    hardware.nvidia.prime = {
-      amdgpuBusId = "PCI:6:0:0";
-
-      nvidiaBusId = "PCI:1:0:0";
-    };
+		nvidia.usage = "compute";
 
     # networking related
     networking.firewall.allowedTCPPorts = [ 22 1443 ];

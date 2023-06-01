@@ -52,7 +52,7 @@ in {
     # only compute part
     boot.extraModulePackages = mkIf onlyCompute [ nvidia-package ];
     boot.blacklistedKernelModules =
-      mkIf onlyCompute [ "nouveau" "nvidia_drm" "nvidia_modeset" "nvidia_uvm" ];
+      mkIf onlyCompute [ "nouveau" "nvidia_modeset" "nvidia_uvm" ];
 
     systemd.services = mkIf onlyCompute {
       "nvidia-persistenced" = {
