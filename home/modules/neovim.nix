@@ -9,7 +9,7 @@ let
       src = builtins.fetchGit {
         url = "https://github.com/${repo}.git";
         ref = ref;
-				rev = rev;
+        rev = rev;
       };
     };
 in {
@@ -49,7 +49,8 @@ in {
       auto-session
       vim-better-whitespace
       neodev-nvim
-			(fromGitHub "main" "65bbc52c27b0cd4b29976fe03be73cc943357528" "s1n7ax/nvim-window-picker")
+      (fromGitHub "main" "65bbc52c27b0cd4b29976fe03be73cc943357528"
+        "s1n7ax/nvim-window-picker")
     ];
     # install luanguage servers
     extraPackages = with pkgs-unstable; [

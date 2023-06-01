@@ -52,7 +52,10 @@
   # kvm settings
   boot.kernelModules = [ "kvm_amd" ];
 
+	base.libvirt.enable = true;
   base.libvirt.qemuHook = ./scripts/vfio_auto_bind.sh;
+
+	base.onedrive.enable = true;
 
   # tmpfile for looking-glass
   systemd.tmpfiles.rules = [ "f /dev/shm/looking-glass 0660 mt kvm -" ];

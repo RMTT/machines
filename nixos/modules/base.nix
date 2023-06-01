@@ -1,8 +1,18 @@
-# Base configuration
+# Base configuratioj
 { pkgs, pkgs-unstable, lib, config, inputs, ... }:
 let cfg = config.base;
 in with lib; {
   options.base = {
+    libvirt.enable = mkOption {
+      type = types.bool;
+      default = false;
+    };
+
+    onedrive.enable = mkOption {
+      type = types.bool;
+      default = false;
+    };
+
     libvirt.qemuHook = mkOption {
       type = types.path;
       default = null;
@@ -201,18 +211,20 @@ in with lib; {
     ];
 
     # enable libvirt
-    virtualisation.libvirtd = { enable = true; };
-    virtualisation.spiceUSBRedirection.enable = true;
-    systemd.services.libvirtd.path = [ pkgs.bash ];
-    systemd.services.libvirtd.preStart = mkIf (cfg.libvirt.qemuHook != null) ''
-      mkdir -p /var/lib/libvirt/hooks
-      chmod 755 /var/lib/libvirt/hooks
+    virtualisation.libvirtd = { enable = cfg.libvirt.enable; };
+    virtualisation.spiceUSBRedirection.enable = cfg.libvirt.enable;
+    systemd.services.libvirtd = mkIf cfg.libvirt.enable {
+      path = [ pkgs.bash ];
+      preStart = mkIf (cfg.libvirt.qemuHook != null) ''
+        mkdir -p /var/lib/libvirt/hooks
+        chmod 755 /var/lib/libvirt/hooks
 
-      # Copy hook files
-      ln -sf ${cfg.libvirt.qemuHook} /var/lib/libvirt/hooks/qemu
-    '';
+        # Copy hook files
+        ln -sf ${cfg.libvirt.qemuHook} /var/lib/libvirt/hooks/qemu
+      '';
+    };
 
     # enable onedrive
-    services.onedrive.enable = true;
+    services.onedrive.enable = cfg.onedrive.enable;
   };
 }
