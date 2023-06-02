@@ -10,7 +10,6 @@
         "arcmenu@arcmenu.com"
         "workspace-indicator@gnome-shell-extensions.gcampax.github.com"
         "kimpanel@kde.org"
-        "pop-shell@system76.com"
       ];
     };
 
@@ -59,26 +58,6 @@
     "org/gnome/shell/extensions/kimpanel" = {
       font = "Sarasa Mono Slab SC 11";
       vertical = false;
-    };
-
-    # pop shell
-    "org/gnome/shell/extensions/pop-shell" = {
-      active-hint = false;
-      active-hint-border-radius = mkUint32 2;
-      fullscreen-launcher = true;
-      gap-inner = mkUint32 2;
-      gap-outer = mkUint32 2;
-      log-level = mkUint32 1;
-      mouse-cursor-focus-location = mkUint32 4;
-      show-skip-taskbar = true;
-      show-title = false;
-      smart-gaps = true;
-      snap-to-grid = true;
-      tile-by-default = true;
-      tile-enter = [ "<Super><Shift>Enter" ];
-      toggle-floating = [ "<Super>f" ];
-      toggle-stacking = [ "<Super>d" ];
-      toggle-stacking-global = [ "<Super>d" ];
     };
 
     # global keybindings

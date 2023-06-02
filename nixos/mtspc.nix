@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, ... }: rec {
   imports = [
     ./modules/base.nix
     ./modules/fs.nix
@@ -25,7 +25,7 @@
   hardware.cpu.amd.updateMicrocode = true;
 
   # additional system packages
-  environment.systemPackages = with pkgs; [ glxinfo ];
+  environment.systemPackages = [ boot.kernelPackages.perf ];
 
   services.xserver.videoDrivers = [ "amdgpu" ];
 
@@ -52,10 +52,10 @@
   # kvm settings
   boot.kernelModules = [ "kvm_amd" ];
 
-	base.libvirt.enable = true;
+  base.libvirt.enable = true;
   base.libvirt.qemuHook = ./scripts/vfio_auto_bind.sh;
 
-	base.onedrive.enable = true;
+  base.onedrive.enable = true;
 
   # tmpfile for looking-glass
   systemd.tmpfiles.rules = [ "f /dev/shm/looking-glass 0660 mt kvm -" ];

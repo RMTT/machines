@@ -1,0 +1,18 @@
+{ pkgs, lib, ... }: {
+  programs.tmux = {
+    enable = true;
+    mouse = true;
+    keyMode = "vi";
+    clock24 = true;
+    extraConfig = ''
+            set -s default-terminal 'screen-256color'
+
+            bind -T copy-mode-vi v send -X begin-selection
+            bind -T copy-mode-vi C-v send -X rectangle-toggle
+            bind -T copy-mode-vi y send -X copy-selection-and-cancel
+            bind -T copy-mode-vi Escape send -X cancel
+      			bind y run -b "\"\$TMUX_PROGRAM\" \''${TMUX_SOCKET:+-S \"\$TMUX_SOCKET\"} save-buffer - | wl-copy"
+    '';
+    plugins = [ ];
+  };
+}

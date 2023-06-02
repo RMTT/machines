@@ -34,6 +34,8 @@ in {
   config = {
     virtualisation.docker.enableNvidia = config.virtualisation.docker.enable;
 
+    services.xserver.videoDrivers = mkIf full [ "nvidia" ];
+
     # system packages for this machine
     environment.systemPackages = with pkgs; [
       nvtop

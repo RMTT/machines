@@ -21,7 +21,6 @@
       gnomeExtensions.arcmenu
       gnome.gnome-tweaks
       gnomeExtensions.kimpanel
-      gnomeExtensions.pop-shell
       gnome.gnome-themes-extra
       gnome.dconf-editor
       pop-launcher

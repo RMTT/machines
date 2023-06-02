@@ -180,11 +180,9 @@ in with lib; {
     programs.tmux = {
       enable = true;
       clock24 = true;
+      keyMode = "vi";
       extraConfig = ''
         set -s default-terminal 'screen-256color'
-        set -g mouse on
-        setw -g mode-keys vi
-        bind -T copy-mode-vi y send-keys -X copy-pipe-and-cancel 'xclip -in -selection clipboard'
       '';
     };
 

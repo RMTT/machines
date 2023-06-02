@@ -5,6 +5,7 @@
     ./modules/alacritty.nix
     ./modules/neovim.nix
     ./modules/gnome.nix
+    ./modules/tmux.nix
   ];
 
   home.stateVersion = stateVersion;

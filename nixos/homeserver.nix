@@ -31,7 +31,7 @@
 
     # gpu setting
     services.xserver.videoDrivers = [ "amdgpu" ];
-    nvidia.usage = "compute";
+    nvidia.usage = "full";
 
     # networking related
     networking.firewall.allowedTCPPorts = [ 22 1443 ];
