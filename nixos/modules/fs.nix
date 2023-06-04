@@ -6,6 +6,7 @@ in {
     btrfs = {
       device = mkOption {
         type = types.str;
+        default = "";
         description = ''
           Parition label for btrfs.
         '';
@@ -13,6 +14,7 @@ in {
 
       volumes = mkOption {
         type = types.attrs;
+        default = { };
         description = ''
           Mappings of filesystem path to btrfs subvolume, for example:
         '';
@@ -48,19 +50,23 @@ in {
 
     boot.device = mkOption {
       type = types.str;
+      default = "";
       description = ''
-        Partition UUID of boot partition.
+        Partition label of boot partition.
       '';
     };
 
   };
 
   config = let
-    btrfs = mapAttrs (_: options: {
-      device = "/dev/disk/by-label/${cfg.btrfs.device}";
-      fsType = "btrfs";
-      options = options;
-    }) cfg.btrfs.volumes;
+    btrfs = if cfg.btrfs.device != "" then
+      mapAttrs (_: options: {
+        device = "/dev/disk/by-label/${cfg.btrfs.device}";
+        fsType = "btrfs";
+        options = options;
+      }) cfg.btrfs.volumes
+    else
+      { };
 
     others = mapAttrs (_: params: {
       fsType = params.fsType;
@@ -68,12 +74,13 @@ in {
       options = mkIf (params.options != [ ]) params.options;
     }) cfg.normal.volumes;
 
-    boot = {
+    boot = if cfg.boot.device != "" then {
       "/boot" = {
         device = "/dev/disk/by-label/${cfg.boot.device}";
         fsType = "vfat";
       };
-    };
+    } else
+      { };
   in {
     fileSystems = (btrfs // others // boot);
 

@@ -4,7 +4,6 @@
     ./modules/fs.nix
     ./modules/networking.nix
     ./modules/nvidia.nix
-    ./modules/secrets.nix
     ./modules/services.nix
   ];
 

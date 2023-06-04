@@ -14,6 +14,7 @@
       nodejs
       clang-tools
       pkg-config
+      pgcli
     ];
 
   };

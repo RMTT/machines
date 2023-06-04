@@ -7,4 +7,6 @@
   sops.secrets.cloudflare-ddns-domains = { };
   sops.secrets.cloudflare-zone-id = { };
   sops.secrets.cloudflare-token = { };
+
+  sops.secrets.mt-pass = { };
 }

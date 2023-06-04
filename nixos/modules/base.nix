@@ -20,6 +20,19 @@ in with lib; {
         libvirt qemu hook, reference: https://www.libvirt.org/hooks.html
       '';
     };
+
+    gl.enable = mkOption {
+      type = types.bool;
+      default = true;
+    };
+
+    mt.password = mkOption {
+      type = types.bool;
+      default = true;
+      description = ''
+        set default password from sops
+      '';
+    };
   };
   config = {
     # enable unfree pkgs
@@ -89,7 +102,6 @@ in with lib; {
       bind
       htop
       gitFull
-      pgcli
       gh
       wget
       curl
@@ -107,7 +119,6 @@ in with lib; {
       man-pages
       gnupg
       bitwarden-cli
-      nixos-option
       sops
       bitwarden-cli
       yubikey-manager
@@ -118,7 +129,6 @@ in with lib; {
       unzip
       zip
       libcgroup
-
     ];
 
     # set XDG viarables
@@ -160,11 +170,13 @@ in with lib; {
     # enable zsh
     programs.zsh = {
       enable = true;
-      enableCompletion = false;
+      enableCompletion = true;
       enableGlobalCompInit = false;
+      shellInit = "	bindkey -e\n";
     };
 
     # main user
+    security.sudo = { wheelNeedsPassword = false; };
     users.users.mt = {
       isNormalUser = true;
       home = "/home/mt";
@@ -172,6 +184,7 @@ in with lib; {
       extraGroups =
         [ "wheel" "networkmanager" "docker" "video" "libvirtd" "kvm" ];
       shell = pkgs.zsh;
+      passwordFile = mkIf cfg.mt.password config.sops.secrets.mt-pass.path;
       openssh.authorizedKeys.keyFiles = [ ../../secrets/ssh_key.pub ];
     };
     environment.pathsToLink = [ "/share/zsh" ];
@@ -193,20 +206,21 @@ in with lib; {
     # enable yubikey otp
     security.pam.yubico = {
       enable = true;
-      debug = true;
       mode = "challenge-response";
     };
 
     # opengl and hardware acc
-    hardware.opengl.enable = true;
-    hardware.opengl.driSupport = true;
-    hardware.opengl.driSupport32Bit = true;
-    hardware.opengl.extraPackages = with pkgs; [
-      libva
-      mesa.drivers
-      vaapiVdpau
-      libvdpau-va-gl
-    ];
+    hardware.opengl = mkIf cfg.gl.enable {
+      enable = true;
+      driSupport = true;
+      driSupport32Bit = true;
+      extraPackages = with pkgs; [
+        libva
+        mesa.drivers
+        vaapiVdpau
+        libvdpau-va-gl
+      ];
+    };
 
     # enable libvirt
     virtualisation.libvirtd = { enable = cfg.libvirt.enable; };

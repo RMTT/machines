@@ -47,8 +47,6 @@
 
   services.xserver.videoDrivers = [ "intel" ];
 
-  security.sudo = { wheelNeedsPassword = false; };
-
   # enable tlp
   services.power-profiles-daemon.enable = false;
   services.tlp.enable = true;

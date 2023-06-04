@@ -58,7 +58,11 @@
 
         mtspc = mkSystem "mtspc" system.x86_64-linux "23.05" [ ];
 
-        homeserver = mkSystem "homeserver" system.x86_64-linux "22.11" [ ];
+        homeserver = mkSystem "homeserver" system.x86_64-linux "23.05" [ ];
+
+        router = mkSystem "router" system.x86_64-linux "23.05" [ ];
+
+        live = mkSystem "live" system.x86_64-linux "23.05" [ ];
       };
     } // eachSystem [ system.x86_64-linux ] (system:
       let

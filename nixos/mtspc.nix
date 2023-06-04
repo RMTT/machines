@@ -1,5 +1,6 @@
 { pkgs, ... }: rec {
   imports = [
+    ./modules/secrets.nix
     ./modules/base.nix
     ./modules/fs.nix
     ./modules/networking.nix
@@ -28,8 +29,6 @@
   environment.systemPackages = [ boot.kernelPackages.perf ];
 
   services.xserver.videoDrivers = [ "amdgpu" ];
-
-  security.sudo = { wheelNeedsPassword = false; };
 
   # enable v2ray
   services.v2raya.enable = true;
