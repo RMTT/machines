@@ -20,7 +20,6 @@ in with lib; {
         libvirt qemu hook, reference: https://www.libvirt.org/hooks.html
       '';
     };
-
     gl.enable = mkOption {
       type = types.bool;
       default = true;
@@ -44,6 +43,7 @@ in with lib; {
       [ "https://mirrors.ustc.edu.cn/nix-channels/store" ];
     nix.settings.trusted-users = [ "root" "mt" ];
     nix.optimise.automatic = true;
+    nix.gc.automatic = true;
 
     # enable flakes
     nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -116,6 +116,7 @@ in with lib; {
       ripgrep
       iptables
       nftables
+      tcpdump
       man-pages
       gnupg
       bitwarden-cli
@@ -129,6 +130,7 @@ in with lib; {
       unzip
       zip
       libcgroup
+      bridge-utils
     ];
 
     # set XDG viarables
@@ -177,6 +179,7 @@ in with lib; {
 
     # main user
     security.sudo = { wheelNeedsPassword = false; };
+    sops.secrets.mt-pass = mkIf cfg.mt.password { neededForUsers = true; };
     users.users.mt = {
       isNormalUser = true;
       home = "/home/mt";
@@ -238,5 +241,9 @@ in with lib; {
 
     # enable onedrive
     services.onedrive.enable = cfg.onedrive.enable;
+
+    # enable home-manager for users
+    home-manager.useGlobalPkgs = true;
+    home-manager.useUserPackages = true;
   };
 }

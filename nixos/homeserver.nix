@@ -1,6 +1,6 @@
 { config, pkgs, ... }: {
   imports = [
-		./modules/secrets.nix
+    ./modules/secrets.nix
     ./modules/base.nix
     ./modules/fs.nix
     ./modules/networking.nix
@@ -41,6 +41,9 @@
     '';
 
     # enable ddns
+    sops.secrets.cloudflare-ddns-domains = { };
+    sops.secrets.cloudflare-zone-id = { };
+    sops.secrets.cloudflare-token = { };
     services.cloudflare-ddns = {
       enable = true;
       domains = config.sops.secrets.cloudflare-ddns-domains.path;

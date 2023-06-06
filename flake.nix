@@ -73,5 +73,8 @@
       in {
         formatter = pkgs.nixfmt;
         packages.apple-fonts = pkgs.callPackage ./packages/apple-fonts.nix { };
+        packages.clash-premium =
+          pkgs.callPackage ./packages/clash-premium.nix { };
+        packages.yacd = pkgs.callPackage ./packages/yacd { };
       });
 }

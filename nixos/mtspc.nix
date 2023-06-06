@@ -1,4 +1,4 @@
-{ pkgs, ... }: rec {
+{ pkgs, config, ... }: rec {
   imports = [
     ./modules/secrets.nix
     ./modules/base.nix
@@ -32,10 +32,6 @@
 
   # enable v2ray
   services.v2raya.enable = true;
-
-  # enable home-manager for users
-  home-manager.useGlobalPkgs = true;
-  home-manager.useUserPackages = true;
 
   # set gdm scale
   desktop.gdm.scale = 2;
