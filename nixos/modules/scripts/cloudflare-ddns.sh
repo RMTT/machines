@@ -1,14 +1,13 @@
 #!/usr/bin/env bash
 
-# CHANGE THESE
 auth_key=$(<"$CLOUDFLARE_TOKEN")
 zone_identifier=$(<"$CLOUDFLARE_ZONE_ID")
 
 IFS=' ' read -r -a record_names < "$CLOUDFLARE_DDNS_DOMAINS"
-record_type="AAAA"             #A or AAAA,ipv4 或 ipv6解析
+record_type="AAAA"             #A or AAAA
 
-ip_index="local"            #use "internet" or "local",使用本地方式还是网络方式获取地址
-eth_card=$INTERFACE             #使用本地方式获取ip绑定的网卡，默认为eth0，仅本地方式有效,the default ethernet card is eth0
+ip_index="local"            #use "internet" or "local"
+eth_card=$INTERFACE
 
 tmpdir="/tmp/cloudflare-ddns/"
 
@@ -16,15 +15,15 @@ if [ ! -e "$tmpdir" ]; then
     mkdir "$tmpdir"
 fi
 
-ip_file="${tmpdir}/ip.txt"            #保存地址信息,save ip information in the ip.txt
+ip_file="${tmpdir}/ip.txt"            # save ip information in the ip.txt
 id_suffix=".ids"
 
 if [ $record_type = "AAAA" ];then
     if [ $ip_index = "internet" ];then
         ip=$(curl -6 ip.sb)
     elif [ $ip_index = "local" ];then
-    	ip=$(ip -6 addr show  $eth_card | grep inet6 | grep -v '::1'|grep -v 'fe80' | grep -v 'fd86' | cut -f2 | awk '{ print $2}' | head -1 | cut -d '/' -f1)
-    else 
+    	ip=$(ip -6 addr show  $eth_card | grep inet6 | grep -v '::1'|grep -v 'fe80' | grep -v 'fd86' | grep -v 'fd80' | cut -f2 | awk '{ print $2}' | head -1 | cut -d '/' -f1)
+    else
         echo "Error IP index, please input the right type"
         exit 0
     fi
@@ -37,7 +36,7 @@ elif [ $record_type = "A" ];then
         else
             ip=$(/sbin/ifconfig $eth_card | grep 'inet'| grep -v '127.0.0.1' | grep -v 'inet6'|cut -f2 | awk '{ print $2}')
         fi
-    else 
+    else
         echo "Error IP index, please input the right type"
         exit 0
     fi

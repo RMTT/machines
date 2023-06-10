@@ -36,8 +36,8 @@
     # networking related
     networking.firewall.allowedTCPPorts = [ 22 1443 ];
     networking.firewall.extraCommands = ''
-      iptables -A nixos-fw -p tcp --source 192.168.5.0/24 -j nixos-fw-accept
-      iptables -A nixos-fw -p udp --source 192.168.5.0/24 -j nixos-fw-accept
+      iptables -A nixos-fw -p tcp --source 192.168.6.0/24 -j nixos-fw-accept
+      iptables -A nixos-fw -p udp --source 192.168.6.0/24 -j nixos-fw-accept
     '';
 
     # enable ddns
@@ -53,7 +53,7 @@
     };
 
     # ssh disable password
-    services.openssh = { passwordAuthentication = false; };
+    services.openssh.settings = { PasswordAuthentication = false; };
 
     # enable home-manager for users
     home-manager.users.mt = {

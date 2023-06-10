@@ -47,6 +47,7 @@ in {
                 	prefix ::/64 {
                 		AdvOnLink on;
                 		AdvAutonomous on;
+										AdvRouterAddr off;
                 	};
                 };
       '';
@@ -65,12 +66,9 @@ in {
           					file ${cfg.authFile}
                     defaultroute
                     noipdefault
-                    nodetach
-                    noaccomp
-                    nodeflate
-                    nopcomp
-                    novj
-                    novjccomp
+										persist
+										maxfail 0
+										holdoff 5
 
           					+ipv6 ipv6cp-use-persistent
         '';
@@ -97,12 +95,16 @@ in {
                 noipv6rs
                 ipv6only
 
+								timeout 0
+
                 # settings for the interface
                 interface ${cfg.ifname}
         					ipv6rs              # router advertisement solicitaion
         					iaid 1              # interface association ID
-        					ia_pd 1 lan/0/60		 # request a PD and assign to interface
+        					ia_pd 1 ${cfg.ipv6RAIf}/0/64		 # request a PD and assign to interface
                 				'';
     };
+		systemd.services.dhcpcd.partOf = [ "pppd-main.service" ];
+		systemd.services.dhcpcd.after = [ "pppd-main.service" ];
   };
 }

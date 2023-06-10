@@ -55,6 +55,9 @@ with lib; {
       "net.ipv6.conf.${wan}.autoconf" = 1;
     };
 
+    # disable dhcpcd in wan
+    networking.interfaces."${wan}".useDHCP = false;
+
     # network interfaces
     networking.bridges = {
       # lan interfaces
@@ -74,9 +77,6 @@ with lib; {
         prefixLength = lan_ip_prefix;
       }];
     };
-
-    # disable dhcpcd in wan
-    networking.interfaces."${wan}".useDHCP = false;
 
     # enable PPPoE
     sops.secrets.pppoe_auth = {
