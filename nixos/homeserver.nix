@@ -26,6 +26,10 @@
 
     hardware.cpu.amd.updateMicrocode = true;
 
+		boot.kernel.sysctl = {
+			"vm.overcommit_memory" = 1;
+		};
+
     # additional system packages
     environment.systemPackages = with pkgs; [ glxinfo ];
 

@@ -19,6 +19,11 @@ in {
         default = ownpkgs.clash-premium;
       };
 
+			ui = mkOption {
+        type = types.package;
+        default = ownpkgs.yacd-meta;
+			};
+
       ad = {
         enable = mkEnableOption "Enable AdGuardHome";
 
@@ -31,31 +36,29 @@ in {
     };
   };
 
-  config = {
-    users.users.clash = mkIf cfg.enable {
+  config = mkIf cfg.enable {
+    users.users.clash = {
       name = "clash";
       group = "clash";
       isSystemUser = true;
     };
-    users.groups.clash = mkIf cfg.enable { };
-    systemd.services.clash = mkIf cfg.enable {
+    users.groups.clash = { };
+    systemd.services.clash = {
       description = "clash service";
       path = with pkgs; [ cfg.package iptables bash iproute2 ];
       wantedBy = [ "multi-user.target" ];
       after = [ "network-online.service" ];
+      script = ''
+						ln -sfn ${cfg.ui} $STATE_DIRECTORY/ui
+						${cfg.package}/bin/clash-meta -d $STATE_DIRECTORY -f ${cfg.config}
+					'';
       serviceConfig = {
         Type = "simple";
         User = "clash";
         Group = "clash";
+				LimitNPROC = 500;
+				LimitNOFILE = 1000000;
         Restart = "always";
-        ExecStartPre =
-          "${pkgs.bash}/bin/bash ${../scripts/clash-tproxy.sh} clean";
-        ExecStart =
-          "${cfg.package}/bin/clash -d $STATE_DIRECTORY -f ${cfg.config}";
-        ExecStartPost =
-          "${pkgs.bash}/bin/bash ${../scripts/clash-tproxy.sh} setup";
-        ExecStopPost =
-          "${pkgs.bash}/bin/bash ${../scripts/clash-tproxy.sh} clean";
         StateDirectory = "clash";
         StateDirectoryMode = "0750";
         CapabilityBoundingSet =
@@ -75,5 +78,6 @@ in {
         dhcp = cfg.ad.dhcp;
       };
     };
+
   };
 }

@@ -1,4 +1,4 @@
-{ pkgs, lib, config, ... }:
+{ pkgs-unstable, lib, config, ... }:
 with lib; {
   imports = [
     ./modules/secrets.nix
@@ -107,6 +107,7 @@ with lib; {
     services.clash = {
       enable = true;
       config = config.sops.secrets.clash_config.path;
+			package = pkgs-unstable.clash-meta;
 
       ad = {
         enable = true;

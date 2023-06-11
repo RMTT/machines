@@ -19,8 +19,8 @@
     sops-nix.inputs.nixpkgs-stable.follows = "nixpkgs";
   };
 
-  outputs =
-    { self, nixpkgs, nixpkgs-unstable, flake-utils, home-manager, ... }@inputs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, flake-utils, home-manager
+    , ... }@inputs:
     with flake-utils.lib;
     let
       mkSystem = name: system: nixosVersion: extraModules:
@@ -73,8 +73,8 @@
       in {
         formatter = pkgs.nixfmt;
         packages.apple-fonts = pkgs.callPackage ./packages/apple-fonts.nix { };
-        packages.clash-premium =
-          pkgs.callPackage ./packages/clash-premium.nix { };
+        packages.yacd-meta =
+          pkgs.callPackage ./packages/yacd-meta.nix { };
         packages.yacd = pkgs.callPackage ./packages/yacd { };
       });
 }
