@@ -22,7 +22,7 @@ if [ $record_type = "AAAA" ];then
     if [ $ip_index = "internet" ];then
         ip=$(curl -6 ip.sb)
     elif [ $ip_index = "local" ];then
-    	ip=$(ip -6 addr show  $eth_card | grep inet6 | grep -v '::1'|grep -v 'fe80' | grep -v 'fd86' | grep -v 'fd80' | cut -f2 | awk '{ print $2}' | head -1 | cut -d '/' -f1)
+    	ip=$(ip -6 addr show $eth_card scope global mngtmpaddr | grep inet6 | grep -v '::1'|grep -v 'fe80' | grep -v 'fd86' | grep -v 'fd80' | grep -v 'deprecated' | cut -f2 | awk '{ print $2}' | head -1 | cut -d '/' -f1)
     else
         echo "Error IP index, please input the right type"
         exit 0

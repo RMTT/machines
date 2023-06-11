@@ -45,9 +45,9 @@ in {
     users.groups.clash = { };
     systemd.services.clash = {
       description = "clash service";
-      path = with pkgs; [ cfg.package iptables bash iproute2 ];
+      path = with pkgs; [ cfg.package iptables bash iproute2 sysctl];
       wantedBy = [ "multi-user.target" ];
-      after = [ "network-online.service" ];
+      after = [ "network-online.service" "adguardhome.service" ];
       script = ''
 						ln -sfn ${cfg.ui} $STATE_DIRECTORY/ui
 						${cfg.package}/bin/clash-meta -d $STATE_DIRECTORY -f ${cfg.config}
@@ -56,9 +56,16 @@ in {
         Type = "simple";
         User = "clash";
         Group = "clash";
+        Restart = "always";
 				LimitNPROC = 500;
 				LimitNOFILE = 1000000;
-        Restart = "always";
+        ExecStartPre =
+          "${pkgs.bash}/bin/bash ${../scripts/clash-tproxy.sh} clean";
+        ExecStartPost =
+          "${pkgs.bash}/bin/bash ${../scripts/clash-tproxy.sh} setup";
+				ExecStop = "${pkgs.util-linux} $MAINPID";
+        ExecStopPost =
+          "${pkgs.bash}/bin/bash ${../scripts/clash-tproxy.sh} clean";
         StateDirectory = "clash";
         StateDirectoryMode = "0750";
         CapabilityBoundingSet =
