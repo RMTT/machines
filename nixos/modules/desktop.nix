@@ -16,7 +16,7 @@ in with lib; {
   };
 
   config = {
-    nixpkgs.config.permittedInsecurePackages = [ "electron-21.4.0" ];
+		security.rtkit.enable = true;
 
     # many gtk apps need dconf
     programs.dconf.enable = true;

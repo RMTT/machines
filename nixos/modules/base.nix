@@ -74,7 +74,11 @@ in with lib; {
     ];
 
     # timezone
-    time.timeZone = "Asia/Shanghai";
+    time.timeZone = ":/etc/localtime";
+		time.hardwareClockInLocalTime = true;
+		environment.variables = {
+			TZ = "Asia/Shanghai";
+		};
 
     # locale
     i18n.defaultLocale = "en_US.UTF-8";
@@ -247,3 +251,4 @@ in with lib; {
     home-manager.useUserPackages = true;
   };
 }
+

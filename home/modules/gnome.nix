@@ -1,6 +1,6 @@
-{ lib, ... }: {
+{ ... }: {
 
-  dconf.settings = with lib.hm.gvariant; {
+  dconf.settings = {
     "org/gnome/shell" = {
       "disable-user-extensions" = false;
       "enabled-extensions" = [
@@ -19,8 +19,10 @@
     # arch menu
     "org/gnome/shell/extensions/arcmenu" = {
       "position-in-panel" = "Center";
+			"enable-standlone-runner-menu" = true;
       "runner-menu-custom-hotkey" = [ "<Super>r" ];
       "runner-menu-hotkey-type" = "Custom";
+			"hide-overview-on-startup" = true;
     };
 
     # custom keybindings

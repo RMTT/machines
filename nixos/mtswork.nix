@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }: {
   imports = [
+		./modules/secrets.nix
     ./modules/base.nix
-    ./modules/boot.nix
     ./modules/fs.nix
     ./modules/networking.nix
     ./modules/gnome.nix
