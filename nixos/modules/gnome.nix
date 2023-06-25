@@ -43,6 +43,7 @@
     environment.sessionVariables = {
       GUAKE_ENABLE_WAYLAND = "1";
       XCURSOR_THEME = "Adwaita";
+			QT_QPA_PLATFORM = "Wayland";
     };
   };
 }

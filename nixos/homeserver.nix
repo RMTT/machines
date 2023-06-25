@@ -28,7 +28,10 @@
 
 		boot.kernel.sysctl = {
 			"vm.overcommit_memory" = 1;
+			"net.ipv6.route.max_size" = 409600;
 		};
+
+		boot.kernelPackages = pkgs.linuxPackages_latest;
 
     # additional system packages
     environment.systemPackages = with pkgs; [ glxinfo ];

@@ -5,7 +5,7 @@ let
 		name = "yacd-meta.zip";
     url =
       "https://codeload.github.com/MetaCubeX/Yacd-meta/zip/refs/heads/gh-pages";
-    sha256 = "sha256-PW8YzH39zK04S1IGWNXQZgwYbm0E1W5xrCOPxiFr1+s=";
+    sha256 = "sha256-YIHisqbfTvkZOCFHpU3R1YHh/M5dBk+Owi7HC3k5rco=";
   };
 in stdenv.mkDerivation {
   pname = "yacd-meta";

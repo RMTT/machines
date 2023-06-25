@@ -25,6 +25,7 @@ in with lib; {
     environment.systemPackages = with pkgs; [
       firefox
       telegram-desktop
+			element-desktop
       alacritty
       tela-icon-theme
       bitwarden
