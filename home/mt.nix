@@ -20,7 +20,7 @@
     userEmail = "d.rong@outlook.com";
     signing = {
       signByDefault = true;
-      key = "407C5B126B1A1895";
+      key = "RMTTT";
     };
     extraConfig = {
       init.defaultBranch = "main";

@@ -63,11 +63,10 @@ in {
           "${pkgs.bash}/bin/bash ${../scripts/clash-tproxy.sh} clean";
         ExecStartPost =
           "${pkgs.bash}/bin/bash ${../scripts/clash-tproxy.sh} setup";
-				ExecStop = "${pkgs.util-linux} $MAINPID";
         ExecStopPost =
           "${pkgs.bash}/bin/bash ${../scripts/clash-tproxy.sh} clean";
         StateDirectory = "clash";
-        StateDirectoryMode = "0750";
+        StateDirectoryMode = "0650";
         CapabilityBoundingSet =
           [ "CAP_NET_ADMIN" "CAP_NET_BIND_SERVICE" "CAP_NET_RAW" ];
         AmbientCapabilities =
