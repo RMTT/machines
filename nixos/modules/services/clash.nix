@@ -16,7 +16,7 @@ in {
 
       package = mkOption {
         type = types.package;
-        default = ownpkgs.clash-premium;
+        default = pkgs.clash;
       };
 
 			ui = mkOption {
