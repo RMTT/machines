@@ -4,6 +4,7 @@
     qt = {
       enable = true;
       platformTheme = "qt5ct";
+      style = "adwaita-dark";
     };
 
     services.xserver.enable = true;
@@ -22,12 +23,15 @@
       gnome.gnome-tweaks
       gnomeExtensions.kimpanel
       gnome.gnome-themes-extra
+      gnome.adwaita-icon-theme
       gnome.dconf-editor
-      pop-launcher
+      gnome.gdm
       guake
       wl-clipboard
-      libsForQt5.qt5ct
+			qgnomeplatform-qt6
+			qgnomeplatform
       adwaita-qt
+      adwaita-qt6
     ];
 
     environment.gnome.excludePackages = (with pkgs.gnome; [
@@ -43,7 +47,7 @@
     environment.sessionVariables = {
       GUAKE_ENABLE_WAYLAND = "1";
       XCURSOR_THEME = "Adwaita";
-			QT_QPA_PLATFORM = "Wayland";
+      QT_QPA_PLATFORM = "Wayland";
     };
   };
 }

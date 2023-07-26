@@ -4,5 +4,5 @@
   sops.age.keyFile = "/var/lib/sops-nix/age";
   sops.age.generateKey = false;
 
-	sops.gnupg.sshKeyPaths = [];
+  sops.gnupg.sshKeyPaths = [ ];
 }

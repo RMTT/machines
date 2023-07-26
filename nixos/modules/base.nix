@@ -75,10 +75,8 @@ in with lib; {
 
     # timezone
     time.timeZone = ":/etc/localtime";
-		time.hardwareClockInLocalTime = true;
-		environment.variables = {
-			TZ = "Asia/Shanghai";
-		};
+    time.hardwareClockInLocalTime = true;
+    environment.variables = { TZ = "Asia/Shanghai"; };
 
     # locale
     i18n.defaultLocale = "en_US.UTF-8";

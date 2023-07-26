@@ -1,6 +1,6 @@
 { config, pkgs, lib, ... }: {
   imports = [
-		./modules/secrets.nix
+    ./modules/secrets.nix
     ./modules/base.nix
     ./modules/fs.nix
     ./modules/networking.nix

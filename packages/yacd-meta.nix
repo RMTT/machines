@@ -1,24 +1,23 @@
 { stdenv, fetchurl, unzip, ... }:
 let
-  version = "0.3.6";
+  version = "0.3.7";
   src = fetchurl {
-		name = "yacd-meta.zip";
-    url =
-      "https://codeload.github.com/MetaCubeX/Yacd-meta/zip/refs/heads/gh-pages";
-    sha256 = "sha256-YIHisqbfTvkZOCFHpU3R1YHh/M5dBk+Owi7HC3k5rco=";
+    name = "yacd-meta.zip";
+    url = "https://github.com/MetaCubeX/yacd/archive/gh-pages.zip";
+    sha256 = "sha256-UzHTKdqqytLQtm+eB1VhfhZGP16YI9jSOwgCvaC/Q7M=";
   };
 in stdenv.mkDerivation {
   pname = "yacd-meta";
   version = version;
   src = src;
-	nativeBuildInputs = [ unzip ];
+  nativeBuildInputs = [ unzip ];
 
-	unpackPhase = ''
-		unzip ${src}
-		'';
+  unpackPhase = ''
+    unzip ${src}
+  '';
   dontBuild = true;
   installPhase = ''
-		mkdir $out
-		cp -r Yacd-meta-gh-pages/* $out
+    mkdir $out
+    cp -r Yacd-meta-gh-pages/* $out
   '';
 }

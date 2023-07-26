@@ -19,14 +19,18 @@
     sops-nix.inputs.nixpkgs-stable.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, flake-utils, home-manager
-    , ... }@inputs:
+  outputs =
+    { self, nixpkgs, nixpkgs-unstable, flake-utils, home-manager, ... }@inputs:
     with flake-utils.lib;
     let
       mkSystem = name: system: nixosVersion: extraModules:
         nixpkgs.lib.nixosSystem {
           system = system;
-          specialArgs.pkgs-unstable = nixpkgs-unstable.legacyPackages.${system};
+          specialArgs.pkgs-unstable = import nixpkgs-unstable {
+            system = "${system}";
+            config.allowUnfree = true;
+          };
+
           specialArgs.ownpkgs = self.packages.${system};
           specialArgs.inputs = inputs;
           modules = [
@@ -40,7 +44,11 @@
               home-manager.useUserPackages = true;
 
               home-manager.extraSpecialArgs.pkgs-unstable =
-                nixpkgs-unstable.legacyPackages.${system};
+                import nixpkgs-unstable {
+                  system = "${system}";
+                  config.allowUnfree = true;
+                };
+							home-manager.extraSpecialArgs.ownpkgs = self.packages.${system};
 
               home-manager.extraSpecialArgs.plasma-manager =
                 inputs.plasma-manager.homeManagerModules.plasma-manager;
@@ -73,8 +81,7 @@
       in {
         formatter = pkgs.nixfmt;
         packages.apple-fonts = pkgs.callPackage ./packages/apple-fonts.nix { };
-        packages.yacd-meta =
-          pkgs.callPackage ./packages/yacd-meta.nix { };
-        packages.yacd = pkgs.callPackage ./packages/yacd { };
+        packages.yacd-meta = pkgs.callPackage ./packages/yacd-meta.nix { };
+				packages.zoom-us = pkgs.callPackage ./packages/zoom-us.nix { };
       });
 }

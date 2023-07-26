@@ -1,8 +1,6 @@
 creation_rules:
   - path_regex: secrets/.*
-    key_groups:
-    - age:
-      - age1u4gjwdwevlzwfy94lvw69t32rueujk4evypc0r6fuq0nvmua94esge30uk
-      pgp:
-      - F01B47BAD5FC895EE1F1B9E59FAD79271D7D461C
-      - 5C8F390F5719AF09F162F3D07425A144236F36A3
+    age: age1u4gjwdwevlzwfy94lvw69t32rueujk4evypc0r6fuq0nvmua94esge30uk
+    pgp: >-
+      F01B47BAD5FC895EE1F1B9E59FAD79271D7D461C,
+      5C8F390F5719AF09F162F3D07425A144236F36A3

@@ -55,5 +55,5 @@
   # tmpfile for looking-glass
   systemd.tmpfiles.rules = [ "f /dev/shm/looking-glass 0660 mt kvm -" ];
 
-	services.cockpit.enable = true;
+  services.cockpit.enable = true;
 }

@@ -1,4 +1,4 @@
-{ pkgs, config, ownpkgs, lib, ... }:
+{ pkgs, pkgs-unstable, config, ownpkgs, lib, ... }:
 let cfg = config.desktop;
 in with lib; {
   options = {
@@ -16,7 +16,7 @@ in with lib; {
   };
 
   config = {
-		security.rtkit.enable = true;
+    security.rtkit.enable = true;
 
     # many gtk apps need dconf
     programs.dconf.enable = true;
@@ -25,7 +25,7 @@ in with lib; {
     environment.systemPackages = with pkgs; [
       firefox
       telegram-desktop
-			element-desktop
+      element-desktop
       alacritty
       tela-icon-theme
       bitwarden
@@ -34,7 +34,6 @@ in with lib; {
       libreoffice-fresh
       obsidian
       virt-manager
-      moonlight-qt
     ];
 
     # fonts

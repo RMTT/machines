@@ -19,10 +19,10 @@ in {
         default = pkgs.clash;
       };
 
-			ui = mkOption {
+      ui = mkOption {
         type = types.package;
         default = ownpkgs.yacd-meta;
-			};
+      };
 
       ad = {
         enable = mkEnableOption "Enable AdGuardHome";
@@ -45,20 +45,18 @@ in {
     users.groups.clash = { };
     systemd.services.clash = {
       description = "clash service";
-      path = with pkgs; [ cfg.package iptables bash iproute2 sysctl];
+      path = with pkgs; [ cfg.package iptables bash iproute2 sysctl ];
       wantedBy = [ "multi-user.target" ];
       after = [ "network-online.service" "adguardhome.service" ];
-      script = ''
-						ln -sfn ${cfg.ui} $STATE_DIRECTORY/ui
-						${cfg.package}/bin/clash-meta -d $STATE_DIRECTORY -f ${cfg.config}
-					'';
+      script =
+        "	ln -sfn ${cfg.ui} $STATE_DIRECTORY/ui\n	${cfg.package}/bin/clash-meta -d $STATE_DIRECTORY -f ${cfg.config}\n";
       serviceConfig = {
         Type = "simple";
         User = "clash";
         Group = "clash";
         Restart = "always";
-				LimitNPROC = 500;
-				LimitNOFILE = 1000000;
+        LimitNPROC = 500;
+        LimitNOFILE = 1000000;
         ExecStartPre =
           "${pkgs.bash}/bin/bash ${../scripts/clash-tproxy.sh} clean";
         ExecStartPost =
@@ -66,7 +64,7 @@ in {
         ExecStopPost =
           "${pkgs.bash}/bin/bash ${../scripts/clash-tproxy.sh} clean";
         StateDirectory = "clash";
-        StateDirectoryMode = "0650";
+        StateDirectoryMode = "0750";
         CapabilityBoundingSet =
           [ "CAP_NET_ADMIN" "CAP_NET_BIND_SERVICE" "CAP_NET_RAW" ];
         AmbientCapabilities =

@@ -22,9 +22,9 @@
     { name = "jeffreytse/zsh-vi-mode"; }
   ];
   programs.zsh.defaultKeymap = "viins";
-	programs.zsh.localVariables = {
-		SSH_AUTH_SOCK = "$(gpgconf --list-dirs agent-ssh-socket)";
-	};
+  programs.zsh.localVariables = {
+    SSH_AUTH_SOCK = "$(gpgconf --list-dirs agent-ssh-socket)";
+  };
 
   # startship configuration
   programs.starship = {
