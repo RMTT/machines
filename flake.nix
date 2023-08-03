@@ -2,8 +2,8 @@
   description = "mt's configuration of machines";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/release-23.05";
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/release-23.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     flake-utils.url = "github:numtide/flake-utils";
 
@@ -15,18 +15,18 @@
     plasma-manager.inputs.home-manager.follows = "home-manager";
 
     sops-nix.url = "github:Mic92/sops-nix";
-    sops-nix.inputs.nixpkgs.follows = "nixpkgs-unstable";
-    sops-nix.inputs.nixpkgs-stable.follows = "nixpkgs";
+    sops-nix.inputs.nixpkgs.follows = "nixpkgs";
+    sops-nix.inputs.nixpkgs-stable.follows = "nixpkgs-stable";
   };
 
   outputs =
-    { self, nixpkgs, nixpkgs-unstable, flake-utils, home-manager, ... }@inputs:
+    { self, nixpkgs, nixpkgs-stable, flake-utils, home-manager, ... }@inputs:
     with flake-utils.lib;
     let
       mkSystem = name: system: nixosVersion: extraModules:
         nixpkgs.lib.nixosSystem {
           system = system;
-          specialArgs.pkgs-unstable = import nixpkgs-unstable {
+          specialArgs.pkgs-stable = import nixpkgs-stable {
             system = "${system}";
             config.allowUnfree = true;
           };
@@ -43,8 +43,8 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
 
-              home-manager.extraSpecialArgs.pkgs-unstable =
-                import nixpkgs-unstable {
+              home-manager.extraSpecialArgs.pkgs-stable =
+                import nixpkgs-stable {
                   system = "${system}";
                   config.allowUnfree = true;
                 };

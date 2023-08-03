@@ -1,4 +1,4 @@
-{ pkgs, pkgs-unstable, config, ownpkgs, lib, ... }:
+{ pkgs, config, ownpkgs, lib, ... }:
 let cfg = config.desktop;
 in with lib; {
   options = {
@@ -38,8 +38,8 @@ in with lib; {
 
     # fonts
     fonts.fontDir.enable = true;
-    fonts.enableDefaultFonts = true;
-    fonts.fonts = with pkgs; [
+    fonts.enableDefaultPackages = true;
+    fonts.packages = with pkgs; [
       noto-fonts
       sarasa-gothic
       joypixels

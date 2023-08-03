@@ -1,9 +1,9 @@
-{ pkgs-unstable, lib, ... }:
+{ pkgs, lib, ... }:
 let
   configPath = ../config/nvim;
 
   fromGitHub = ref: rev: repo:
-    pkgs-unstable.vimUtils.buildVimPluginFrom2Nix {
+    pkgs.vimUtils.buildVimPluginFrom2Nix {
       pname = "${lib.strings.sanitizeDerivationName repo}";
       version = ref;
       src = builtins.fetchGit {
@@ -21,10 +21,10 @@ in {
     defaultEditor = true;
     vimAlias = true;
     viAlias = true;
-    package = pkgs-unstable.neovim-unwrapped;
+    package = pkgs.neovim-unwrapped;
     withPython3 = true;
     withNodeJs = true;
-    plugins = with pkgs-unstable.vimPlugins; [
+    plugins = with pkgs.vimPlugins; [
       nvim-lspconfig
       nvim-web-devicons
       lualine-nvim
@@ -45,7 +45,7 @@ in {
       vim-fugitive
       editorconfig-vim
       gitsigns-nvim
-      nvim-treesitter
+      nvim-treesitter.withAllGrammars
       auto-session
       vim-better-whitespace
       neodev-nvim
@@ -53,7 +53,7 @@ in {
         "s1n7ax/nvim-window-picker")
     ];
     # install luanguage servers
-    extraPackages = with pkgs-unstable; [
+    extraPackages = with pkgs; [
       sumneko-lua-language-server
       nodePackages.pyright
       nil

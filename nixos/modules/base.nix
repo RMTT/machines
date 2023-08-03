@@ -1,5 +1,5 @@
 # Base configuratioj
-{ pkgs, pkgs-unstable, lib, config, inputs, ... }:
+{ pkgs, lib, config, inputs, ... }:
 let cfg = config.base;
 in with lib; {
   options.base = {
@@ -51,7 +51,7 @@ in with lib; {
       self.flake = inputs.self;
       nixpkgs.flake = inputs.nixpkgs;
 
-      nixpkgs-unstable.flake = inputs.nixpkgs-unstable;
+      nixpkgs-stable.flake = inputs.nixpkgs-stable;
 
       home-manager.flake = inputs.home-manager;
 
@@ -149,7 +149,7 @@ in with lib; {
     # set default editor to nvim
     programs.neovim = {
       enable = true;
-      package = pkgs-unstable.neovim-unwrapped;
+      package = pkgs.neovim-unwrapped;
       defaultEditor = true;
       vimAlias = true;
       viAlias = true;

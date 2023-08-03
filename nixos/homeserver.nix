@@ -31,7 +31,7 @@
       "net.ipv6.route.max_size" = 409600;
     };
 
-    boot.kernelPackages = pkgs.linuxPackages_latest;
+    boot.kernelPackages = pkgs.linuxPackages_lts;
 
     # additional system packages
     environment.systemPackages = with pkgs; [ glxinfo ];

@@ -41,32 +41,32 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1690333178,
-        "narHash": "sha256-y1AabHa5VZnpmH9ARvutQbwUY9K9QbRuXNrZ3HOFaDk=",
+        "lastModified": 1690881714,
+        "narHash": "sha256-h/nXluEqdiQHs1oSgkOOWF+j8gcJMWhwnZ9PFabN6q0=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "a0e03cef9344e68c44abea2194173eaf44253fd3",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "release-23.05",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs-unstable": {
-      "locked": {
-        "lastModified": 1690179384,
-        "narHash": "sha256-+arbgqFTAtoeKtepW9wCnA0njCOyoiDFyl0Q0SBSOtE=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "b12803b6d90e2e583429bb79b859ca53c348b39a",
+        "rev": "9e1960bc196baf6881340d53dccb203a951745a2",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
         "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs-stable": {
+      "locked": {
+        "lastModified": 1691016377,
+        "narHash": "sha256-Vvi49vIL2CzX5bsfE3qovcmzJpkfMo/Mx/coCbu5Jeo=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "ad73028def6716978adaec5b0b7706edc611a83e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "release-23.05",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -81,11 +81,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1664383871,
-        "narHash": "sha256-dOnnzfqd/PCf1K3USKq2PqSGKmIqkr/SD7zHb1yoAyw=",
+        "lastModified": 1690827734,
+        "narHash": "sha256-zcNLTSKGZ5zcx0RQkDKH4dN2MBx+KTfrYN7HfmD0N7c=",
         "owner": "pjones",
         "repo": "plasma-manager",
-        "rev": "16c437e43a0e049b15c9bfd37295f6e978ea9955",
+        "rev": "b6241a2f7c625d0b0bee8e203d78232d0a6535e9",
         "type": "github"
       },
       "original": {
@@ -99,7 +99,7 @@
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
-        "nixpkgs-unstable": "nixpkgs-unstable",
+        "nixpkgs-stable": "nixpkgs-stable",
         "plasma-manager": "plasma-manager",
         "sops-nix": "sops-nix"
       }
@@ -107,10 +107,10 @@
     "sops-nix": {
       "inputs": {
         "nixpkgs": [
-          "nixpkgs-unstable"
+          "nixpkgs"
         ],
         "nixpkgs-stable": [
-          "nixpkgs"
+          "nixpkgs-stable"
         ]
       },
       "locked": {
