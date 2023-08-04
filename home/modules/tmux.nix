@@ -18,6 +18,10 @@ in {
     extraConfig = ''
             			set -s default-terminal 'screen-256color'
 
+									unbind-key C-b
+									set-option -g prefix C-a
+									bind-key C-a send-prefix
+
             			bind -T copy-mode-vi v send -X begin-selection
                   bind -T copy-mode-vi C-v send -X rectangle-toggle
                   bind -T copy-mode-vi y send -X copy-selection-and-cancel
