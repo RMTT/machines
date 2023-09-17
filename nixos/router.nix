@@ -55,29 +55,6 @@ with lib; {
       "net.ipv6.conf.${wan}.autoconf" = 1;
     };
 
-    # disable dhcpcd in wan
-    networking.interfaces."${wan}".useDHCP = false;
-
-    # network interfaces
-    networking.bridges = {
-      # lan interfaces
-      lan = {
-        rstp = true;
-        interfaces = lan;
-      };
-    };
-
-    # bypass lan
-    networking.firewall.trustedInterfaces = [ "lan" ];
-    networking.interfaces.lan = {
-      name = "lan";
-      useDHCP = false;
-      ipv4.addresses = [{
-        address = lan_gateway;
-        prefixLength = lan_ip_prefix;
-      }];
-    };
-
     # enable PPPoE
     sops.secrets.pppoe_auth = {
       sopsFile = ../secrets/pppoe_auth;
@@ -86,10 +63,58 @@ with lib; {
     services.pppoe = {
       enable = true;
       ifname = "ppp0";
-      wanName = wan;
       authFile = config.sops.secrets.pppoe_auth.path;
-      ipv6RAIf = "lan";
     };
+
+    networking.useNetworkd = true;
+    networking.useDHCP = false;
+    networking.bridges = {
+      lan = { interfaces = lan; };
+      wan = { interfaces = [ wan ]; };
+    };
+    # bypass lan
+    networking.firewall.trustedInterfaces = [ "lan" ];
+    systemd.network = {
+      enable = true;
+      networks = {
+        wan = {
+          name = "wan";
+          networkConfig = { DHCP = "no"; };
+        };
+        lan = {
+          name = "lan";
+          networkConfig = {
+            Address = "${lan_gateway}/${toString lan_ip_prefix}";
+            LinkLocalAddressing = "ipv6";
+            IPv6AcceptRA = "no";
+            IPv6SendRA = "yes";
+            DHCPPrefixDelegation = "yes";
+          };
+          dhcpPrefixDelegationConfig = {
+            UplinkInterface = "ppp0";
+            SubnetId = 1;
+            Announce = "yes";
+          };
+        };
+        ppp0 = {
+          name = "ppp0";
+          networkConfig = {
+            DHCP = "ipv6";
+            IPv6AcceptRA = "no";
+            DHCPPrefixDelegation = "yes";
+          };
+          dhcpV6Config = { WithoutRA = "solicit"; UseDNS = false; };
+          routes = [{ routeConfig = { Gateway = "::"; }; }];
+          dhcpPrefixDelegationConfig = {
+            UplinkInterface = "ppp0";
+            SubnetId = 0;
+            Announce = "no";
+          };
+        };
+      };
+    };
+    services.resolved.extraConfig =
+      "DNS = 127.0.0.1 ::1\nDNSStubListener = false\n";
 
     # enable nat from lan
     networking.nat = {
@@ -119,10 +144,6 @@ with lib; {
             subnet_mask = lan_ip_mask;
             range_start = lan_ip_start;
             range_end = lan_ip_end;
-          };
-          dhcpv6 = {
-            ra_allow_slaac = false;
-            range_start = "2001::1";
           };
         };
       };

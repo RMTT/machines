@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, lib, ... }: {
   imports = [
     ./modules/secrets.nix
     ./modules/base.nix
@@ -8,7 +8,7 @@
     ./modules/services.nix
   ];
 
-  config = {
+  config = with lib; {
     # set filesystems mount
     fs.btrfs.device = "@data";
     fs.btrfs.volumes = {
@@ -18,7 +18,8 @@
       "/" = {
         fsType = "ext4";
         device = "@";
-        options = [ ];
+        options =
+          [ "noatime" "data=writeback" "barrier=0" "nobh" "errors=remount-ro" ];
       };
     };
     fs.swap.device = "@swap";
@@ -31,8 +32,6 @@
       "net.ipv6.route.max_size" = 409600;
     };
 
-    boot.kernelPackages = pkgs.linuxPackages_lts;
-
     # additional system packages
     environment.systemPackages = with pkgs; [ glxinfo ];
 
@@ -40,12 +39,29 @@
     services.xserver.videoDrivers = [ "amdgpu" ];
     nvidia.usage = "full";
 
+    # disable network manager
+    networking.networkmanager.enable = mkForce false;
+
+    # disable dhcpcd
+    networking.useDHCP = false;
+
     # networking related
     networking.firewall.allowedTCPPorts = [ 22 1443 ];
     networking.firewall.extraCommands = ''
       iptables -A nixos-fw -p tcp --source 192.168.6.0/24 -j nixos-fw-accept
       iptables -A nixos-fw -p udp --source 192.168.6.0/24 -j nixos-fw-accept
     '';
+
+    security.polkit.enable = true;
+    systemd.network.enable = true;
+    systemd.network.networks.wan = {
+      matchConfig.Name = "enp4s0";
+      networkConfig.DHCP = "yes";
+      dhcpV4Config = {
+        UseDNS = true;
+        UseRoutes = true;
+      };
+    };
 
     # enable ddns
     sops.secrets.cloudflare-ddns-domains = { };

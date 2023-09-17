@@ -48,7 +48,7 @@
                   system = "${system}";
                   config.allowUnfree = true;
                 };
-							home-manager.extraSpecialArgs.ownpkgs = self.packages.${system};
+              home-manager.extraSpecialArgs.ownpkgs = self.packages.${system};
 
               home-manager.extraSpecialArgs.plasma-manager =
                 inputs.plasma-manager.homeManagerModules.plasma-manager;
@@ -82,6 +82,6 @@
         formatter = pkgs.nixfmt;
         packages.apple-fonts = pkgs.callPackage ./packages/apple-fonts.nix { };
         packages.yacd-meta = pkgs.callPackage ./packages/yacd-meta.nix { };
-				packages.zoom-us = pkgs.callPackage ./packages/zoom-us.nix { };
+        packages.zoom-us = pkgs.callPackage ./packages/zoom-us.nix { };
       });
 }

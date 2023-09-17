@@ -11,11 +11,7 @@
   home.stateVersion = stateVersion;
 
   # additional packages
-  home.packages = with pkgs; [
-    exa
-    ownpkgs.zoom-us
-    jetbrains.idea-community
-  ];
+  home.packages = with pkgs; [ ownpkgs.zoom-us jetbrains.idea-community ];
 
   # configure git
   programs.git = {
@@ -47,10 +43,8 @@
     enableSshSupport = true;
     enableExtraSocket = true;
     enableZshIntegration = true;
-		pinentryFlavor = "gnome3";
-		extraConfig = ''
-			allow-loopback-pinentry
-		'';
+    pinentryFlavor = "gnome3";
+    extraConfig = "	allow-loopback-pinentry\n";
   };
 
   # Let Home Manager install and manage itself.

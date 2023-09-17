@@ -28,8 +28,8 @@
       gnome.gdm
       guake
       wl-clipboard
-			qgnomeplatform-qt6
-			qgnomeplatform
+      qgnomeplatform-qt6
+      qgnomeplatform
       adwaita-qt
       adwaita-qt6
     ];

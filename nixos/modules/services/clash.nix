@@ -76,11 +76,7 @@ in {
       mkIf cfg.ad.enable [ "CAP_NET_RAW" ];
     services.adguardhome = mkIf cfg.ad.enable {
       enable = true;
-      settings = {
-        bind_port = 2048;
-        dns = { port = 1053; };
-        dhcp = cfg.ad.dhcp;
-      };
+      settings = { dhcp = cfg.ad.dhcp; };
     };
 
   };

@@ -88,7 +88,7 @@ in with lib; {
 
     # enable bluetooth
     hardware.bluetooth.enable = true;
-    hardware.bluetooth.package = pkgs.bluezFull;
+    hardware.bluetooth.package = pkgs.bluez;
     hardware.bluetooth.settings = {
       General = {
         Experimental = true;

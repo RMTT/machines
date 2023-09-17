@@ -74,9 +74,8 @@ in with lib; {
     ];
 
     # timezone
-    time.timeZone = ":/etc/localtime";
+    time.timeZone = "Asia/Shanghai";
     time.hardwareClockInLocalTime = true;
-    environment.variables = { TZ = "Asia/Shanghai"; };
 
     # locale
     i18n.defaultLocale = "en_US.UTF-8";
@@ -99,7 +98,7 @@ in with lib; {
 
     # system packages
     environment.systemPackages = with pkgs; [
-      exa
+      eza
       parted
       bind
       htop
@@ -160,6 +159,9 @@ in with lib; {
 
     # enable docker
     virtualisation.docker.enable = true;
+    virtualisation.docker.daemon.settings = {
+      hosts = [ "tcp://127.0.0.1:2375" ];
+    };
 
     # cpu governor
     powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
@@ -189,7 +191,8 @@ in with lib; {
       extraGroups =
         [ "wheel" "networkmanager" "docker" "video" "libvirtd" "kvm" ];
       shell = pkgs.zsh;
-      passwordFile = mkIf cfg.mt.password config.sops.secrets.mt-pass.path;
+      hashedPasswordFile =
+        mkIf cfg.mt.password config.sops.secrets.mt-pass.path;
       openssh.authorizedKeys.keyFiles = [ ../../secrets/ssh_key.pub ];
     };
     environment.pathsToLink = [ "/share/zsh" ];

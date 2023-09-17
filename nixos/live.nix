@@ -13,7 +13,5 @@ with lib; {
     virtualisation.docker.enable = mkForce false;
 
     networking.useDHCP = mkForce true;
-
-    networking.dhcpcd.enable = true;
   };
 }

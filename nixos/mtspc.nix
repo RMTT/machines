@@ -1,4 +1,4 @@
-{ pkgs, config, ... }: rec {
+{ pkgs, ... }: rec {
   imports = [
     ./modules/secrets.nix
     ./modules/base.nix
@@ -52,8 +52,23 @@
 
   base.onedrive.enable = true;
 
-  # tmpfile for looking-glass
-  systemd.tmpfiles.rules = [ "f /dev/shm/looking-glass 0660 mt kvm -" ];
-
   services.cockpit.enable = true;
+  services.kea.dhcp4 = {
+    enable = true;
+    settings = {
+      interfaces-config = { interfaces = [ "enp38s0" ]; };
+      lease-database = {
+        name = "/var/lib/kea/dhcp4.leases";
+        persist = true;
+        type = "memfile";
+      };
+      rebind-timer = 2000;
+      renew-timer = 1000;
+      subnet4 = [{
+        pools = [{ pool = "192.168.6.10 - 192.168.6.240"; }];
+        subnet = "192.168.6.1/24";
+      }];
+      valid-lifetime = 4000;
+    };
+  };
 }

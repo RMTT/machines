@@ -5,7 +5,7 @@
 
   # zsh configuration
   programs.zsh.enable = true;
-  programs.zsh.shellAliases = { "ls" = "exa"; };
+  programs.zsh.shellAliases = { "ls" = "eza"; };
   programs.zsh.zplug.enable = true;
   programs.zsh.zplug.plugins = [
     { name = "zsh-users/zsh-autosuggestions"; }
