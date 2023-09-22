@@ -98,6 +98,7 @@ in with lib; {
 
     # system packages
     environment.systemPackages = with pkgs; [
+			smartmontools
       eza
       parted
       bind
@@ -161,6 +162,10 @@ in with lib; {
     virtualisation.docker.enable = true;
     virtualisation.docker.daemon.settings = {
       hosts = [ "tcp://127.0.0.1:2375" ];
+			experimental =  true;
+      ip6tables = true;
+			fixed-cidr-v6 = "fd00::/80";
+			ipv6 = true;
     };
 
     # cpu governor

@@ -49,26 +49,4 @@
 
   base.libvirt.enable = true;
   base.libvirt.qemuHook = ./scripts/vfio_auto_bind.sh;
-
-  base.onedrive.enable = true;
-
-  services.cockpit.enable = true;
-  services.kea.dhcp4 = {
-    enable = true;
-    settings = {
-      interfaces-config = { interfaces = [ "enp38s0" ]; };
-      lease-database = {
-        name = "/var/lib/kea/dhcp4.leases";
-        persist = true;
-        type = "memfile";
-      };
-      rebind-timer = 2000;
-      renew-timer = 1000;
-      subnet4 = [{
-        pools = [{ pool = "192.168.6.10 - 192.168.6.240"; }];
-        subnet = "192.168.6.1/24";
-      }];
-      valid-lifetime = 4000;
-    };
-  };
 }

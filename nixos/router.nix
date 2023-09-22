@@ -103,7 +103,10 @@ with lib; {
             IPv6AcceptRA = "no";
             DHCPPrefixDelegation = "yes";
           };
-          dhcpV6Config = { WithoutRA = "solicit"; UseDNS = false; };
+          dhcpV6Config = {
+            WithoutRA = "solicit";
+            UseDNS = false;
+          };
           routes = [{ routeConfig = { Gateway = "::"; }; }];
           dhcpPrefixDelegationConfig = {
             UplinkInterface = "ppp0";
@@ -113,8 +116,11 @@ with lib; {
         };
       };
     };
-    services.resolved.extraConfig =
-      "DNS = 127.0.0.1 ::1\nDNSStubListener = false\n";
+    services.resolved.extraConfig = ''
+      DNS = 127.0.0.1 ::1
+      DNSStubListener = false
+			DNSSEC = false
+    '';
 
     # enable nat from lan
     networking.nat = {
@@ -129,7 +135,7 @@ with lib; {
       format = "binary";
       mode = "644";
     };
-    services.clash = {
+    services.split_flow = {
       enable = true;
       config = config.sops.secrets.clash_config.path;
       package = pkgs.clash-meta;

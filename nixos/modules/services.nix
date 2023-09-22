@@ -1,7 +1,7 @@
 { ... }: {
   imports = [
     ./services/cloudflare-ddns.nix
-    ./services/clash.nix
+    ./services/split_flow.nix
     ./services/pppoe.nix
   ];
 }

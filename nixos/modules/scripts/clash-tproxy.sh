@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 ROUTE_MARK=6
+ROUTED_MARK=7
 TPROXY_PORT=7891
 
 set -ex
@@ -47,6 +48,7 @@ setup() {
     iptables -t mangle -A clash_local -d 240.0.0.0/4 -j RETURN
 
     # bypass clash
+    iptables -t mangle -A clash_local -m mark --mark $ROUTED_MARK -j RETURN
     iptables -t mangle -A clash_local -p tcp -m owner --uid-owner clash -j RETURN
     iptables -t mangle -A clash_local -p udp -m owner --uid-owner clash -j RETURN
 

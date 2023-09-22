@@ -62,21 +62,16 @@
         UseRoutes = true;
       };
     };
-
-    # enable ddns
-    sops.secrets.cloudflare-ddns-domains = { };
-    sops.secrets.cloudflare-zone-id = { };
-    sops.secrets.cloudflare-token = { };
-    services.cloudflare-ddns = {
-      enable = true;
-      domains = config.sops.secrets.cloudflare-ddns-domains.path;
-      interface = "enp4s0";
-      token = config.sops.secrets.cloudflare-token.path;
-      zone-id = config.sops.secrets.cloudflare-zone-id.path;
-    };
+    services.resolved.extraConfig = ''
+      DNSStubListener = false
+			LLMNR = false
+			MulticastDNS = false
+    '';
 
     # ssh disable password
     services.openssh.settings = { PasswordAuthentication = false; };
+
+		base.onedrive.enable = true;
 
     # enable home-manager for users
     home-manager.users.mt = {
