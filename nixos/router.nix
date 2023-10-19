@@ -117,9 +117,9 @@ with lib; {
       };
     };
     services.resolved.extraConfig = ''
-      DNS = 127.0.0.1 ::1
-      DNSStubListener = false
-			DNSSEC = false
+            DNS = 127.0.0.1 ::1 223.5.5.5 223.6.6.6
+            DNSStubListener = false
+      			DNSSEC = false
     '';
 
     # enable nat from lan
@@ -138,7 +138,6 @@ with lib; {
     services.split_flow = {
       enable = true;
       config = config.sops.secrets.clash_config.path;
-      package = pkgs.clash-meta;
 
       ad = {
         enable = true;

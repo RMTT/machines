@@ -1,4 +1,4 @@
-{ pkgs, stateVersion, ownpkgs, ... }: {
+{ pkgs, ... }: {
 
   imports = [
     ./modules/shell.nix
@@ -7,11 +7,6 @@
     ./modules/gnome.nix
     ./modules/tmux.nix
   ];
-
-  home.stateVersion = stateVersion;
-
-  # additional packages
-  home.packages = with pkgs; [ ownpkgs.zoom-us jetbrains.idea-community ];
 
   # configure git
   programs.git = {

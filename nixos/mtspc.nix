@@ -1,4 +1,4 @@
-{ pkgs, ... }: rec {
+{ pkgs, config, ... }: rec {
   imports = [
     ./modules/secrets.nix
     ./modules/base.nix
@@ -26,7 +26,10 @@
   hardware.cpu.amd.updateMicrocode = true;
 
   # additional system packages
-  environment.systemPackages = [ boot.kernelPackages.perf ];
+  environment.systemPackages = with pkgs; [
+    boot.kernelPackages.perf
+    moonlight-qt
+  ];
 
   services.xserver.videoDrivers = [ "amdgpu" ];
 
@@ -36,8 +39,6 @@
   # set gdm scale
   desktop.gdm.scale = 2;
   desktop.gdm.avatar = "mt";
-
-  home-manager.users.mt = import ../home/mt.nix;
 
   virtualisation.docker.storageDriver = "btrfs";
 
@@ -49,4 +50,10 @@
 
   base.libvirt.enable = true;
   base.libvirt.qemuHook = ./scripts/vfio_auto_bind.sh;
+
+  networking.networkmanager = { dns = "dnsmasq"; };
+  environment.etc = {
+    "NetworkManager/dnsmasq.d/vmware".text =
+      "	server=/vmware.com/10.117.0.38\n	server=/vmware.com/10.117.0.39\n";
+  };
 }

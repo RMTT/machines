@@ -1,4 +1,4 @@
-{ pkgs, config, ownpkgs, lib, ... }:
+{ pkgs, config, lib, ... }:
 let cfg = config.desktop;
 in with lib; {
   options = {
@@ -25,7 +25,10 @@ in with lib; {
     environment.systemPackages = with pkgs; [
       firefox
       telegram-desktop
+      nextcloud-client
       element-desktop
+      zotero
+      anki
       alacritty
       tela-icon-theme
       bitwarden
@@ -34,6 +37,7 @@ in with lib; {
       libreoffice-fresh
       obsidian
       virt-manager
+ownpkgs.zoom-us jetbrains.idea-community
     ];
 
     # fonts
@@ -44,7 +48,6 @@ in with lib; {
       sarasa-gothic
       joypixels
       noto-fonts-emoji
-      ownpkgs.apple-fonts
       (nerdfonts.override { fonts = [ "FiraCode" ]; })
     ];
     fonts.fontconfig = {
@@ -52,27 +55,15 @@ in with lib; {
       defaultFonts = {
         emoji = [ "JoyPixels" ];
         serif = [
-          "SF Pro Text"
           "Sarasa Mono Slab SC"
           "Sarasa Mono Slab TC"
           "Sarasa Mono Slab J"
           "Sarasa Mono Slab K"
         ];
-        sansSerif = [
-          "SF Pro"
-          "Sarasa UI SC"
-          "Sarasa UI TC"
-          "Sarasa UI J"
-          "Sarasa UI K"
-        ];
-        monospace = [
-          "SF Mono"
-          "FiraCode"
-          "Sarasa Mono SC"
-          "Sarasa Mono TC"
-          "Sarasa Mono J"
-          "Sarasa Mono K"
-        ];
+        sansSerif =
+          [ "Sarasa UI SC" "Sarasa UI TC" "Sarasa UI J" "Sarasa UI K" ];
+        monospace =
+          [ "Sarasa Mono SC" "Sarasa Mono TC" "Sarasa Mono J" "Sarasa Mono K" ];
       };
     };
 
@@ -99,19 +90,6 @@ in with lib; {
     # enable logitech
     hardware.logitech.wireless.enable = true;
     hardware.logitech.wireless.enableGraphical = true;
-
-    # set gdm scale
-    home-manager.users = mkIf (cfg.gdm.scale != 1) {
-      gdm = { lib, stateVersion, ... }: {
-        home.stateVersion = stateVersion;
-        home.file.".cache/.keep".enable = lib.mkForce false;
-        dconf.settings = {
-          "org/gnome/desktop/interface" = {
-            scaling-factor = lib.hm.gvariant.mkUint32 2;
-          };
-        };
-      };
-    };
 
     # set gdm avatar
     boot.postBootCommands = mkIf (cfg.gdm.avatar != "") (let

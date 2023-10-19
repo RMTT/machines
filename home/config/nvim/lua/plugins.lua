@@ -1,7 +1,6 @@
 ---- setting for neodev ----
 -- IMPORTANT: make sure to setup neodev BEFORE lspconfig
-require("neodev").setup({
-})
+require("neodev").setup({})
 ---- end ----
 --
 ---- setting for lualine ----
@@ -158,33 +157,37 @@ lspconfig.pyright.setup {
 }
 
 -- lua language server
-require 'lspconfig'.lua_ls.setup {
-    on_attach = on_attach,
-    capabilities = capabilities,
-    settings = {
+require'lspconfig'.lua_ls.setup {
+  on_init = function(client)
+    local path = client.workspace_folders[1].name
+    if not vim.loop.fs_stat(path..'/.luarc.json') and not vim.loop.fs_stat(path..'/.luarc.jsonc') then
+      client.config.settings = vim.tbl_deep_extend('force', client.config.settings, {
         Lua = {
-            runtime = {
-                -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-                version = 'LuaJIT',
-            },
-            format = {
-                enable = true
-            },
-            diagnostics = {
-                -- Get the language server to recognize the `vim` global
-                globals = { 'vim' },
-            },
-            workspace = {
-                -- Make the server aware of Neovim runtime files
-                library = vim.api.nvim_get_runtime_file("", true),
-            },
-            -- Do not send telemetry data containing a randomized but unique identifier
-            telemetry = {
-                enable = false,
-            },
-        },
-    },
+          runtime = {
+            -- Tell the language server which version of Lua you're using
+            -- (most likely LuaJIT in the case of Neovim)
+            version = 'LuaJIT'
+          },
+          -- Make the server aware of Neovim runtime files
+          workspace = {
+            checkThirdParty = false,
+            library = {
+              vim.env.VIMRUNTIME
+              -- "${3rd}/luv/library"
+              -- "${3rd}/busted/library",
+            }
+            -- or pull in all of 'runtimepath'. NOTE: this is a lot slower
+            -- library = vim.api.nvim_get_runtime_file("", true)
+          }
+        }
+      })
+
+      client.notify("workspace/didChangeConfiguration", { settings = client.config.settings })
+    end
+    return true
+  end
 }
+---- end ----
 
 ---- efm support ----
 -- efm is used to lint and format for some lsps which do not support such functions
@@ -194,11 +197,12 @@ lspconfig.efm.setup {
         rootMarkers = { 'pyproject.toml', '.git' },
         languages = {
             python = {
-                { formatCommand = 'yapf', formatStdin = true },
+                { formatCommand = 'black', formatStdin = true },
             }
         }
     },
-    filetypes = { 'python', }
+    filetypes = { 'python', },
+    single_file_support = true
 }
 ---- end ----
 
@@ -225,6 +229,14 @@ require 'lspconfig'.rust_analyzer.setup { on_attach = on_attach, capabilities = 
 require 'lspconfig'.nil_ls.setup {}
 --- end ----
 
+require'lspconfig'.bashls.setup{
+    settings = {
+        bashIde = {
+            globPattern = "*@(.sh|.inc|.bash|.command)",
+            shellcheckPath = "shellcheck"
+        }
+    }
+}
 ---- end for lsp server ----
 
 ---- nvim-tree setting ----

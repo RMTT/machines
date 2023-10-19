@@ -3,7 +3,7 @@ let
   configPath = ../config/nvim;
 
   fromGitHub = ref: rev: repo:
-    pkgs.vimUtils.buildVimPluginFrom2Nix {
+    pkgs.vimUtils.buildVimPlugin {
       pname = "${lib.strings.sanitizeDerivationName repo}";
       version = ref;
       src = builtins.fetchGit {
@@ -51,16 +51,24 @@ in {
       neodev-nvim
       (fromGitHub "main" "65bbc52c27b0cd4b29976fe03be73cc943357528"
         "s1n7ax/nvim-window-picker")
+      (fromGitHub "master" "e30e3de6c791a05cdc08f5346c9be56adf17f1fe"
+        "cappyzawa/starlark.vim")
+      (fromGitHub "master" "bafa8feb15066d58a9de9a52719906343fb3af73"
+        "carvel-dev/ytt.vim")
     ];
     # install luanguage servers
     extraPackages = with pkgs; [
-      sumneko-lua-language-server
+      lua-language-server
       nodePackages.pyright
       nil
       cmake-language-server
       tree-sitter
       clang-tools
       efm-langserver
+      gopls
+      black
+      shellcheck
+      nodePackages.bash-language-server
     ];
   };
 }

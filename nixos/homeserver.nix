@@ -4,7 +4,6 @@
     ./modules/base.nix
     ./modules/fs.nix
     ./modules/networking.nix
-    ./modules/nvidia.nix
     ./modules/services.nix
   ];
 
@@ -25,7 +24,7 @@
     fs.swap.device = "@swap";
     fs.boot.device = "@boot";
 
-    hardware.cpu.amd.updateMicrocode = true;
+    hardware.cpu.intel.updateMicrocode = true;
 
     boot.kernel.sysctl = {
       "vm.overcommit_memory" = 1;
@@ -36,8 +35,7 @@
     environment.systemPackages = with pkgs; [ glxinfo ];
 
     # gpu setting
-    services.xserver.videoDrivers = [ "amdgpu" ];
-    nvidia.usage = "full";
+    services.xserver.videoDrivers = [ "i915" ];
 
     # disable network manager
     networking.networkmanager.enable = mkForce false;
@@ -47,6 +45,7 @@
 
     # networking related
     networking.firewall.allowedTCPPorts = [ 22 1443 ];
+    # allow lan
     networking.firewall.extraCommands = ''
       iptables -A nixos-fw -p tcp --source 192.168.6.0/24 -j nixos-fw-accept
       iptables -A nixos-fw -p udp --source 192.168.6.0/24 -j nixos-fw-accept
@@ -55,7 +54,7 @@
     security.polkit.enable = true;
     systemd.network.enable = true;
     systemd.network.networks.wan = {
-      matchConfig.Name = "enp4s0";
+      matchConfig.Name = "enp2s0";
       networkConfig.DHCP = "yes";
       dhcpV4Config = {
         UseDNS = true;
@@ -63,20 +62,45 @@
       };
     };
     services.resolved.extraConfig = ''
-      DNSStubListener = false
-			LLMNR = false
-			MulticastDNS = false
+                  DNSStubListener = false
+            			LLMNR = false
+            			MulticastDNS = false
+      						DNSSEC = false
     '';
 
     # ssh disable password
     services.openssh.settings = { PasswordAuthentication = false; };
 
-		base.onedrive.enable = true;
+    base.onedrive.enable = true;
 
-    # enable home-manager for users
-    home-manager.users.mt = {
-      imports = [ ../home/modules/shell.nix ];
-      home.stateVersion = "23.05";
+    # set msmtp, for sending notification
+    sops.secrets.zoho-pass = { mode = "644"; };
+    programs.msmtp = {
+      enable = true;
+      accounts = {
+        default = {
+          auth = true;
+          tls = true;
+          tls_starttls = false;
+          from = "notify@rmtt.tech";
+          host = "smtppro.zoho.com";
+          port = 465;
+          user = "d.rong@outlook.com";
+          passwordeval =
+            "${pkgs.coreutils}/bin/cat ${config.sops.secrets.zoho-pass.path}";
+        };
+      };
+    };
+
+    # config smartd, monitor disk status
+    services.smartd = {
+      enable = true;
+      notifications.test = true;
+      notifications.mail = {
+        enable = true;
+        recipient = "d.rong@outlook.com";
+        sender = "notify@rmtt.tech";
+      };
     };
   };
 }

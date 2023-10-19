@@ -10,6 +10,7 @@
         "arcmenu@arcmenu.com"
         "workspace-indicator@gnome-shell-extensions.gcampax.github.com"
         "kimpanel@kde.org"
+        "gsconnect@andyholmes.github.io"
       ];
     };
 

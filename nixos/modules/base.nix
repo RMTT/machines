@@ -1,5 +1,5 @@
 # Base configuratioj
-{ pkgs, lib, config, inputs, ... }:
+{ pkgs, lib, config, ... }:
 let cfg = config.base;
 in with lib; {
   options.base = {
@@ -47,16 +47,6 @@ in with lib; {
 
     # enable flakes
     nix.settings.experimental-features = [ "nix-command" "flakes" ];
-    nix.registry = {
-      self.flake = inputs.self;
-      nixpkgs.flake = inputs.nixpkgs;
-
-      nixpkgs-stable.flake = inputs.nixpkgs-stable;
-
-      home-manager.flake = inputs.home-manager;
-
-      flake-utils.flake = inputs.flake-utils;
-    };
 
     # bootloader
     boot.loader.systemd-boot.enable = true;
@@ -98,7 +88,7 @@ in with lib; {
 
     # system packages
     environment.systemPackages = with pkgs; [
-			smartmontools
+      smartmontools
       eza
       parted
       bind
@@ -131,8 +121,8 @@ in with lib; {
       jq
       unzip
       zip
-      libcgroup
       bridge-utils
+      home-manager
     ];
 
     # set XDG viarables
@@ -160,13 +150,6 @@ in with lib; {
 
     # enable docker
     virtualisation.docker.enable = true;
-    virtualisation.docker.daemon.settings = {
-      hosts = [ "tcp://127.0.0.1:2375" ];
-			experimental =  true;
-      ip6tables = true;
-			fixed-cidr-v6 = "fd00::/80";
-			ipv6 = true;
-    };
 
     # cpu governor
     powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
@@ -251,10 +234,5 @@ in with lib; {
 
     # enable onedrive
     services.onedrive.enable = cfg.onedrive.enable;
-
-    # enable home-manager for users
-    home-manager.useGlobalPkgs = true;
-    home-manager.useUserPackages = true;
   };
 }
-

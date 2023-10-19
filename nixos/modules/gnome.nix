@@ -33,6 +33,10 @@
       adwaita-qt
       adwaita-qt6
     ];
+    programs.kdeconnect = {
+      package = pkgs.gnomeExtensions.gsconnect;
+      enable = true;
+    };
 
     environment.gnome.excludePackages = (with pkgs.gnome; [
       gnome-terminal

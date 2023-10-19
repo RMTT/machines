@@ -54,8 +54,5 @@
   # enable v2ray
   services.v2raya.enable = true;
 
-  # enable home-manager for users
-  home-manager.users.mt = { imports = [ ../home/mt.nix ]; };
-
   virtualisation.docker.storageDriver = "btrfs";
 }
