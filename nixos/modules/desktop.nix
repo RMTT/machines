@@ -37,7 +37,8 @@ in with lib; {
       libreoffice-fresh
       obsidian
       virt-manager
-ownpkgs.zoom-us jetbrains.idea-community
+      ownpkgs.zoom-us
+      jetbrains.idea-community
     ];
 
     # fonts

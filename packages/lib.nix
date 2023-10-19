@@ -15,7 +15,7 @@
         ../nixos/${name}.nix
         nur.nixosModules.nur
         sops-nix.nixosModules.sops
-				home-manager.nixosModules.home-manager
+        home-manager.nixosModules.home-manager
         ({ config, pkgs, ... }: {
           nixpkgs.overlays = [ overlay-stable overlay-ownpkgs ];
         })
@@ -39,9 +39,9 @@
       extraSpecialArgs.sops = sops-nix.homeManagerModules.sops;
       modules = [
         {
-					home.stateVersion = stateVersion;
-					home.username = name;
-					home.homeDirectory = "/home/${name}";
+          home.stateVersion = stateVersion;
+          home.username = name;
+          home.homeDirectory = "/home/${name}";
         }
         ../home/${name}.nix
       ];
