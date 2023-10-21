@@ -36,10 +36,6 @@
   # enable v2ray
   services.v2raya.enable = true;
 
-  # set gdm scale
-  desktop.gdm.scale = 2;
-  desktop.gdm.avatar = "mt";
-
   virtualisation.docker.storageDriver = "btrfs";
 
   # nvidia setting

@@ -42,6 +42,7 @@
           home.stateVersion = stateVersion;
           home.username = name;
           home.homeDirectory = "/home/${name}";
+					programs.home-manager.enable = true;
         }
         ../home/${name}.nix
       ];

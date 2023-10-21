@@ -1,7 +1,5 @@
 { pkgs, lib, ... }:
 let
-  configPath = ../config/nvim;
-
   fromGitHub = ref: rev: repo:
     pkgs.vimUtils.buildVimPlugin {
       pname = "${lib.strings.sanitizeDerivationName repo}";
@@ -13,17 +11,17 @@ let
       };
     };
 in {
-  xdg.configFile.nvim.source = configPath;
-  xdg.configFile.nvim.recursive = true;
-
   programs.neovim = {
     enable = true;
     defaultEditor = true;
     vimAlias = true;
     viAlias = true;
-    package = pkgs.neovim-unwrapped;
     withPython3 = true;
     withNodeJs = true;
+		extraLuaConfig = ''
+			package.path = package.path .. ";${../config/nvim}/lua/?.lua"
+			dofile("${../config/nvim}/init.lua")
+		'';
     plugins = with pkgs.vimPlugins; [
       nvim-lspconfig
       nvim-web-devicons
@@ -32,16 +30,17 @@ in {
       tokyonight-nvim
       plenary-nvim
       telescope-nvim
+      nvim-cmp
+      cmp_luasnip
       cmp-nvim-lsp
       cmp-buffer
       cmp-path
       cmp-cmdline
-      nvim-cmp
+			cmp-cmdline-history
       luasnip
-      cmp_luasnip
       nvim-tree-lua
       barbar-nvim
-      FTerm-nvim
+			toggleterm-nvim
       vim-fugitive
       editorconfig-vim
       gitsigns-nvim
@@ -69,6 +68,7 @@ in {
       black
       shellcheck
       nodePackages.bash-language-server
+			shfmt
     ];
   };
 }

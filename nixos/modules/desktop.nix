@@ -2,17 +2,6 @@
 let cfg = config.desktop;
 in with lib; {
   options = {
-    desktop.gdm.scale = lib.mkOption {
-      type = types.int;
-      default = 1;
-      description = "GDM scale factor";
-    };
-
-    desktop.gdm.avatar = lib.mkOption {
-      type = types.str;
-      default = "";
-      description = "user which need set $HOME/.face to GDM avatar";
-    };
   };
 
   config = {
@@ -37,7 +26,7 @@ in with lib; {
       libreoffice-fresh
       obsidian
       virt-manager
-      ownpkgs.zoom-us
+      zoom-us
       jetbrains.idea-community
     ];
 
@@ -91,16 +80,5 @@ in with lib; {
     # enable logitech
     hardware.logitech.wireless.enable = true;
     hardware.logitech.wireless.enableGraphical = true;
-
-    # set gdm avatar
-    boot.postBootCommands = mkIf (cfg.gdm.avatar != "") (let
-      gdm_user_conf = ''
-        [User]
-        Icon=/home/${cfg.gdm.avatar}/.face
-        SystemAccount=false
-      '';
-    in ''
-      echo '${gdm_user_conf}' > /var/lib/AccountsService/users/${cfg.gdm.avatar}
-    '');
   };
 }
