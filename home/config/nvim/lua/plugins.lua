@@ -310,7 +310,7 @@ end
 
 vim.api.nvim_set_keymap("n", "<A-g>", "<cmd>lua Gitui_toggle()<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<A-i>", "<cmd>lua MainTerm_toggle()<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("t", "<space><Esc>", "<C-\\><C-n>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("t", "<C-q>", "<C-\\><C-n>", { noremap = true, silent = true })
 ---- end ----
 
 ---- setting for gitsign ----

@@ -26,6 +26,9 @@ vim.o.updatecount = 100
 vim.o.directory = vim.fn.stdpath('data') .. '/swap'
 
 vim.o.termguicolors = true
+
+vim.g.mapleader = ' '
+
 -- make sure the dir is exist
 utility.mkdir(vim.o.backupdir)
 utility.mkdir(vim.o.undodir)
