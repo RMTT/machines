@@ -20,13 +20,13 @@
       # gnome related
       gnomeExtensions.appindicator
       gnomeExtensions.arcmenu
+      gnomeExtensions.quake-mode
       gnome.gnome-tweaks
       gnomeExtensions.kimpanel
       gnome.gnome-themes-extra
       gnome.adwaita-icon-theme
       gnome.dconf-editor
       gnome.gdm
-      guake
       wl-clipboard
       qgnomeplatform-qt6
       qgnomeplatform
@@ -49,7 +49,6 @@
     ]);
 
     environment.sessionVariables = {
-      GUAKE_ENABLE_WAYLAND = "1";
       XCURSOR_THEME = "Adwaita";
       QT_QPA_PLATFORM = "Wayland";
     };

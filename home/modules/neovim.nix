@@ -18,10 +18,9 @@ in {
     viAlias = true;
     withPython3 = true;
     withNodeJs = true;
-		extraLuaConfig = ''
-			package.path = package.path .. ";${../config/nvim}/lua/?.lua"
-			dofile("${../config/nvim}/init.lua")
-		'';
+    extraLuaConfig = "	package.path = package.path .. \";${
+         ../config/nvim
+       }/lua/?.lua\"\n	dofile(\"${../config/nvim}/init.lua\")\n";
     plugins = with pkgs.vimPlugins; [
       nvim-lspconfig
       nvim-web-devicons
@@ -36,11 +35,11 @@ in {
       cmp-buffer
       cmp-path
       cmp-cmdline
-			cmp-cmdline-history
+      cmp-cmdline-history
       luasnip
       nvim-tree-lua
       barbar-nvim
-			toggleterm-nvim
+      toggleterm-nvim
       vim-fugitive
       editorconfig-vim
       gitsigns-nvim
@@ -68,7 +67,7 @@ in {
       black
       shellcheck
       nodePackages.bash-language-server
-			shfmt
+      shfmt
     ];
   };
 }

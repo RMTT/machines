@@ -37,6 +37,9 @@
       character.vimcmd_replace_one_symbol = "[<](bold purple)";
       character.vimcmd_replace_symbol = "[<](bold purple)";
       character.vimcmd_visual_symbol = "[<](bold yellow)";
+
+      package.disabled = true;
+      gcloud.disabled = true;
     };
   };
 }

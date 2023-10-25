@@ -11,6 +11,7 @@
         "workspace-indicator@gnome-shell-extensions.gcampax.github.com"
         "kimpanel@kde.org"
         "gsconnect@andyholmes.github.io"
+        "quake-mode@repsac-by.github.com"
       ];
     };
 
@@ -41,13 +42,6 @@
         "binding" = "<Super>Return";
         "command" = "env XCURSOR_THEME=Adwaita alacritty";
         "name" = "alacritty";
-      };
-
-    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1" =
-      {
-        "binding" = "<Super>grave";
-        "command" = "guake-toggle";
-        "name" = "dropdown";
       };
 
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2" =
@@ -100,32 +94,39 @@
 
     "org/gnome/desktop/wm/preferences" = {
       num-workspaces = 4;
-      titlebar-font = "SF Pro Display 11";
+      titlebar-font = "Sarasa UI SC 10";
       workspace-names = [ "Daily" "Browser" "Code" "Fun" ];
     };
 
-    # guake related
-    "apps/guake/keybindings/global" = { show-hide = "<Super>grave"; };
-    "apps/guake/style/font" = {
-      palette-name = "One Dark";
-      style = "FiraCode Nerd Font Mono weight=450 10";
+    # quake-mode related
+    "com/github/repsac-by/quake-mode" = {
+      quake-mode-always-on-top = false;
+      quake-mode-focusout = true;
+      quake-mode-height = 60;
+      quake-mode-hide-from-overview = true;
+      quake-mode-tray = true;
+      quake-mode-width = 100;
     };
-    "apps/guake/style/background" = { transparency = 96; };
+
+    "com/github/repsac-by/quake-mode/accelerators" = {
+      quake-mode-accelerator-1 = [ "<Super>grave" ];
+    };
+
+    "com/github/repsac-by/quake-mode/apps" = { app-1 = "Alacritty.desktop"; };
 
     # interface settings
     "org/gnome/desktop/interface" = {
       clock-show-date = true;
       color-scheme = "prefer-dark";
       cursor-theme = "Adwaita";
-      document-font-name = "SF Pro Text 11";
+      document-font-name = "Sarasa Fixed SC 11";
       font-antialiasing = "rgba";
       font-hinting = "full";
-      font-name = "SF Pro Rounded 10";
+      font-name = "Sarasa UI SC 10";
       gtk-theme = "Adwaita-dark";
       icon-theme = "Tela-blue-dark";
-      monospace-font-name = "SF Mono 10";
+      monospace-font-name = "Sarasa Mono SC 10";
     };
 
   };
-
 }

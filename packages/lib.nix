@@ -1,4 +1,16 @@
-{ self, nixpkgs, nixpkgs-stable, flake-utils, home-manager, nur, sops-nix }: {
+{ self, nixpkgs, nixpkgs-stable, flake-utils, home-manager, nur, sops-nix }:
+let
+  overlay-libvterm = final: prev: {
+    libvterm-neovim = prev.libvterm-neovim.overrideAttrs
+      (finalAttrs: oldAttrs: {
+        src = prev.fetchgit {
+          url = "https://github.com/RMTT/libvterm";
+          rev = "21f196ed7e0d3cb4d6869cf5e0f04386f2e7ba2d";
+					hash = "sha256-nL9WCiyzAhPvjCU9TXjIMOfLEZjN9DBXOSIvp4cFvvY=";
+        };
+      });
+  };
+in {
   mkSystem = name: system: nixosVersion: extraModules:
     let
       overlay-stable = final: prev: {
@@ -9,6 +21,7 @@
       };
 
       overlay-ownpkgs = final: prev: { ownpkgs = self.packages.${system}; };
+
     in nixpkgs.lib.nixosSystem {
       inherit system;
       modules = [
@@ -39,10 +52,11 @@
       extraSpecialArgs.sops = sops-nix.homeManagerModules.sops;
       modules = [
         {
+          nixpkgs.overlays = [ overlay-libvterm ];
           home.stateVersion = stateVersion;
           home.username = name;
           home.homeDirectory = "/home/${name}";
-					programs.home-manager.enable = true;
+          programs.home-manager.enable = true;
         }
         ../home/${name}.nix
       ];

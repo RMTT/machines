@@ -1,8 +1,7 @@
 { pkgs, config, lib, ... }:
 let cfg = config.desktop;
 in with lib; {
-  options = {
-  };
+  options = { };
 
   config = {
     security.rtkit.enable = true;
