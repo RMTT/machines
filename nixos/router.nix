@@ -24,7 +24,8 @@ with lib; {
       "/" = {
         fsType = "ext4";
         device = "@";
-        options = [ ];
+        options =
+          [ "noatime" "data=writeback" "barrier=0" "nobh" "errors=remount-ro" ];
       };
     };
     fs.boot.device = "@boot";

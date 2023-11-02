@@ -1,4 +1,5 @@
-{ self, nixpkgs, nixpkgs-stable, flake-utils, home-manager, nur, sops-nix }:
+{ self, nixpkgs, nixpkgs-stable, flake-utils, home-manager, nur, sops-nix, disko
+}:
 let
   overlay-libvterm = final: prev: {
     libvterm-neovim = prev.libvterm-neovim.overrideAttrs
@@ -29,6 +30,7 @@ in {
         nur.nixosModules.nur
         sops-nix.nixosModules.sops
         home-manager.nixosModules.home-manager
+        disko.nixosModules.disko
         ({ config, pkgs, ... }: {
           nixpkgs.overlays = [ overlay-stable overlay-ownpkgs ];
         })

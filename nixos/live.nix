@@ -6,9 +6,6 @@ with lib; {
   config = {
     base.gl.enable = false;
 
-    base.mt.password = false;
-    users.users.mt.password = "nixos";
-
     # disable docker
     virtualisation.docker.enable = mkForce false;
 

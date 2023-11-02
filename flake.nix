@@ -15,6 +15,9 @@
     sops-nix.inputs.nixpkgs-stable.follows = "nixpkgs-stable";
 
     nur.url = "github:nix-community/NUR";
+
+    disko.url = "github:nix-community/disko";
+    disko.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = { self, nixpkgs, nixpkgs-stable, flake-utils, home-manager, nur

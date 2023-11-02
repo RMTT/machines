@@ -20,6 +20,7 @@ in with lib; {
         libvirt qemu hook, reference: https://www.libvirt.org/hooks.html
       '';
     };
+
     gl.enable = mkOption {
       type = types.bool;
       default = true;
@@ -179,18 +180,19 @@ in with lib; {
     # main user
     security.sudo = { wheelNeedsPassword = false; };
     sops.secrets.mt-pass = mkIf cfg.mt.password { neededForUsers = true; };
+    users.mutableUsers = true;
     users.users.mt = {
       isNormalUser = true;
       home = "/home/mt";
       description = "mt";
       extraGroups =
         [ "wheel" "networkmanager" "docker" "video" "libvirtd" "kvm" ];
-      shell = pkgs.zsh;
       hashedPasswordFile =
         mkIf cfg.mt.password config.sops.secrets.mt-pass.path;
       openssh.authorizedKeys.keyFiles = [ ../../secrets/ssh_key.pub ];
     };
-    environment.pathsToLink = [ "/share/zsh" ];
+    users.users.root.openssh.authorizedKeys.keyFiles =
+      [ ../../secrets/ssh_key.pub ];
 
     # configure tmux
     programs.tmux = {
