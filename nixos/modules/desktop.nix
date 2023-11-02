@@ -17,7 +17,6 @@ in with lib; {
       element-desktop
       zotero
       anki
-      alacritty
       tela-icon-theme
       bitwarden
       yubikey-manager-qt

@@ -33,8 +33,6 @@ in {
 
   config = mkIf cfg.enable {
     networking.firewall.trustedInterfaces = [ "Meta" ];
-    networking.firewall.extraCommands =
-      "iptables -t mangle -I nixos-fw-rpfilter -i Meta -j RETURN";
     systemd.services.clash = {
       description = "clash service";
       wantedBy = [ "multi-user.target" ];

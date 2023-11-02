@@ -5,8 +5,8 @@ let
       (finalAttrs: oldAttrs: {
         src = prev.fetchgit {
           url = "https://github.com/RMTT/libvterm";
-          rev = "21f196ed7e0d3cb4d6869cf5e0f04386f2e7ba2d";
-					hash = "sha256-nL9WCiyzAhPvjCU9TXjIMOfLEZjN9DBXOSIvp4cFvvY=";
+          rev = "f85948154c22549d126a2ef3ebdf09952c6b237c";
+          hash = "sha256-iC6LC5B7ZcRIFwTaHxSq9Ax59NBpEfS0LwMEB1b+fvw=";
         };
       });
   };

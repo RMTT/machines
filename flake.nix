@@ -35,6 +35,8 @@
 
         router = lib.mkSystem "router" system.x86_64-linux stateVersion [ ];
 
+        vps-hk = lib.mkSystem "vps-hk" system.x86_64-linux stateVersion [ ];
+
         live = lib.mkSystem "live" system.x86_64-linux stateVersion [ ];
       };
 

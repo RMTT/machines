@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ pkgs, lib, ... }:
 with lib; {
   imports =
     [ ./modules/secrets.nix ./modules/base.nix ./modules/networking.nix ];
@@ -13,5 +13,7 @@ with lib; {
     virtualisation.docker.enable = mkForce false;
 
     networking.useDHCP = mkForce true;
+
+    environment.systemPackages = with pkgs; [ nixos-install-tools ];
   };
 }

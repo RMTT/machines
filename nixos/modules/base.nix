@@ -37,6 +37,7 @@ in with lib; {
     # enable unfree pkgs
     nixpkgs.config.allowUnfree = true;
     nixpkgs.config.joypixels.acceptLicense = true;
+    nixpkgs.config.permittedInsecurePackages = [ "zotero-6.0.27" ];
 
     # binary cache
     nix.settings.substituters =
@@ -146,7 +147,11 @@ in with lib; {
     };
 
     # enable ssh
-    services.openssh.enable = true;
+    services.openssh = {
+      enable = true;
+      settings = { PasswordAuthentication = false; };
+      openFirewall = false;
+    };
 
     # enable docker
     virtualisation.docker.enable = true;
@@ -166,7 +171,9 @@ in with lib; {
       enable = true;
       enableCompletion = true;
       enableGlobalCompInit = false;
-      shellInit = "	bindkey -e\n";
+      shellInit = ''
+        bindkey -e
+      '';
     };
 
     # main user

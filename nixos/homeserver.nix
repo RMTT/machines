@@ -31,9 +31,6 @@
       "net.ipv6.route.max_size" = 409600;
     };
 
-    # additional system packages
-    environment.systemPackages = with pkgs; [ glxinfo ];
-
     # gpu setting
     services.xserver.videoDrivers = [ "i915" ];
 
@@ -44,7 +41,7 @@
     networking.useDHCP = false;
 
     # networking related
-    networking.firewall.allowedTCPPorts = [ 22 1443 ];
+    networking.firewall.allowedTCPPorts = [ 1443 ];
     # allow lan
     networking.firewall.extraCommands = ''
       iptables -A nixos-fw -p tcp --source 192.168.6.0/24 -j nixos-fw-accept
@@ -67,9 +64,6 @@
             			MulticastDNS = false
       						DNSSEC = false
     '';
-
-    # ssh disable password
-    services.openssh.settings = { PasswordAuthentication = false; };
 
     base.onedrive.enable = true;
 

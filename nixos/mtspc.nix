@@ -45,11 +45,16 @@
   boot.kernelModules = [ "kvm_amd" ];
 
   base.libvirt.enable = true;
+  networking.firewall.trustedInterfaces = [ "virbr0" ];
   base.libvirt.qemuHook = ./scripts/vfio_auto_bind.sh;
 
   networking.networkmanager = { dns = "dnsmasq"; };
   environment.etc = {
     "NetworkManager/dnsmasq.d/vmware".text =
       "	server=/vmware.com/10.117.0.38\n	server=/vmware.com/10.117.0.39\n";
+  };
+
+  virtualisation.docker.daemon.settings = {
+    exec-opts = [ "native.cgroupdriver=cgroupfs" ];
   };
 }
