@@ -1,11 +1,11 @@
 { pkgs, lib, config, ... }:
 with lib; {
   imports = [
-    ./modules/secrets.nix
-    ./modules/services.nix
-    ./modules/base.nix
-    ./modules/fs.nix
-    ./modules/networking.nix
+    ../modules/secrets.nix
+    ../modules/services.nix
+    ../modules/base.nix
+    ../modules/fs.nix
+    ../modules/networking.nix
   ];
 
   config = let
@@ -23,17 +23,14 @@ with lib; {
     fs.normal.volumes = {
       "/" = {
         fsType = "ext4";
-        device = "@";
+        label = "@";
         options =
           [ "noatime" "data=writeback" "barrier=0" "nobh" "errors=remount-ro" ];
       };
     };
-    fs.boot.device = "@boot";
+    fs.boot.label = "@boot";
 
     hardware.cpu.intel.updateMicrocode = true;
-
-    # disable network manager
-    networking.networkmanager.enable = mkForce false;
 
     # disable docker
     virtualisation.docker.enable = mkForce false;
@@ -58,7 +55,7 @@ with lib; {
 
     # enable PPPoE
     sops.secrets.pppoe_auth = {
-      sopsFile = ../secrets/pppoe_auth;
+      sopsFile = ../../secrets/pppoe_auth;
       format = "binary";
     };
     services.pppoe = {
@@ -68,7 +65,6 @@ with lib; {
     };
 
     networking.useNetworkd = true;
-    networking.useDHCP = false;
     networking.bridges = {
       lan = { interfaces = lan; };
       wan = { interfaces = [ wan ]; };
@@ -76,7 +72,6 @@ with lib; {
     # bypass lan
     networking.firewall.trustedInterfaces = [ "lan" ];
     systemd.network = {
-      enable = true;
       networks = {
         wan = {
           name = "wan";
@@ -84,8 +79,10 @@ with lib; {
         };
         lan = {
           name = "lan";
+          linkConfig = { ActivationPolicy = "always-up"; };
           networkConfig = {
             Address = "${lan_gateway}/${toString lan_ip_prefix}";
+            ConfigureWithoutCarrier = true;
             LinkLocalAddressing = "ipv6";
             IPv6AcceptRA = "no";
             IPv6SendRA = "yes";
@@ -132,7 +129,7 @@ with lib; {
 
     # enable clash and adguardhome (for DNS and DHCP)
     sops.secrets.clash_config = {
-      sopsFile = ../secrets/clash_config;
+      sopsFile = ../../secrets/clash_config;
       format = "binary";
       mode = "644";
     };
@@ -154,6 +151,37 @@ with lib; {
         };
       };
     };
+    sops.secrets.wg-private = {
+      owner = "systemd-network";
+      mode = "0400";
+      sopsFile = ./keys/wg-private.key;
+      format = "binary";
+    };
 
+    systemd.network.netdevs."wg0" = {
+      netdevConfig = {
+        Kind = "wireguard";
+        Name = "wg0";
+      };
+      wireguardConfig = {
+        ListenPort = 12345;
+        PrivateKeyFile = config.sops.secrets.wg-private.path;
+      };
+      wireguardPeers = [{
+        wireguardPeerConfig = {
+          AllowedIPs = [ "172.31.1.0/24" ];
+          Endpoint = "portal:30005";
+          PersistentKeepalive = 15;
+          PublicKey = "nzARKMdkzfy1lMN9xk10yiMfAMzB889NROSa5jvDUBo=";
+        };
+      }];
+    };
+    systemd.network.networks."wg0" = {
+      matchConfig = { Name = "wg0"; };
+      networkConfig = { Address = "172.31.1.3/24"; };
+    };
+
+    networking.nftables.ruleset =
+      "	table ip nixos-nat {\n		chain post {\n			ip saddr != 172.31.1.0/24 oifname \"wg0\" masquerade\n		}\n	}\n";
   };
 }

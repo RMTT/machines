@@ -1,28 +1,29 @@
 { config, pkgs, lib, ... }: {
   imports = [
-    ./modules/secrets.nix
-    ./modules/base.nix
-    ./modules/fs.nix
-    ./modules/networking.nix
-    ./modules/services.nix
+    ../modules/secrets.nix
+    ../modules/base.nix
+    ../modules/fs.nix
+    ../modules/networking.nix
+    ../modules/services.nix
+    ../modules/docker.nix
   ];
 
   config = with lib; {
     # set filesystems mount
-    fs.btrfs.device = "@data";
+    fs.btrfs.label = "@data";
     fs.btrfs.volumes = {
       "/data" = [ "subvol=/" "rw" "relatime" "ssd" "space_cache=v2" ];
     };
     fs.normal.volumes = {
       "/" = {
         fsType = "ext4";
-        device = "@";
+        label = "@";
         options =
           [ "noatime" "data=writeback" "barrier=0" "nobh" "errors=remount-ro" ];
       };
     };
-    fs.swap.device = "@swap";
-    fs.boot.device = "@boot";
+    fs.swap.label = "@swap";
+    fs.boot.label = "@boot";
 
     hardware.cpu.intel.updateMicrocode = true;
 
@@ -31,33 +32,16 @@
       "net.ipv6.route.max_size" = 409600;
     };
 
+    virtualisation.docker.portainer.enable = true;
+
     # gpu setting
     services.xserver.videoDrivers = [ "i915" ];
 
-    # disable network manager
-    networking.networkmanager.enable = mkForce false;
-
-    # disable dhcpcd
-    networking.useDHCP = false;
+    networking.useNetworkd = true;
 
     # networking related
     networking.firewall.allowedTCPPorts = [ 1443 ];
-    # allow lan
-    networking.firewall.extraCommands = ''
-      iptables -A nixos-fw -p tcp --source 192.168.6.0/24 -j nixos-fw-accept
-      iptables -A nixos-fw -p udp --source 192.168.6.0/24 -j nixos-fw-accept
-    '';
 
-    security.polkit.enable = true;
-    systemd.network.enable = true;
-    systemd.network.networks.wan = {
-      matchConfig.Name = "enp2s0";
-      networkConfig.DHCP = "yes";
-      dhcpV4Config = {
-        UseDNS = true;
-        UseRoutes = true;
-      };
-    };
     services.resolved.extraConfig = ''
                   DNSStubListener = false
             			LLMNR = false
@@ -97,4 +81,5 @@
       };
     };
   };
+
 }

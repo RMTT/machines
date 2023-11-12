@@ -1,5 +1,5 @@
 { self, nixpkgs, nixpkgs-stable, flake-utils, home-manager, nur, sops-nix, disko
-}:
+}@inputs:
 let
   overlay-libvterm = final: prev: {
     libvterm-neovim = prev.libvterm-neovim.overrideAttrs
@@ -26,7 +26,7 @@ in {
     in nixpkgs.lib.nixosSystem {
       inherit system;
       modules = [
-        ../nixos/${name}.nix
+        ../nixos/${name}/default.nix
         nur.nixosModules.nur
         sops-nix.nixosModules.sops
         home-manager.nixosModules.home-manager
@@ -37,12 +37,7 @@ in {
         { system.stateVersion = nixosVersion; }
         { networking.hostName = name; }
         {
-          nix.registry = {
-            self.flake = self;
-            nixpkgs.flake = nixpkgs;
-
-            nixpkgs-stable.flake = nixpkgs-stable;
-          };
+          nix.registry = builtins.mapAttrs (name: value: { flake = value; }) inputs;
         }
 
       ] ++ extraModules;
