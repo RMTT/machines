@@ -1,10 +1,39 @@
 { config, lib, ... }:
 with lib;
-let cfg = config.fs;
+let
+  cfg = config.fs;
+  volumesMap = with lib.types; {
+    options = {
+      fsType = mkOption {
+        type = str;
+        default = "";
+      };
+      device = mkOption {
+        type = str;
+        default = "";
+      };
+      label = mkOption {
+        type = str;
+        default = "";
+      };
+      options = mkOption {
+        type = listOf str;
+        default = [ ];
+      };
+    };
+  };
 in {
   options.fs = {
     btrfs = {
       device = mkOption {
+        type = types.str;
+        default = "";
+        description = ''
+          Parition uuid for btrfs.
+        '';
+      };
+
+      label = mkOption {
         type = types.str;
         default = "";
         description = ''
@@ -26,66 +55,93 @@ in {
     };
 
     normal.volumes = mkOption {
-      type = types.attrs;
+      type = types.attrsOf (types.submodule volumesMap);
       default = { };
       example = {
         "/" = {
           fsType = "ext4";
-          device = "label";
-          options = options;
+          device = "uuid";
+          label = "label";
+          options = [ ];
         };
       };
+
       description = ''
         mount filesystems.
       '';
     };
 
-    swap.device = mkOption {
-      type = types.str;
-      default = "";
-      description = ''
-        label of swap device
-      '';
+    swap = {
+      device = mkOption {
+        type = types.str;
+        default = "";
+        description = ''
+          uuid of swap device
+        '';
+      };
+      label = mkOption {
+        type = types.str;
+        default = "";
+        description = ''
+          label of swap device
+        '';
+      };
     };
 
-    boot.device = mkOption {
-      type = types.str;
-      default = "";
-      description = ''
-        Partition label of boot partition.
-      '';
+    boot = {
+      device = mkOption {
+        type = types.str;
+        default = "";
+        description = ''
+          Partition uuid of boot partition.
+        '';
+      };
+      label = mkOption {
+        type = types.str;
+        default = "";
+        description = ''
+          Partition label of boot partition.
+        '';
+      };
     };
 
   };
 
   config = let
-    btrfs = if cfg.btrfs.device != "" then
-      mapAttrs (_: options: {
-        device = "/dev/disk/by-label/${cfg.btrfs.device}";
+    btrfs = if (cfg.btrfs.device != "" || cfg.btrfs.label != "") then
+      (mapAttrs (_: options: {
+        device = mkIf (cfg.btrfs.device != "")
+          "/dev/disk/by-label/${cfg.btrfs.device}";
+        label = mkIf (cfg.btrfs.label != "") cfg.btrfs.label;
         fsType = "btrfs";
         options = options;
-      }) cfg.btrfs.volumes
+      }) cfg.btrfs.volumes)
     else
       { };
 
     others = mapAttrs (_: params: {
       fsType = params.fsType;
-      device = "/dev/disk/by-label/${params.device}";
+      label = mkIf (params.label != "") params.label;
+      device = mkIf (params.device != "") "/dev/disk/by-uuid/${params.device}";
       options = mkIf (params.options != [ ]) params.options;
     }) cfg.normal.volumes;
 
-    boot = if cfg.boot.device != "" then {
+    boot = if (cfg.boot.device != "" || cfg.boot.label != "") then {
       "/boot" = {
-        device = "/dev/disk/by-label/${cfg.boot.device}";
+        device =
+          mkIf (cfg.boot.device != "") "/dev/disk/by-label/${cfg.boot.device}";
+        label = mkIf (cfg.boot.label != "") cfg.boot.label;
         fsType = "vfat";
       };
     } else
       { };
   in {
-    fileSystems = (btrfs // others // boot);
+    fileSystems = btrfs // others // boot;
 
-    swapDevices = mkIf (cfg.swap.device != "") [{
-      device = "/dev/disk/by-label/${cfg.swap.device}";
+    swapDevices = mkIf (cfg.swap.device != "" || cfg.swap.label != "") [{
+      device =
+        mkIf (cfg.swap.device != "") "/dev/disk/by-uuid/${cfg.swap.device}";
+      label = mkIf (cfg.swap.label != "") cfg.swap.label;
     }];
 
   };

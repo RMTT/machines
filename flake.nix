@@ -40,6 +40,8 @@
 
         vps-hk = lib.mkSystem "vps-hk" system.x86_64-linux stateVersion [ ];
 
+        portal = lib.mkSystem "portal" system.x86_64-linux stateVersion [ ];
+
         live = lib.mkSystem "live" system.x86_64-linux stateVersion [ ];
       };
 

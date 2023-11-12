@@ -26,7 +26,7 @@ in {
     in nixpkgs.lib.nixosSystem {
       inherit system;
       modules = [
-        ../nixos/${name}.nix
+        ../nixos/${name}/default.nix
         nur.nixosModules.nur
         sops-nix.nixosModules.sops
         home-manager.nixosModules.home-manager

@@ -25,14 +25,6 @@ in with lib; {
       type = types.bool;
       default = true;
     };
-
-    mt.password = mkOption {
-      type = types.bool;
-      default = true;
-      description = ''
-        set default password from sops
-      '';
-    };
   };
   config = {
     # enable unfree pkgs
@@ -53,6 +45,11 @@ in with lib; {
     # bootloader
     boot.loader.systemd-boot.enable = true;
     boot.loader.efi.canTouchEfiVariables = true;
+
+    boot.loader.systemd-boot.configurationLimit = 10;
+    boot.loader.grub.configurationLimit = 10;
+
+    boot.kernelModules = [ "wireguard" ];
 
     # common initrd options
     boot.initrd.availableKernelModules = [
@@ -125,6 +122,7 @@ in with lib; {
       zip
       bridge-utils
       home-manager
+      wireguard-tools
     ];
 
     # set XDG viarables
@@ -151,11 +149,7 @@ in with lib; {
     services.openssh = {
       enable = true;
       settings = { PasswordAuthentication = false; };
-      openFirewall = false;
     };
-
-    # enable docker
-    virtualisation.docker.enable = true;
 
     # cpu governor
     powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
@@ -179,20 +173,28 @@ in with lib; {
 
     # main user
     security.sudo = { wheelNeedsPassword = false; };
-    sops.secrets.mt-pass = mkIf cfg.mt.password { neededForUsers = true; };
     users.mutableUsers = true;
     users.users.mt = {
       isNormalUser = true;
       home = "/home/mt";
       description = "mt";
-      extraGroups =
-        [ "wheel" "networkmanager" "docker" "video" "libvirtd" "kvm" ];
-      hashedPasswordFile =
-        mkIf cfg.mt.password config.sops.secrets.mt-pass.path;
+      extraGroups = [
+        "wheel"
+        "networkmanager"
+        (mkIf config.virtualisation.docker.enable "docker")
+        "video"
+        "libvirtd"
+        "kvm"
+      ];
+      initialHashedPassword =
+        "$y$j9T$RHlCoWbFSwNhdz9.5Y7Hy.$6CrlIcp6sl9vbBJL.ZcvJaq1KCZJ3RLV228gMezSBGA";
       openssh.authorizedKeys.keyFiles = [ ../../secrets/ssh_key.pub ];
     };
-    users.users.root.openssh.authorizedKeys.keyFiles =
-      [ ../../secrets/ssh_key.pub ];
+    users.users.root = {
+      openssh.authorizedKeys.keyFiles = [ ../../secrets/ssh_key.pub ];
+      initialHashedPassword =
+        "$y$j9T$I.Ih8kx/HR9/iI.Mhbsz./$apkdSpL9tpDTBJRjCgKCUikijFkA2cuUhJYecOBT0cC";
+    };
 
     # configure tmux
     programs.tmux = {

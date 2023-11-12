@@ -12,13 +12,13 @@
   ];
 
   # set filesystems mount
-  fs.btrfs.device = "@";
+  fs.btrfs.label = "@";
   fs.btrfs.volumes = {
     "/" = [ "subvol=@" "rw" "relatime" "ssd" "space_cache=v2" ];
     "/home" = [ "subvol=@home" "rw" "relatime" "ssd" "space_cache=v2" ];
   };
-  fs.swap.device = "@swap";
-  fs.boot.device = "@boot";
+  fs.swap.label = "@swap";
+  fs.boot.label = "@boot";
 
   # kernel version
   boot.kernelPackages = pkgs.linuxKernel.packages.linux_zen;
