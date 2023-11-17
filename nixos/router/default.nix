@@ -179,13 +179,8 @@ with lib; {
       networkConfig = { Address = "172.31.1.3/24"; };
     };
 
-		networking.nftables.ruleset = ''
-			table ip nixos-nat {
-				chain post {
-					ip saddr != 172.31.1.0/24 oifname "wg0" masquerade
-				}
-			}
-		'';
+    networking.nftables.ruleset =
+      "	table ip nixos-nat {\n		chain post {\n			ip saddr != 172.31.1.0/24 oifname \"wg0\" masquerade\n		}\n	}\n";
     networking.firewall.allowedUDPPorts = [ 12345 ];
   };
 }

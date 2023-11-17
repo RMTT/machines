@@ -43,10 +43,7 @@
     "net.ipv6.conf.all.forwarding" = true;
   };
 
-
-  virtualisation.docker.listenTcp = {
-    enable = true;
-  };
+  virtualisation.docker.listenTcp = { enable = true; };
 
   networking.useNetworkd = true;
 
@@ -79,11 +76,5 @@
     networkConfig = { Address = "172.31.1.2/24"; };
   };
 
-  networking.firewall.allowedTCPPorts = [
-    2376 # for docker
-    80
-    443
-  ];
-
-  networking.firewall.allowedUDPPorts = [ 12345 ];
+  networking.firewall.allowedTCPPorts = [ 80 443 ];
 }

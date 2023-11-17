@@ -22,7 +22,10 @@ in with lib; {
   in {
     networking.extraHosts = "	${hosts_internet}\n";
 
-    networking.nftables.enable = true;
+    networking.nftables = {
+      enable = true;
+      flushRuleset = false;
+    };
     networking.useDHCP = false;
     networking.firewall = {
       enable = true;
@@ -31,7 +34,7 @@ in with lib; {
       logRefusedUnicastsOnly = false;
       extraInputRules = "ip saddr {${subnet4}} accept";
 
-      allowedUDPPorts = [ 68 67 ]; # DHCP
+      allowedUDPPorts = [ 68 67 12345 ]; # DHCP and wireguard
     };
 
     networking.networkmanager.enable = !cfg.useNetworkd;
