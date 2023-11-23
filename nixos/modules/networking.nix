@@ -37,7 +37,10 @@ in with lib; {
       allowedUDPPorts = [ 68 67 12345 ]; # DHCP and wireguard
     };
 
-    networking.networkmanager.enable = !cfg.useNetworkd;
+    networking.networkmanager = mkIf (!cfg.useNetworkd) {
+      enable = true;
+      dns = "dnsmasq";
+    };
 
     systemd.network.wait-online.anyInterface = mkIf cfg.useNetworkd true;
     systemd.network.networks = mkIf cfg.useNetworkd {

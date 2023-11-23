@@ -1,4 +1,4 @@
-{ pkgs, config, ... }: rec {
+{ pkgs, lib, config, ... }: rec {
   imports = [
     ../modules/secrets.nix
     ../modules/base.nix
@@ -26,6 +26,14 @@
 
   # kernel version
   boot.kernelPackages = pkgs.linuxKernel.packages.linux_zen;
+  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.systemd-boot.enable = lib.mkForce false;
+  boot.loader.grub = {
+    enable = true;
+    useOSProber = true;
+    device = "nodev";
+    efiSupport = true;
+  };
 
   hardware.cpu.amd.updateMicrocode = true;
 
@@ -42,17 +50,14 @@
 
   virtualisation.docker.storageDriver = "btrfs";
 
-  # nvidia setting
-  nvidia.usage = "compute";
-
   # kvm settings
   boot.kernelModules = [ "kvm_amd" ];
 
-  base.libvirt.enable = true;
+  nvidia.usage = "compute";
+  virtualisation.libvirtd.enable = true;
+  virtualisation.libvirtd.qemuHook = ./scripts/vfio_auto_bind.sh;
   networking.firewall.trustedInterfaces = [ "virbr0" ];
-  base.libvirt.qemuHook = ../scripts/vfio_auto_bind.sh;
 
-  networking.networkmanager = { dns = "dnsmasq"; };
   environment.etc = {
     "NetworkManager/dnsmasq.d/vmware".text =
       "	server=/vmware.com/10.117.0.38\n	server=/vmware.com/10.117.0.39\n";

@@ -37,7 +37,8 @@ in {
         { system.stateVersion = nixosVersion; }
         { networking.hostName = name; }
         {
-          nix.registry = builtins.mapAttrs (name: value: { flake = value; }) inputs;
+          nix.registry =
+            builtins.mapAttrs (name: value: { flake = value; }) inputs;
         }
 
       ] ++ extraModules;

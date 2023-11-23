@@ -65,7 +65,6 @@
       settings = {
         "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
         "security.webauthn.ctap2" = true;
-        "media.ffmpeg.vaapi.enabled" = true;
       };
       userChrome = ''
         #TabsToolbar

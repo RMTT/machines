@@ -2,23 +2,12 @@
 { pkgs, lib, config, ... }:
 let cfg = config.base;
 in with lib; {
-  options.base = {
-    libvirt.enable = mkOption {
-      type = types.bool;
-      default = false;
-    };
+  imports = [ ./libvirtd.nix ];
 
+  options.base = {
     onedrive.enable = mkOption {
       type = types.bool;
       default = false;
-    };
-
-    libvirt.qemuHook = mkOption {
-      type = types.path;
-      default = null;
-      description = ''
-        libvirt qemu hook, reference: https://www.libvirt.org/hooks.html
-      '';
     };
 
     gl.enable = mkOption {
@@ -123,6 +112,7 @@ in with lib; {
       bridge-utils
       home-manager
       wireguard-tools
+      efibootmgr
     ];
 
     # set XDG viarables
@@ -183,7 +173,6 @@ in with lib; {
         "networkmanager"
         (mkIf config.virtualisation.docker.enable "docker")
         "video"
-        "libvirtd"
         "kvm"
       ];
       initialHashedPassword =
@@ -221,26 +210,13 @@ in with lib; {
       enable = true;
       driSupport = true;
       driSupport32Bit = true;
+      setLdLibraryPath = true;
       extraPackages = with pkgs; [
         libva
         mesa.drivers
         vaapiVdpau
         libvdpau-va-gl
       ];
-    };
-
-    # enable libvirt
-    virtualisation.libvirtd = { enable = cfg.libvirt.enable; };
-    virtualisation.spiceUSBRedirection.enable = cfg.libvirt.enable;
-    systemd.services.libvirtd = mkIf cfg.libvirt.enable {
-      path = [ pkgs.bash ];
-      preStart = mkIf (cfg.libvirt.qemuHook != null) ''
-        mkdir -p /var/lib/libvirt/hooks
-        chmod 755 /var/lib/libvirt/hooks
-
-        # Copy hook files
-        ln -sf ${cfg.libvirt.qemuHook} /var/lib/libvirt/hooks/qemu
-      '';
     };
 
     # enable onedrive

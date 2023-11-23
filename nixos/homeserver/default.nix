@@ -41,7 +41,6 @@
 
     # networking related
     networking.firewall.allowedTCPPorts = [ 1443 ];
-
     services.resolved.extraConfig = ''
                   DNSStubListener = false
             			LLMNR = false
@@ -80,6 +79,24 @@
         sender = "notify@rmtt.tech";
       };
     };
-  };
 
+    # ups
+    users = {
+      users.nut = {
+        isSystemUser = true;
+        group = "nut";
+        home = "/var/lib/nut";
+        createHome = true;
+      };
+      groups.nut = { };
+    };
+
+    power.ups = {
+      enable = true;
+      ups.main = {
+        driver = "usbhid-ups";
+        port = "auto";
+      };
+    };
+  };
 }
