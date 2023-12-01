@@ -94,5 +94,30 @@ with lib; {
     networkConfig = { Address = "172.31.1.1/24"; };
   };
 
+  sops.secrets.sing-pass = {
+    sopsFile = ./config/sing.yaml;
+    mode = "0444";
+  };
+  services.sing-box = {
+    enable = true;
+    settings = {
+      inbounds = [{
+        type = "shadowsocks";
+        tag = "in";
+        listen = "::";
+        listen_port = 12346;
+        network = "tcp";
+        method = "2022-blake3-aes-128-gcm";
+        password = { _secret = config.sops.secrets.sing-pass.path; };
+      }];
+      outbounds = [{
+        type = "direct";
+        tag = "direct";
+      }];
+      route.final = "direct";
+    };
+  };
+
   networking.firewall.allowedUDPPorts = [ 12345 ];
+  networking.firewall.allowedTCPPorts = [ 12346 ];
 }

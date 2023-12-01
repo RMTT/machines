@@ -53,17 +53,6 @@ with lib; {
       "net.ipv6.conf.${wan}.autoconf" = 1;
     };
 
-    # enable PPPoE
-    sops.secrets.pppoe_auth = {
-      sopsFile = ../../secrets/pppoe_auth;
-      format = "binary";
-    };
-    services.pppoe = {
-      enable = true;
-      ifname = "ppp0";
-      authFile = config.sops.secrets.pppoe_auth.path;
-    };
-
     networking.useNetworkd = true;
     networking.bridges = {
       lan = { interfaces = lan; };
@@ -75,41 +64,18 @@ with lib; {
       networks = {
         wan = {
           name = "wan";
-          networkConfig = { DHCP = "no"; };
+          networkConfig = { DHCP = "yes"; };
+          dhcpV6Config = { WithoutRA = "solicit"; };
         };
         lan = {
           name = "lan";
-          linkConfig = { ActivationPolicy = "always-up"; };
           networkConfig = {
             Address = "${lan_gateway}/${toString lan_ip_prefix}";
             ConfigureWithoutCarrier = true;
-            LinkLocalAddressing = "ipv6";
-            IPv6AcceptRA = "no";
+
+            IPv6AcceptRA = "yes";
             IPv6SendRA = "yes";
             DHCPPrefixDelegation = "yes";
-          };
-          dhcpPrefixDelegationConfig = {
-            UplinkInterface = "ppp0";
-            SubnetId = 1;
-            Announce = "yes";
-          };
-        };
-        ppp0 = {
-          name = "ppp0";
-          networkConfig = {
-            DHCP = "ipv6";
-            IPv6AcceptRA = "no";
-            DHCPPrefixDelegation = "yes";
-          };
-          dhcpV6Config = {
-            WithoutRA = "solicit";
-            UseDNS = false;
-          };
-          routes = [{ routeConfig = { Gateway = "::"; }; }];
-          dhcpPrefixDelegationConfig = {
-            UplinkInterface = "ppp0";
-            SubnetId = 0;
-            Announce = "no";
           };
         };
       };
@@ -124,7 +90,7 @@ with lib; {
     networking.nat = {
       enable = true;
       internalIPs = [ "${lan_gateway}/${toString lan_ip_prefix}" ];
-      externalInterface = "ppp0";
+      externalInterface = "wan";
     };
 
     # enable clash and adguardhome (for DNS and DHCP)
@@ -181,7 +147,12 @@ with lib; {
       networkConfig = { Address = "172.31.1.3/24"; };
     };
 
-    networking.nftables.ruleset =
-      "	table ip nixos-nat {\n		chain post {\n			ip saddr != 172.31.1.0/24 oifname \"wg0\" masquerade\n		}\n	}\n";
+    networking.nftables.ruleset = ''
+      table ip nixos-nat {
+      				chain post {
+      					ip saddr != 172.31.1.0/24 oifname "wg0" masquerade
+      				}
+      			}
+      			'';
   };
 }

@@ -90,13 +90,20 @@
       };
       groups.nut = { };
     };
-
     power.ups = {
       enable = true;
       ups.main = {
         driver = "usbhid-ups";
         port = "auto";
       };
+    };
+    environment.etc = {
+      "nut/upsd.conf".source = ./config/upsd.conf;
+      "nut/upsd.users".source = ./config/upsd.users;
+      "nut/upsmon.conf".source = pkgs.writeText "upsmon.conf" ''
+        MONITOR main@localhost 1 upsuser upspass primary
+        SHUTDOWNCMD "${pkgs.systemd}/bin/systemctl poweroff"
+      '';
     };
   };
 }

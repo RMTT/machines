@@ -113,6 +113,7 @@ in with lib; {
       home-manager
       wireguard-tools
       efibootmgr
+      virtiofsd
     ];
 
     # set XDG viarables

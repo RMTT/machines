@@ -42,5 +42,25 @@ in {
         '';
       };
     };
+    systemd.network.networks = {
+      ppp0 = {
+        name = "ppp0";
+        networkConfig = {
+          DHCP = "ipv6";
+          IPv6AcceptRA = "no";
+          DHCPPrefixDelegation = "yes";
+        };
+        dhcpV6Config = {
+          WithoutRA = "solicit";
+          UseDNS = false;
+        };
+        routes = [{ routeConfig = { Gateway = "::"; }; }];
+        dhcpPrefixDelegationConfig = {
+          UplinkInterface = "ppp0";
+          SubnetId = 0;
+          Announce = "no";
+        };
+      };
+    };
   };
 }

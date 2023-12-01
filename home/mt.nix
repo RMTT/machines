@@ -6,25 +6,8 @@
     ./modules/neovim.nix
     ./modules/gnome.nix
     ./modules/tmux.nix
+    ./modules/git.nix
   ];
-
-  # configure git
-  programs.git = {
-    enable = true;
-    userName = "RMT";
-    userEmail = "d.rong@outlook.com";
-    signing = {
-      signByDefault = true;
-      key = "RMTTT";
-    };
-    extraConfig = {
-      init.defaultBranch = "main";
-      credential."https://github.com".helper =
-        "!/usr/bin/env gh auth git-credential";
-      credential."https://gist.github.com".helper =
-        "!/usr/bin/env gh auth git-credential";
-    };
-  };
 
   # configure gpg
   programs.gpg = {

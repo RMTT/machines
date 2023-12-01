@@ -41,6 +41,7 @@
   environment.systemPackages = with pkgs; [
     boot.kernelPackages.perf
     moonlight-qt
+    vmware-horizon-client
   ];
 
   services.xserver.videoDrivers = [ "amdgpu" ];
