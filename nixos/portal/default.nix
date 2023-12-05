@@ -98,6 +98,10 @@ with lib; {
     sopsFile = ./config/sing.yaml;
     mode = "0444";
   };
+  sops.secrets.sing-pass-algo = {
+    sopsFile = ./config/sing.yaml;
+    mode = "0444";
+  };
   services.sing-box = {
     enable = true;
     settings = {
@@ -107,7 +111,7 @@ with lib; {
         listen = "::";
         listen_port = 12346;
         network = "tcp";
-        method = "2022-blake3-aes-128-gcm";
+        method = { _secret = config.sops.secrets.sing-pass-algo.path; };
         password = { _secret = config.sops.secrets.sing-pass.path; };
       }];
       outbounds = [{

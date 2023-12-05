@@ -1,4 +1,5 @@
 sing-pass: ENC[AES256_GCM,data:qRLJyH5rZ7WK8IXwOmTQg0BslYHnDwvB,iv:qgb4K83cX/Xt5DUg0sUhYYMBgdiioEcEqzZ+Tx0ORrs=,tag:wA/i3Ustu2y/6zfe5N9Alg==,type:str]
+sing-pass-algo: ENC[AES256_GCM,data:4e3GzQZLvAQAt4jqSRSSTA8YBFTEKM4=,iv:cp8XFSoxovezvnN2h+BSrlf7GjpKqdKKRYCH0rDfPx4=,tag:DswK/pYCnUIXNMDCK9GmUg==,type:str]
 sops:
     kms: []
     gcp_kms: []
@@ -14,8 +15,8 @@ sops:
             SVNIU2FRTU4yWU1Uc1E2QXhvTzZNd0kK4Jw319j/Y/1Ht4Xckerf0fA7wiv9EjoB
             TBpEonH5XIj301IK6SDVzGKxeY4ZEeHClsDLKP0CZRhGtzhep4SPDQ==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2023-12-01T11:47:16Z"
-    mac: ENC[AES256_GCM,data:DMYiN+c6zO5NyveVTI59DQSWBpJVLKreanbMEprNyMT8qxb32krjrxDLymWfZgQrwNk4kqz3RmKsmrSBme3npsi5O4FycNalWYJDzFIRpUOPiqT8qbbeXOjZDlXZkLnx0XiV5OrsuYv0Dn2joQyuoj7CE1YSrYVUqC6QWYlDO1w=,iv:bIlr/wqQdum9rUwsckIt/2DpLhbFuoJB6Ll4sit1z/U=,tag:vptyM2/Z4VFXefGGFHbAlQ==,type:str]
+    lastmodified: "2023-12-04T01:46:57Z"
+    mac: ENC[AES256_GCM,data:5+7emkFjIVEpks2lw1UTjNocu2vDm1Us2H3/yb7Lc7O38cTpsLYEkjV6+auUMmmOJx5KXiW4+nprs/J218163GZV4w4SKAYMr/Ay/97ONUL2uNZVcM5TvJ5XdmSQ0hKgXz+VWhEKedSbphzDMA6XBti1wH+grnN5TZrVS3iZDUQ=,iv:hhVslC32gPh5WXX6caxNGn1RHrVW0GMaoFDSfepIOs8=,tag:9VnfCFH3KKwOwRMdRei+TA==,type:str]
     pgp:
         - created_at: "2023-12-01T11:36:09Z"
           enc: |-
