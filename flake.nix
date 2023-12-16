@@ -18,6 +18,10 @@
 
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
+
+    plasma-manager.url = "github:pjones/plasma-manager";
+    plasma-manager.inputs.nixpkgs.follows = "nixpkgs";
+    plasma-manager.inputs.home-manager.follows = "home-manager";
   };
 
   outputs = { self, nixpkgs, nixpkgs-stable, flake-utils, home-manager, nur
@@ -58,7 +62,7 @@
           config.allowUnfree = true;
         };
       in {
-        formatter = pkgs.nixfmt;
+        formatter = pkgs.nixpkgs-fmt;
         packages.metacubexd = pkgs.callPackage ./packages/metacubexd.nix { };
         packages.zoom-us = pkgs.callPackage ./packages/zoom-us.nix { };
       });

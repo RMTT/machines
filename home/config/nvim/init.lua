@@ -25,12 +25,15 @@ vim.o.undodir = vim.fn.stdpath('data') .. '/undo'
 vim.o.updatecount = 100
 vim.o.directory = vim.fn.stdpath('data') .. '/swap'
 
+vim.o.shadafile = "NONE"
+
 vim.o.termguicolors = true
 
 -- make sure the dir is exist
 utility.mkdir(vim.o.backupdir)
 utility.mkdir(vim.o.undodir)
 utility.mkdir(vim.o.directory)
+utility.mkdir(vim.fn.stdpath('data') .. '/shada')
 
 vim.o.encoding = 'utf-8'
 

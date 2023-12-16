@@ -58,7 +58,8 @@ in {
     extraPackages = with pkgs; [
       lua-language-server
       nodePackages.pyright
-      nil
+      nixd
+			nixpkgs-fmt
       cmake-language-server
       tree-sitter
       clang-tools

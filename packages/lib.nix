@@ -1,5 +1,5 @@
 { self, nixpkgs, nixpkgs-stable, flake-utils, home-manager, nur, sops-nix, disko
-}@inputs:
+, ... }@inputs:
 let
   overlay-libvterm = final: prev: {
     libvterm-neovim = prev.libvterm-neovim.overrideAttrs
@@ -56,6 +56,7 @@ in {
           home.homeDirectory = "/home/${name}";
           programs.home-manager.enable = true;
         }
+        inputs.plasma-manager.homeManagerModules.plasma-manager
         ../home/${name}.nix
       ];
     };

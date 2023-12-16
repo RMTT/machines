@@ -8,10 +8,8 @@
     # desktop apps
     environment.systemPackages = with pkgs; [
       # plasma related
-      libsForQt5.bismuth
       libsForQt5.yakuake
-      xclip
+      wl-clipboard
     ];
-
   };
 }

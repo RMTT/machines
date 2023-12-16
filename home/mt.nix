@@ -4,7 +4,7 @@
     ./modules/shell.nix
     ./modules/alacritty.nix
     ./modules/neovim.nix
-    ./modules/gnome.nix
+    ./modules/plasma.nix
     ./modules/tmux.nix
     ./modules/git.nix
   ];
@@ -21,7 +21,7 @@
     enableSshSupport = true;
     enableExtraSocket = true;
     enableZshIntegration = true;
-    pinentryFlavor = "gnome3";
+    pinentryFlavor = "qt";
     extraConfig = "	allow-loopback-pinentry\n";
   };
 

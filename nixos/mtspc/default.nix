@@ -4,7 +4,7 @@
     ../modules/base.nix
     ../modules/fs.nix
     ../modules/networking.nix
-    ../modules/gnome.nix
+    ../modules/plasma.nix
     ../modules/nvidia.nix
     ../modules/pipewire.nix
     ../modules/developments.nix
@@ -49,7 +49,10 @@
   # enable v2ray
   services.v2raya.enable = true;
 
-  virtualisation.docker.storageDriver = "btrfs";
+  virtualisation.docker = {
+    storageDriver = "btrfs";
+    daemon.settings = { exec-opts = [ "native.cgroupdriver=cgroupfs" ]; };
+  };
 
   # kvm settings
   boot.kernelModules = [ "kvm_amd" ];

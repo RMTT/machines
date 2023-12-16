@@ -6,7 +6,7 @@ require("neodev").setup({})
 ---- setting for lualine ----
 require('lualine').setup {
     options = { icon_enabled = true, theme = 'tokyonight' },
-    sections = { lualine_c = { require('auto-session.lib').current_session_name } } }
+}
 ---- end ----
 
 ---- setting for rainbow ----
@@ -221,7 +221,7 @@ require 'lspconfig'.rust_analyzer.setup { capabilities = capabilities }
 --- end ---
 
 ---- nix ----
-require 'lspconfig'.nil_ls.setup {}
+require'lspconfig'.nixd.setup{}
 --- end ----
 
 require 'lspconfig'.bashls.setup {
@@ -359,6 +359,12 @@ require 'nvim-treesitter.configs'.setup {
 ---- end ----
 
 ---- setting for auto-session ----
+local session_name = require('auto-session.lib').escaped_session_name_from_cwd()
+local shadafile = vim.fn.stdpath('data') .. '/shada/' .. session_name .. '.shada'
+local loadshada_cmd = ""
+if vim.fn.filereadable(vim.fn.expand(shadafile)) == 1 then
+    loadshada_cmd = "rshada! " .. shadafile
+end
 require("auto-session").setup {
     log_level = "error",
 
@@ -367,5 +373,6 @@ require("auto-session").setup {
             require("lualine").refresh()
         end,
     },
+    pre_restore_cmds = { "set shadafile=" .. shadafile, loadshada_cmd },
 }
 ---- end ----

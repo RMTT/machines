@@ -105,6 +105,7 @@ with lib; {
   services.sing-box = {
     enable = true;
     settings = {
+      log = { level = "warn"; };
       inbounds = [{
         type = "shadowsocks";
         tag = "in";
@@ -122,6 +123,6 @@ with lib; {
     };
   };
 
-  networking.firewall.allowedUDPPorts = [ 12345 ];
+  networking.firewall.allowedUDPPorts = [ 12345 12355 ];
   networking.firewall.allowedTCPPorts = [ 12346 ];
 }
