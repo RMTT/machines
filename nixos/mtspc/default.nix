@@ -10,6 +10,7 @@
     ../modules/developments.nix
     ../modules/services.nix
     ../modules/docker.nix
+    ../modules/wireguard.nix
   ];
 
   # set filesystems mount

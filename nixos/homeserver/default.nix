@@ -6,6 +6,7 @@
     ../modules/networking.nix
     ../modules/services.nix
     ../modules/docker.nix
+    ../modules/wireguard.nix
   ];
 
   config = with lib; {
@@ -105,5 +106,26 @@
         SHUTDOWNCMD "${pkgs.systemd}/bin/systemctl poweroff"
       '';
     };
+
+    sops.secrets.wg-private = {
+      owner = "systemd-network";
+      mode = "0400";
+      sopsFile = ./keys/wg-private.key;
+      format = "binary";
+    };
+    networking.wireguard.networks = [
+      {
+        ip = [ "172.31.1.4/24" ];
+        privateKeyFile = config.sops.secrets.wg-private.path;
+
+        peers = [
+          {
+            allowedIPs = [ "172.31.1.1/24" ];
+            endpoint = "portal:30005";
+            publicKey = "nzARKMdkzfy1lMN9xk10yiMfAMzB889NROSa5jvDUBo=";
+          }
+        ];
+      }
+    ];
   };
 }

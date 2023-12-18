@@ -5,6 +5,7 @@
     ../modules/networking.nix
     ../modules/fs.nix
     ../modules/docker.nix
+		../modules/wireguard.nix
   ];
 
   base.gl.enable = false;
@@ -53,28 +54,20 @@
     sopsFile = ./keys/wg-private.key;
     format = "binary";
   };
-  systemd.network.netdevs."wg0" = {
-    netdevConfig = {
-      Kind = "wireguard";
-      Name = "wg0";
-    };
-    wireguardConfig = {
-      ListenPort = 12345;
-      PrivateKeyFile = config.sops.secrets.wg-private.path;
-    };
-    wireguardPeers = [{
-      wireguardPeerConfig = {
-        AllowedIPs = [ "172.31.1.0/24" ];
-        Endpoint = "portal:30005";
-        PersistentKeepalive = 15;
-        PublicKey = "nzARKMdkzfy1lMN9xk10yiMfAMzB889NROSa5jvDUBo=";
-      };
-    }];
-  };
-  systemd.network.networks."wg0" = {
-    matchConfig = { Name = "wg0"; };
-    networkConfig = { Address = "172.31.1.2/24"; };
-  };
+  networking.wireguard.networks = [
+    {
+      ip = [ "172.31.1.2/24" ];
+      privateKeyFile = config.sops.secrets.wg-private.path;
+
+      peers = [
+        {
+          allowedIPs = [ "172.31.1.1/24" ];
+          publicKey = "nzARKMdkzfy1lMN9xk10yiMfAMzB889NROSa5jvDUBo=";
+					endpoint = "portal:30005";
+        }
+      ];
+    }
+  ];
 
   networking.firewall.allowedTCPPorts = [ 80 443 ];
 }

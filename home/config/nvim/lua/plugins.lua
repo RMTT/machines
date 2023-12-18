@@ -221,7 +221,15 @@ require 'lspconfig'.rust_analyzer.setup { capabilities = capabilities }
 --- end ---
 
 ---- nix ----
-require'lspconfig'.nixd.setup{}
+require 'lspconfig'.nil_ls.setup {
+    settings = {
+        ['nil'] = {
+            formatting = {
+                command = { "nixpkgs-fmt" },
+            },
+        },
+    },
+}
 --- end ----
 
 require 'lspconfig'.bashls.setup {

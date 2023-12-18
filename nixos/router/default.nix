@@ -6,6 +6,7 @@ with lib; {
     ../modules/base.nix
     ../modules/fs.nix
     ../modules/networking.nix
+		../modules/wireguard.nix
   ];
 
   config =
@@ -134,36 +135,19 @@ with lib; {
         sopsFile = ./keys/wg-private.key;
         format = "binary";
       };
+      networking.wireguard.networks = [
+        {
+          ip = [ "172.31.1.3/24" ];
+          privateKeyFile = config.sops.secrets.wg-private.path;
 
-      systemd.network.netdevs."wg0" = {
-        netdevConfig = {
-          Kind = "wireguard";
-          Name = "wg0";
-        };
-        wireguardConfig = {
-          ListenPort = 12345;
-          PrivateKeyFile = config.sops.secrets.wg-private.path;
-        };
-        wireguardPeers = [{
-          wireguardPeerConfig = {
-            AllowedIPs = [ "172.31.1.0/24" ];
-            Endpoint = "portal:30005";
-            PersistentKeepalive = 15;
-            PublicKey = "nzARKMdkzfy1lMN9xk10yiMfAMzB889NROSa5jvDUBo=";
-          };
-        }];
-      };
-      systemd.network.networks."wg0" = {
-        matchConfig = { Name = "wg0"; };
-        networkConfig = { Address = "172.31.1.3/24"; };
-      };
-
-      networking.nftables.ruleset = ''
-        table ip nixos-nat {
-        				chain post {
-        					ip saddr != 172.31.1.0/24 oifname "wg0" masquerade
-        				}
-        			}
-        			'';
+          peers = [
+            {
+              allowedIPs = [ "172.31.1.1/24" ];
+							endpoint = "portal:30005";
+              publicKey = "nzARKMdkzfy1lMN9xk10yiMfAMzB889NROSa5jvDUBo=";
+            }
+          ];
+        }
+      ];
     };
 }

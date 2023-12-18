@@ -10,7 +10,8 @@ let
         rev = rev;
       };
     };
-in {
+in
+{
   programs.neovim = {
     enable = true;
     defaultEditor = true;
@@ -58,8 +59,8 @@ in {
     extraPackages = with pkgs; [
       lua-language-server
       nodePackages.pyright
-      nixd
-			nixpkgs-fmt
+      nil
+      nixpkgs-fmt
       cmake-language-server
       tree-sitter
       clang-tools

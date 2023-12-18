@@ -1,5 +1,13 @@
-{ self, nixpkgs, nixpkgs-stable, flake-utils, home-manager, nur, sops-nix, disko
-, ... }@inputs:
+{ self
+, nixpkgs
+, nixpkgs-stable
+, flake-utils
+, home-manager
+, nur
+, sops-nix
+, disko
+, ...
+}@inputs:
 let
   overlay-libvterm = final: prev: {
     libvterm-neovim = prev.libvterm-neovim.overrideAttrs
@@ -11,7 +19,14 @@ let
         };
       });
   };
-in {
+  overlay-tailscale = final: prev: {
+    tailscale = prev.tailscale.overrideAttrs
+      (finalAttrs: oldAttrs: {
+        subPackages = oldAttrs.subPackages ++ [ "cmd/derper" ];
+      });
+  };
+in
+{
   mkSystem = name: system: nixosVersion: extraModules:
     let
       overlay-stable = final: prev: {
@@ -23,7 +38,8 @@ in {
 
       overlay-ownpkgs = final: prev: { ownpkgs = self.packages.${system}; };
 
-    in nixpkgs.lib.nixosSystem {
+    in
+    nixpkgs.lib.nixosSystem {
       inherit system;
       modules = [
         ../nixos/${name}/default.nix
@@ -32,7 +48,7 @@ in {
         home-manager.nixosModules.home-manager
         disko.nixosModules.disko
         ({ config, pkgs, ... }: {
-          nixpkgs.overlays = [ overlay-stable overlay-ownpkgs ];
+          nixpkgs.overlays = [ overlay-stable overlay-ownpkgs overlay-tailscale ];
         })
         { system.stateVersion = nixosVersion; }
         { networking.hostName = name; }

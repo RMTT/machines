@@ -1,7 +1,7 @@
 { pkgs, lib, config, ... }:
 with lib; {
   imports =
-    [ ../modules/secrets.nix ../modules/base.nix ../modules/networking.nix ];
+    [ ../modules/secrets.nix ../modules/base.nix ../modules/networking.nix ../modules/wireguard.nix ];
 
   base.gl.enable = false;
 
@@ -62,37 +62,27 @@ with lib; {
     sopsFile = ./keys/wg-private.key;
     format = "binary";
   };
+  networking.wireguard.networks = [
+    {
+      ip = [ "172.31.1.1/24" ];
+      privateKeyFile = config.sops.secrets.wg-private.path;
 
-  systemd.network.netdevs."wg0" = {
-    netdevConfig = {
-      Kind = "wireguard";
-      Name = "wg0";
-    };
-    wireguardConfig = {
-      ListenPort = 12345;
-      PrivateKeyFile = config.sops.secrets.wg-private.path;
-    };
-    wireguardPeers = [
-      {
-        wireguardPeerConfig = {
-          AllowedIPs = [ "172.31.1.2/32" ];
-          PersistentKeepalive = 15;
-          PublicKey = "2nzzD9C33j6loxVcrjfeWvokbUBXpyxEryUk6HN60nE=";
-        };
-      }
-      {
-        wireguardPeerConfig = {
-          AllowedIPs = [ "172.31.1.3/32" "192.168.6.1/24" ];
-          PersistentKeepalive = 15;
-          PublicKey = "RYZS5mHgkmjW+/D40Zxn9d/h8NzvN4pzJVbnWK3DbXg=";
-        };
-      }
-    ];
-  };
-  systemd.network.networks."wg0" = {
-    matchConfig = { Name = "wg0"; };
-    networkConfig = { Address = "172.31.1.1/24"; };
-  };
+      peers = [
+        {
+          allowedIPs = [ "172.31.1.2/32" ];
+          publicKey = "2nzzD9C33j6loxVcrjfeWvokbUBXpyxEryUk6HN60nE=";
+        }
+        {
+          allowedIPs = [ "172.31.1.3/32" ];
+          publicKey = "RYZS5mHgkmjW+/D40Zxn9d/h8NzvN4pzJVbnWK3DbXg=";
+        }
+				{
+					allowedIPs = [ "172.31.1.4/32" ];
+					publicKey = "CN+zErqQ3JIlksx51LgY6exZgjDNIGJih73KhO1WpkI=";
+				}
+      ];
+    }
+  ];
 
   sops.secrets.sing-pass = {
     sopsFile = ./config/sing.yaml;
@@ -123,6 +113,6 @@ with lib; {
     };
   };
 
-  networking.firewall.allowedUDPPorts = [ 12345 12355 ];
+  networking.firewall.allowedUDPPorts = [ 12345 ];
   networking.firewall.allowedTCPPorts = [ 12346 ];
 }

@@ -1,14 +1,14 @@
 { config, pkgs, lib, ... }: {
   imports = [
-    ./modules/secrets.nix
-    ./modules/base.nix
-    ./modules/fs.nix
-    ./modules/networking.nix
-    ./modules/gnome.nix
-    ./modules/nvidia.nix
-    ./modules/pipewire.nix
-    ./modules/developments.nix
-    ./modules/services.nix
+    ../modules/secrets.nix
+    ../modules/base.nix
+    ../modules/fs.nix
+    ../modules/networking.nix
+    ../modules/gnome.nix
+    ../modules/nvidia.nix
+    ../modules/pipewire.nix
+    ../modules/developments.nix
+    ../modules/services.nix
   ];
 
   # set filesystems mount
