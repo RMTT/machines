@@ -1,12 +1,12 @@
-{ pkgs, lib, config, ... }:
+{ pkgs, lib, modules, config, ... }:
 with lib; {
-  imports = [
-    ../modules/secrets.nix
-    ../modules/services.nix
-    ../modules/base.nix
-    ../modules/fs.nix
-    ../modules/networking.nix
-		../modules/wireguard.nix
+  imports = with modules; [
+    services
+    base
+    fs
+    networking
+    wireguard
+		./secrets.nix
   ];
 
   config =
@@ -106,11 +106,6 @@ with lib; {
       };
 
       # enable clash and adguardhome (for DNS and DHCP)
-      sops.secrets.clash_config = {
-        sopsFile = ../../secrets/clash_config;
-        format = "binary";
-        mode = "644";
-      };
       services.split_flow = {
         enable = true;
         config = config.sops.secrets.clash_config.path;
@@ -129,21 +124,15 @@ with lib; {
           };
         };
       };
-      sops.secrets.wg-private = {
-        owner = "systemd-network";
-        mode = "0400";
-        sopsFile = ./keys/wg-private.key;
-        format = "binary";
-      };
       networking.wireguard.networks = [
         {
-          ip = [ "172.31.1.3/24" ];
+          ip = [ "192.168.128.3/24" ];
           privateKeyFile = config.sops.secrets.wg-private.path;
 
           peers = [
             {
-              allowedIPs = [ "172.31.1.1/24" ];
-							endpoint = "portal:30005";
+              allowedIPs = [ "192.168.128.1/24" ];
+              endpoint = "portal:30005";
               publicKey = "nzARKMdkzfy1lMN9xk10yiMfAMzB889NROSa5jvDUBo=";
             }
           ];

@@ -9,7 +9,8 @@ let
       rev = "f7b6da07ab55fe32ee5f7d62da56d8e5ac691a92";
     };
   };
-in {
+in
+{
   programs.tmux = {
     enable = true;
     mouse = true;

@@ -1,7 +1,6 @@
 { self
 , nixpkgs
 , nixpkgs-stable
-, flake-utils
 , home-manager
 , nur
 , sops-nix
@@ -9,6 +8,23 @@
 , ...
 }@inputs:
 let
+  modulePath = ../nixos/modules;
+  secretsPath = ../secrets/secrets.nix;
+
+  modules = {
+    base = modulePath + "/base.nix";
+    fs = modulePath + "/fs.nix";
+    networking = modulePath + "/networking.nix";
+    plasma = modulePath + "/plasma.nix";
+    nvidia = modulePath + "/nvidia.nix";
+    pipewire = modulePath + "/pipewire.nix";
+    developments = modulePath + "/developments.nix";
+    services = modulePath + "/services.nix";
+    docker = modulePath + "/docker.nix";
+    wireguard = modulePath + "/wireguard.nix";
+    secrets = secretsPath;
+  };
+
   overlay-libvterm = final: prev: {
     libvterm-neovim = prev.libvterm-neovim.overrideAttrs
       (finalAttrs: oldAttrs: {
@@ -19,12 +35,14 @@ let
         };
       });
   };
+
   overlay-tailscale = final: prev: {
     tailscale = prev.tailscale.overrideAttrs
       (finalAttrs: oldAttrs: {
         subPackages = oldAttrs.subPackages ++ [ "cmd/derper" ];
       });
   };
+
 in
 {
   mkSystem = name: system: nixosVersion: extraModules:
@@ -37,12 +55,14 @@ in
       };
 
       overlay-ownpkgs = final: prev: { ownpkgs = self.packages.${system}; };
-
     in
     nixpkgs.lib.nixosSystem {
       inherit system;
+      specialArgs = {
+        modules = modules;
+      };
       modules = [
-        ../nixos/${name}/default.nix
+        ../nixos/hosts/${name}/default.nix
         nur.nixosModules.nur
         sops-nix.nixosModules.sops
         home-manager.nixosModules.home-manager
@@ -50,13 +70,12 @@ in
         ({ config, pkgs, ... }: {
           nixpkgs.overlays = [ overlay-stable overlay-ownpkgs overlay-tailscale ];
         })
-        { system.stateVersion = nixosVersion; }
-        { networking.hostName = name; }
         {
           nix.registry =
             builtins.mapAttrs (name: value: { flake = value; }) inputs;
+          system.stateVersion = nixosVersion;
+          networking.hostName = name;
         }
-
       ] ++ extraModules;
     };
 
@@ -77,3 +96,4 @@ in
       ];
     };
 }
+

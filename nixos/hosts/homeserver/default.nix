@@ -1,12 +1,12 @@
-{ config, pkgs, lib, ... }: {
-  imports = [
-    ../modules/secrets.nix
-    ../modules/base.nix
-    ../modules/fs.nix
-    ../modules/networking.nix
-    ../modules/services.nix
-    ../modules/docker.nix
-    ../modules/wireguard.nix
+{ config, pkgs, modules, lib, ... }: {
+  imports = with modules; [
+    base
+    fs
+    networking
+    services
+    docker
+    wireguard
+    ./secrets.nix
   ];
 
   config = with lib; {
@@ -52,7 +52,6 @@
     base.onedrive.enable = true;
 
     # set msmtp, for sending notification
-    sops.secrets.zoho-pass = { mode = "644"; };
     programs.msmtp = {
       enable = true;
       accounts = {
@@ -107,20 +106,14 @@
       '';
     };
 
-    sops.secrets.wg-private = {
-      owner = "systemd-network";
-      mode = "0400";
-      sopsFile = ./keys/wg-private.key;
-      format = "binary";
-    };
     networking.wireguard.networks = [
       {
-        ip = [ "172.31.1.4/24" ];
+        ip = [ "192.168.128.4/24" ];
         privateKeyFile = config.sops.secrets.wg-private.path;
 
         peers = [
           {
-            allowedIPs = [ "172.31.1.1/24" ];
+            allowedIPs = [ "192.168.128.1/24" ];
             endpoint = "portal:30005";
             publicKey = "nzARKMdkzfy1lMN9xk10yiMfAMzB889NROSa5jvDUBo=";
           }

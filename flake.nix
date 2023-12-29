@@ -28,7 +28,7 @@
     , sops-nix, ... }@inputs:
     with flake-utils.lib;
     let
-      stateVersion = "23.05";
+      stateVersion = "24.05";
 
       lib = import ./packages/lib.nix inputs;
 
@@ -64,6 +64,5 @@
       in {
         formatter = pkgs.nixpkgs-fmt;
         packages.metacubexd = pkgs.callPackage ./packages/metacubexd.nix { };
-        packages.zoom-us = pkgs.callPackage ./packages/zoom-us.nix { };
       });
 }

@@ -19,7 +19,7 @@ in with lib; {
     # enable unfree pkgs
     nixpkgs.config.allowUnfree = true;
     nixpkgs.config.joypixels.acceptLicense = true;
-    nixpkgs.config.permittedInsecurePackages = [ "zotero-6.0.27" ];
+    nixpkgs.config.permittedInsecurePackages = [ "electron-25.9.0" ];
 
     # binary cache
     nix.settings.substituters =
@@ -125,6 +125,8 @@ in with lib; {
       XDG_STATE_HOME = "$HOME/.local/state";
 
       PATH = [ "${XDG_BIN_HOME}" ];
+
+			NIXPKGS_ALLOW_UNFREE = "1";
     };
 
     # set default editor to nvim

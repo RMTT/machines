@@ -1,7 +1,7 @@
 { lib, config, pkgs, ... }:
 let
   defaltLocalSubnet4 = "192.168.6.1/24";
-  wgSubnet4 = [ "172.31.1.0/24" ];
+  wgSubnet4 = [ "192.168.128.0/24" ];
   cfg = config.networking;
   hosts_internet = ''
     				85.237.205.152 portal-original
@@ -10,8 +10,6 @@ let
   '';
 in
 with lib; {
-  imports = [ ./secrets.nix ];
-
   options = {
     networking.bypassSubnet4 = mkOption {
       type = types.listOf types.str;

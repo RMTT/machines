@@ -1,11 +1,11 @@
-{ pkgs, config, lib, ... }: {
-  imports = [
-    ../modules/secrets.nix
-    ../modules/base.nix
-    ../modules/networking.nix
-    ../modules/fs.nix
-    ../modules/docker.nix
-		../modules/wireguard.nix
+{ pkgs, config, modules, lib, ... }: {
+  imports = with modules; [
+    base
+    networking
+    fs
+    docker
+    wireguard
+		./secrets.nix
   ];
 
   base.gl.enable = false;
@@ -48,22 +48,16 @@
 
   networking.useNetworkd = true;
 
-  sops.secrets.wg-private = {
-    owner = "systemd-network";
-    mode = "0400";
-    sopsFile = ./keys/wg-private.key;
-    format = "binary";
-  };
   networking.wireguard.networks = [
     {
-      ip = [ "172.31.1.2/24" ];
+      ip = [ "192.168.128.2/24" ];
       privateKeyFile = config.sops.secrets.wg-private.path;
 
       peers = [
         {
-          allowedIPs = [ "172.31.1.1/24" ];
+          allowedIPs = [ "192.168.128.1/24" ];
           publicKey = "nzARKMdkzfy1lMN9xk10yiMfAMzB889NROSa5jvDUBo=";
-					endpoint = "portal:30005";
+          endpoint = "portal:30005";
         }
       ];
     }

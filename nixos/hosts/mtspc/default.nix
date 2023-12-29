@@ -1,16 +1,14 @@
-{ pkgs, lib, config, ... }: rec {
-  imports = [
-    ../modules/secrets.nix
-    ../modules/base.nix
-    ../modules/fs.nix
-    ../modules/networking.nix
-    ../modules/plasma.nix
-    ../modules/nvidia.nix
-    ../modules/pipewire.nix
-    ../modules/developments.nix
-    ../modules/services.nix
-    ../modules/docker.nix
-    ../modules/wireguard.nix
+{ pkgs, lib, config, modules, ... }: rec {
+  imports = with modules;[
+    base
+    fs
+    networking
+    plasma
+    nvidia
+    pipewire
+    developments
+    services
+    docker
   ];
 
   # set filesystems mount

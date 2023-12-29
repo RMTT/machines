@@ -2,7 +2,8 @@
 let
   cfg = config.virtualisation.docker;
   portainerYml = ./config/portainer.yml;
-in with lib; {
+in
+with lib; {
   options = {
     # when launch portainer, you need specify a data dir to create a common volume
     virtualisation.docker.portainer = {
@@ -53,18 +54,22 @@ in with lib; {
     # enable docker
     virtualisation.docker.enable = true;
 
-    virtualisation.docker.daemon.settings = {
-      # TODO: remove this when docker support nftables offically
-      iptables = false; # docker will bypass nftables's input rule now
-    } // (if cfg.listenTcp.enable && cfg.listenTcp.tls then {
-      tls = true;
-      tlsverify = true;
-      tlscacert = cfg.listenTcp.tlscacert;
-      tlscert = cfg.listenTcp.tlscert;
-      tlskey = cfg.listenTcp.tlskey;
-      hosts = [ "tcp://0.0.0.0:2376" ];
-    } else
-      mkIf cfg.listenTcp.enable { hosts = [ "tcp://0.0.0.0:2376" ]; });
+    virtualisation.docker.daemon.settings = mkMerge [
+      {
+        # TODO: remove this when docker support nftables offically
+        iptables = false; # docker will bypass nftables's input rule now
+      }
+
+      (mkIf cfg.listenTcp.enable { hosts = [ "tcp://0.0.0.0:2376" ]; })
+
+      (mkIf (cfg.listenTcp.enable && cfg.listenTcp.tls) {
+        tls = true;
+        tlsverify = true;
+        tlscacert = cfg.listenTcp.tlscacert;
+        tlscert = cfg.listenTcp.tlscert;
+        tlskey = cfg.listenTcp.tlskey;
+      })
+    ];
 
     systemd.services.portainer = mkIf cfg.portainer.enable {
       enable = true;

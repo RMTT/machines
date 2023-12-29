@@ -1,7 +1,7 @@
-{ pkgs, lib, config, ... }:
+{ pkgs, lib, modules, config, ... }:
 with lib; {
   imports =
-    [ ../modules/secrets.nix ../modules/base.nix ../modules/networking.nix ../modules/wireguard.nix ];
+    with modules; [ base networking wireguard ./secrets.nix ];
 
   base.gl.enable = false;
 
@@ -38,6 +38,7 @@ with lib; {
     "virtio_pci"
     "virtio_scsi"
     "virtio_blk"
+    "virtio_net"
     "virtio"
     "sd_mod"
     "sr_mod"
@@ -55,43 +56,37 @@ with lib; {
   };
 
   networking.useNetworkd = true;
-
-  sops.secrets.wg-private = {
-    owner = "systemd-network";
-    mode = "0400";
-    sopsFile = ./keys/wg-private.key;
-    format = "binary";
+  services.resolved = {
+    enable = true;
+    extraConfig = ''
+                  			[Resolve]
+      										DNS = 1.1.1.1#cloudflare-dns.com 8.8.8.8#dns.google 1.0.0.1#cloudflare-dns.com 8.8.4.4#dns.google
+            							DNSOverTLS=yes
+                  			'';
   };
+
   networking.wireguard.networks = [
     {
-      ip = [ "172.31.1.1/24" ];
+      ip = [ "192.168.128.1/24" ];
       privateKeyFile = config.sops.secrets.wg-private.path;
 
       peers = [
         {
-          allowedIPs = [ "172.31.1.2/32" ];
+          allowedIPs = [ "192.168.128.2/32" ];
           publicKey = "2nzzD9C33j6loxVcrjfeWvokbUBXpyxEryUk6HN60nE=";
         }
         {
-          allowedIPs = [ "172.31.1.3/32" ];
+          allowedIPs = [ "192.168.128.3/32" ];
           publicKey = "RYZS5mHgkmjW+/D40Zxn9d/h8NzvN4pzJVbnWK3DbXg=";
         }
-				{
-					allowedIPs = [ "172.31.1.4/32" ];
-					publicKey = "CN+zErqQ3JIlksx51LgY6exZgjDNIGJih73KhO1WpkI=";
-				}
+        {
+          allowedIPs = [ "192.168.128.4/32" ];
+          publicKey = "CN+zErqQ3JIlksx51LgY6exZgjDNIGJih73KhO1WpkI=";
+        }
       ];
     }
   ];
 
-  sops.secrets.sing-pass = {
-    sopsFile = ./config/sing.yaml;
-    mode = "0444";
-  };
-  sops.secrets.sing-pass-algo = {
-    sopsFile = ./config/sing.yaml;
-    mode = "0444";
-  };
   services.sing-box = {
     enable = true;
     settings = {
