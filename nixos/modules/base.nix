@@ -51,6 +51,11 @@ in with lib; {
       "btrfs"
     ];
 
+    boot.kernel.sysctl = {
+      "net.ipv4.conf.all.forwarding" = true;
+      "net.ipv6.conf.all.forwarding" = true;
+    };
+
     # timezone
     time.timeZone = "Asia/Shanghai";
     time.hardwareClockInLocalTime = true;
@@ -126,7 +131,7 @@ in with lib; {
 
       PATH = [ "${XDG_BIN_HOME}" ];
 
-			NIXPKGS_ALLOW_UNFREE = "1";
+      NIXPKGS_ALLOW_UNFREE = "1";
     };
 
     # set default editor to nvim

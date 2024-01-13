@@ -1,4 +1,4 @@
-{ pkgs, lib, config, modules, ... }: rec {
+{ pkgs, lib, config, modules, ... }: {
   imports = with modules;[
     base
     fs
@@ -25,6 +25,7 @@
 
   # kernel version
   boot.kernelPackages = pkgs.linuxKernel.packages.linux_zen;
+  boot.kernelParams = [ "nvidia-drm.modeset=1" ];
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.systemd-boot.enable = lib.mkForce false;
   boot.loader.grub = {
@@ -38,7 +39,7 @@
 
   # additional system packages
   environment.systemPackages = with pkgs; [
-    boot.kernelPackages.perf
+    config.boot.kernelPackages.perf
     moonlight-qt
     vmware-horizon-client
   ];
@@ -56,7 +57,6 @@
   # kvm settings
   boot.kernelModules = [ "kvm_amd" ];
 
-  nvidia.usage = "compute";
   virtualisation.libvirtd.enable = true;
   virtualisation.libvirtd.qemuHook = ./scripts/vfio_auto_bind.sh;
   networking.firewall.trustedInterfaces = [ "virbr0" ];

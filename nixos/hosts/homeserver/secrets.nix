@@ -10,5 +10,11 @@
     format = "binary";
   };
 
+  sops.secrets.ups_pass = {
+    mode = "0400";
+    sopsFile = ./secrets/ups_pass;
+    format = "binary";
+  };
+
   sops.secrets.zoho-pass = { mode = "644"; };
 }

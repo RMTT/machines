@@ -25,7 +25,6 @@ in with lib; {
       obsidian
       virt-manager
       zoom-us
-      jetbrains.idea-community
     ];
 
     # fonts
