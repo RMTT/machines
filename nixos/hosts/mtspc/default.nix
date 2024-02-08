@@ -20,6 +20,10 @@
   fs.swap.label = "@swap";
   fs.boot.label = "@boot";
 
+	boot.kernel.sysctl = {
+		"kernel.yama.ptrace_scope" = 0;
+	};
+
   # default shell
   users.users.mt.shell = pkgs.zsh;
 
@@ -64,5 +68,9 @@
   environment.etc = {
     "NetworkManager/dnsmasq.d/vmware".text =
       "	server=/vmware.com/10.117.0.38\n	server=/vmware.com/10.117.0.39\n";
+  };
+
+  environment.variables = {
+    NIXOS_OZONE_WL = "1";
   };
 }

@@ -9,4 +9,9 @@
     sopsFile = ./secrets/wg-private.key;
     format = "binary";
   };
+
+	sops.secrets.rke2 = {
+		sopsFile = ./secrets/rke2-config;
+		format = "binary";
+	};
 }

@@ -41,7 +41,7 @@
     networking.useNetworkd = true;
 
     # networking related
-    networking.firewall.allowedTCPPorts = [ 1443 ];
+    networking.firewall.allowedTCPPorts = [ 1443 6443 ];
     services.resolved.extraConfig = ''
                   DNSStubListener = false
             			LLMNR = false
@@ -128,5 +128,16 @@
         ];
       }
     ];
+
+    services.rke2 = {
+      enable = true;
+      role = "server";
+      params = [ "--node-ip=192.168.128.4" ];
+    };
+
+    networking.interfaces."enp2s0" = {
+      wakeOnLan.enable = true;
+      useDHCP = true;
+    };
   };
 }

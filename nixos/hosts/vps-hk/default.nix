@@ -5,7 +5,8 @@
     fs
     docker
     wireguard
-		./secrets.nix
+		services
+    ./secrets.nix
   ];
 
   base.gl.enable = false;
@@ -36,13 +37,6 @@
   boot.loader.grub.enable = lib.mkForce true;
   boot.loader.efi.canTouchEfiVariables = lib.mkForce false;
   boot.loader.grub.devices = [ "/dev/sda" ];
-  boot.kernel.sysctl = {
-    # if you use ipv4, this is all you need
-    "net.ipv4.conf.all.forwarding" = true;
-
-    # If you want to use it for ipv6
-    "net.ipv6.conf.all.forwarding" = true;
-  };
 
   virtualisation.docker.listenTcp = { enable = true; };
 
@@ -64,4 +58,12 @@
   ];
 
   networking.firewall.allowedTCPPorts = [ 80 443 ];
+
+  services.rke2 = {
+    enable = true;
+    role = "agent";
+
+    configFile = config.sops.secrets.rke2.path;
+    params = [ "--node-ip=192.168.128.2" ];
+  };
 }
