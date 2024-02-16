@@ -54,4 +54,7 @@
   services.v2raya.enable = true;
 
   virtualisation.docker.storageDriver = "btrfs";
+
+  # default shell
+  users.users.mt.shell = pkgs.zsh;
 }

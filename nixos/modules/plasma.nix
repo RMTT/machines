@@ -11,5 +11,7 @@
       libsForQt5.yakuake
       wl-clipboard
     ];
+
+		programs.kdeconnect.enable = true;
   };
 }
