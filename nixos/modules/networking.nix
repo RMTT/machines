@@ -41,7 +41,7 @@ with lib; {
 
       networking.networkmanager = mkIf (!cfg.useNetworkd) {
         enable = true;
-        dns = "dnsmasq";
+        dns = mkForce "dnsmasq";
       };
 
       systemd.network.wait-online.anyInterface = mkIf cfg.useNetworkd true;

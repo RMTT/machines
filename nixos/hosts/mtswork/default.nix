@@ -34,9 +34,6 @@
   # additional kernel modules
   boot.kernelModules = [ "kvm-intel" "i915" ];
 
-  # additional system packages
-  environment.systemPackages = with pkgs; [ glxinfo ];
-
   # nvidia related
   hardware.nvidia.prime = {
     intelBusId = "PCI:0:2:0";

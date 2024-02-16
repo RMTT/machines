@@ -3,7 +3,7 @@
   config = {
     services.xserver.enable = true;
     services.xserver.displayManager.sddm.enable = true;
-		services.xserver.displayManager.sddm.wayland.enable = true;
+    services.xserver.displayManager.sddm.wayland.enable = true;
     services.xserver.desktopManager.plasma5.enable = true;
 
     # desktop apps
@@ -11,9 +11,9 @@
       # plasma related
       libsForQt5.yakuake
       wl-clipboard
-			libsForQt5.sddm-kcm
+      libsForQt5.sddm-kcm
     ];
 
-		programs.kdeconnect.enable = true;
+    programs.kdeconnect.enable = true;
   };
 }
