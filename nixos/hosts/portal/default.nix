@@ -1,7 +1,7 @@
 { pkgs, lib, modules, config, ... }:
 with lib; {
   imports =
-    with modules; [ base networking wireguard ./secrets.nix ];
+    with modules; [ base networking wireguard services ./secrets.nix ];
 
   base.gl.enable = false;
 
@@ -47,23 +47,7 @@ with lib; {
   boot.loader.grub.enable = lib.mkForce true;
   boot.loader.efi.canTouchEfiVariables = lib.mkForce false;
 
-  boot.kernel.sysctl = {
-    # if you use ipv4, this is all you need
-    "net.ipv4.conf.all.forwarding" = true;
-
-    # If you want to use it for ipv6
-    "net.ipv6.conf.all.forwarding" = true;
-  };
-
   networking.useNetworkd = true;
-  services.resolved = {
-    enable = true;
-    extraConfig = ''
-                  			[Resolve]
-      										DNS = 1.1.1.1#cloudflare-dns.com 8.8.8.8#dns.google 1.0.0.1#cloudflare-dns.com 8.8.4.4#dns.google
-            							DNSOverTLS=yes
-                  			'';
-  };
 
   networking.wireguard.networks = [
     {
@@ -110,4 +94,12 @@ with lib; {
 
   networking.firewall.allowedUDPPorts = [ 12345 ];
   networking.firewall.allowedTCPPorts = [ 12346 ];
+
+  services.rke2 = {
+    enable = true;
+    role = "agent";
+
+    configFile = config.sops.secrets.rke2.path;
+		params = [ "--node-ip=192.168.128.1" ];
+  };
 }

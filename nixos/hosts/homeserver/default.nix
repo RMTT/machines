@@ -41,7 +41,7 @@
     networking.useNetworkd = true;
 
     # networking related
-    networking.firewall.allowedTCPPorts = [ 1443 ];
+    networking.firewall.allowedTCPPorts = [ 1443 6443 ];
     services.resolved.extraConfig = ''
                   DNSStubListener = false
             			LLMNR = false
@@ -81,29 +81,37 @@
     };
 
     # ups
-    users = {
-      users.nut = {
-        isSystemUser = true;
-        group = "nut";
-        home = "/var/lib/nut";
-        createHome = true;
-      };
-      groups.nut = { };
-    };
     power.ups = {
       enable = true;
       ups.main = {
         driver = "usbhid-ups";
         port = "auto";
       };
-    };
-    environment.etc = {
-      "nut/upsd.conf".source = ./config/upsd.conf;
-      "nut/upsd.users".source = ./config/upsd.users;
-      "nut/upsmon.conf".source = pkgs.writeText "upsmon.conf" ''
-        MONITOR main@localhost 1 upsuser upspass primary
-        SHUTDOWNCMD "${pkgs.systemd}/bin/systemctl poweroff"
-      '';
+
+      users.mt = {
+        upsmon = "primary";
+        instcmds = [ "ALL" ];
+        actions = [ "SET" ];
+        passwordFile = config.sops.secrets.ups_pass.path;
+      };
+
+      upsd = {
+        enable = true;
+        listen = [
+          {
+            address = "0.0.0.0";
+            port = 3493;
+          }
+        ];
+      };
+
+      upsmon = {
+        monitor.mt = {
+          user = "mt";
+          system = "main";
+          passwordFile = config.sops.secrets.ups_pass.path;
+        };
+      };
     };
 
     networking.wireguard.networks = [
@@ -120,5 +128,16 @@
         ];
       }
     ];
+
+    services.rke2 = {
+      enable = true;
+      role = "server";
+      params = [ "--node-ip=192.168.128.4" ];
+    };
+
+    networking.interfaces."enp2s0" = {
+      wakeOnLan.enable = true;
+      useDHCP = true;
+    };
   };
 }

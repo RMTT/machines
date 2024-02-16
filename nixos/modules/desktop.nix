@@ -25,7 +25,6 @@ in with lib; {
       obsidian
       virt-manager
       zoom-us
-      jetbrains.idea-community
     ];
 
     # fonts
@@ -78,5 +77,7 @@ in with lib; {
     # enable logitech
     hardware.logitech.wireless.enable = true;
     hardware.logitech.wireless.enableGraphical = true;
+
+		services.input-remapper.enable = true;
   };
 }

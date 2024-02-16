@@ -19,4 +19,9 @@
     sopsFile = ./secrets/sing.yaml;
     mode = "0444";
   };
+
+	sops.secrets.rke2 = {
+		sopsFile = ./secrets/rke2-config;
+		format = "binary";
+	};
 }

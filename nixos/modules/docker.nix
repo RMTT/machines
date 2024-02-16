@@ -57,7 +57,7 @@ with lib; {
     virtualisation.docker.daemon.settings = mkMerge [
       {
         # TODO: remove this when docker support nftables offically
-        iptables = false; # docker will bypass nftables's input rule now
+        iptables = true; # docker will bypass nftables's input rule now
       }
 
       (mkIf cfg.listenTcp.enable { hosts = [ "tcp://0.0.0.0:2376" ]; })

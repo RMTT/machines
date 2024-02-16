@@ -39,12 +39,6 @@ with lib; {
       virtualisation.docker.enable = mkForce false;
 
       boot.kernel.sysctl = {
-        # if you use ipv4, this is all you need
-        "net.ipv4.conf.all.forwarding" = true;
-
-        # If you want to use it for ipv6
-        "net.ipv6.conf.all.forwarding" = true;
-
         # source: https://github.com/mdlayher/homelab/blob/master/nixos/routnerr-2/configuration.nix#L52
         # By default, not automatically configure any IPv6 addresses.
         "net.ipv6.conf.all.accept_ra" = 0;

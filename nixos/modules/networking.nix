@@ -20,6 +20,8 @@ with lib; {
   config =
     let subnet4 = builtins.concatStringsSep "," cfg.bypassSubnet4;
     in {
+			systemd.network.enable = true;
+
       networking.extraHosts = "	${hosts_internet}\n";
 
       networking.nftables = {

@@ -1,1 +1,1 @@
-{ ... }: { imports = [ ./services/split_flow.nix ./services/pppoe.nix ]; }
+{ ... }: { imports = [ ./services/split_flow.nix ./services/pppoe.nix ./services/rke2.nix]; }
