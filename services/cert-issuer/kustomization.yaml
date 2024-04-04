@@ -1,0 +1,17 @@
+resources:
+  - issuer.yaml
+
+namespace: cert-manager
+
+generators:
+  - secrets.yaml
+
+configurations:
+  - namereference.yaml
+
+helmCharts:
+  - name: cert-manager
+    repo: https://charts.jetstack.io
+    version: v1.14.4
+    releaseName: cert-manager
+    namespace: cert-manager

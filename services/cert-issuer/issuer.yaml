@@ -1,0 +1,22 @@
+---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-rmtt-tech
+spec:
+  acme:
+    server: https://acme-v02.api.letsencrypt.org/directory
+    email: d.rong@outlook.com
+    privateKeySecretRef:
+      name: letsencrypt-rmtt-tech
+    solvers:
+    # An empty 'selector' means that this solver matches all domains
+    - selector:
+        dnsZones:
+        - 'rmtt.tech'
+      dns01:
+        cloudflare:
+          email: d.rong@outlook.com
+          apiTokenSecretRef:
+            name: cloudflare-api-token
+            key: rmtt-tech
