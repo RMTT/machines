@@ -8,6 +8,7 @@
     ./modules/tmux.nix
     ./modules/git.nix
   ];
+  system.stateVersion = "23.05";
 
   # configure gpg
   programs.gpg = {

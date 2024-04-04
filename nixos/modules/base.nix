@@ -70,7 +70,7 @@ in with lib; {
     ];
 
     # swap caps and escape
-    services.xserver.xkbOptions = "caps:swapescape";
+    services.xserver.xkb.options = "caps:swapescape";
 
     # console
     console = {

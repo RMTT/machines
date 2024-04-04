@@ -10,10 +10,10 @@ let
         type = str;
       };
 
-			endpoint = mkOption {
-				type = nullOr str;
-				default = null;
-			};
+      endpoint = mkOption {
+        type = nullOr str;
+        default = null;
+      };
     };
   };
 
@@ -24,14 +24,24 @@ let
       };
       listenPort = mkOption {
         type = int;
-        default = 12345;
+        default = 51820;
       };
       ip = mkOption {
         type = listOf str;
       };
 
+      mtu = mkOption {
+        type = int;
+        default = 1280;
+      };
+
       name = mkOption {
         type = nullOr str;
+        default = null;
+      };
+
+      script = mkOption {
+        type = nullOr lines;
         default = null;
       };
 
@@ -60,10 +70,6 @@ in
     };
   };
   config =
-    let
-      counter = { value = 0; };
-      inc = self: { value = self.value + 1; };
-    in
     {
       systemd.network.netdevs = listToAttrs (lists.imap0
         (i: config:
@@ -79,6 +85,7 @@ in
               wireguardConfig = {
                 ListenPort = config.listenPort;
                 PrivateKeyFile = config.privateKeyFile;
+                RouteTable = "main";
               };
               wireguardPeers = map
                 (peer: {
@@ -86,13 +93,35 @@ in
                     AllowedIPs = peer.allowedIPs;
                     PersistentKeepalive = 15;
                     PublicKey = peer.publicKey;
-										Endpoint = mkIf (peer.endpoint != null) peer.endpoint;
+                    Endpoint = mkIf (peer.endpoint != null) peer.endpoint;
                   };
                 })
                 config.peers;
             };
           })
         cfg.networks);
+
+      systemd.services = listToAttrs (lists.imap0
+        (i: config:
+          let name = if config.name == null then "wg${toString i}" else config.name;
+          in
+          {
+            name = "wg-script@${name}";
+            value = {
+              enable = true;
+              wants = [ "sys-devices-virtual-net-${name}.device" ];
+              wantedBy = [ "multi-user.target" ];
+              serviceConfig = {
+                Type = "simple";
+                KillMode = "mixed";
+              };
+              script = config.script;
+              scriptArgs = "%i";
+            };
+          }
+        )
+        (builtins.filter (config: config.script != null) cfg.networks)
+      );
 
       systemd.network.networks = listToAttrs (lists.imap0
         (i: config:
@@ -102,10 +131,14 @@ in
             name = name;
             value = {
               matchConfig = { Name = name; };
-							address = config.ip;
+              address = config.ip;
+              linkConfig = {
+                MTUBytes = toString config.mtu;
+              };
             };
           }
         )
         cfg.networks);
+
     };
 }

@@ -4,9 +4,14 @@ let
   wgSubnet4 = [ "192.168.128.0/24" ];
   cfg = config.networking;
   hosts_internet = ''
-    				85.237.205.152 portal-original
-        		101.227.98.233 portal
-        		103.39.79.110 vps-hk
+        				85.237.205.152 portal-origin
+            		101.227.98.233 portal
+            		103.39.79.110 vps-hk
+
+    						192.168.128.1 portal.infra.rmtt.host
+    						192.168.128.2 vps-hk.infra.rmtt.host
+    						192.168.128.3 router.infra.rmtt.host
+    						192.168.128.4 homeserver.infra.rmtt.host
   '';
 in
 with lib; {
@@ -20,7 +25,26 @@ with lib; {
   config =
     let subnet4 = builtins.concatStringsSep "," cfg.bypassSubnet4;
     in {
-			systemd.network.enable = true;
+      systemd.network = mkIf cfg.useNetworkd {
+        enable = true;
+        config = {
+          networkConfig = {
+            ManageForeignRoutingPolicyRules = false;
+          };
+        };
+
+        wait-online.anyInterface = true;
+        networks = mkIf cfg.useNetworkd {
+          "dhcp" = {
+            matchConfig = {
+              Name = "en*";
+              Type = "ether";
+            };
+            networkConfig = { DHCP = "yes"; };
+          };
+        };
+
+      };
 
       networking.extraHosts = "	${hosts_internet}\n";
 
@@ -36,7 +60,7 @@ with lib; {
         logRefusedUnicastsOnly = false;
         extraInputRules = "ip saddr {${subnet4}} accept";
 
-        allowedUDPPorts = [ 68 67 12345 ]; # DHCP and wireguard
+        allowedUDPPorts = [ 68 67 51820 ]; # DHCP and wireguard
       };
 
       networking.networkmanager = mkIf (!cfg.useNetworkd) {
@@ -44,15 +68,5 @@ with lib; {
         dns = mkForce "dnsmasq";
       };
 
-      systemd.network.wait-online.anyInterface = mkIf cfg.useNetworkd true;
-      systemd.network.networks = mkIf cfg.useNetworkd {
-        "dhcp" = {
-          matchConfig = {
-            Name = "en*";
-            Type = "ether";
-          };
-          networkConfig = { DHCP = "yes"; };
-        };
-      };
     };
 }

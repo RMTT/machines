@@ -36,9 +36,9 @@ in {
     systemd.services.clash = {
       description = "clash service";
       wantedBy = [ "multi-user.target" ];
-      after = [ "network-online.service" "systemd-networkd.service" ];
+      after = [ "network.target" "NetworkManager.service" "systemd-networkd.service" "iwd.service" ];
       script =
-        "	ln -sfn ${cfg.ui}/public $STATE_DIRECTORY/ui\n	${pkgs.clash-meta}/bin/clash-meta -d $STATE_DIRECTORY -f ${cfg.config}\n";
+        "${pkgs.clash-meta}/bin/clash-meta -d $STATE_DIRECTORY -f ${cfg.config}";
       serviceConfig = {
         Type = "simple";
         Restart = "always";

@@ -6,7 +6,7 @@ with lib; {
     fs
     networking
     wireguard
-		./secrets.nix
+    ./secrets.nix
   ];
 
   config =
@@ -19,8 +19,11 @@ with lib; {
       lan_ip_mask = "255.255.255.0";
       lan_ip_start = "192.168.6.10";
       lan_ip_end = "192.168.6.233";
+
+      infra_node_ip = "192.168.128.3";
     in
     {
+      system.stateVersion = "23.05";
       base.gl.enable = false;
 
       fs.normal.volumes = {
@@ -118,19 +121,29 @@ with lib; {
           };
         };
       };
+
       networking.wireguard.networks = [
         {
-          ip = [ "192.168.128.3/24" ];
+          ip = [ "${infra_node_ip}/24" ];
           privateKeyFile = config.sops.secrets.wg-private.path;
 
           peers = [
             {
-              allowedIPs = [ "192.168.128.1/24" ];
-              endpoint = "portal:30005";
-              publicKey = "nzARKMdkzfy1lMN9xk10yiMfAMzB889NROSa5jvDUBo=";
+              allowedIPs = [ "${infra_node_ip}/24" ];
+              endpoint = "vps-hk:51820";
+              publicKey = "2nzzD9C33j6loxVcrjfeWvokbUBXpyxEryUk6HN60nE=";
             }
+            {
+              allowedIPs = [ "192.168.128.4/32" ];
+              publicKey = "CN+zErqQ3JIlksx51LgY6exZgjDNIGJih73KhO1WpkI=";
+						}
           ];
         }
       ];
+
+      services.tailscale = {
+        enable = true;
+        openFirewall = true;
+      };
     };
 }

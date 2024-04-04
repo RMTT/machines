@@ -10,6 +10,8 @@
     services
   ];
 
+  system.stateVersion = "23.05";
+
   # set filesystems mount
   fs.btrfs.label = "@";
   fs.btrfs.volumes = {

@@ -5,65 +5,79 @@
     fs
     docker
     wireguard
-		services
+    services
     ./secrets.nix
   ];
 
-  base.gl.enable = false;
-
-  fs.normal.volumes = {
-    "/" = {
-      fsType = "ext4";
-      label = "@";
-      options =
-        [ "noatime" "data=writeback" "barrier=0" "nobh" "errors=remount-ro" ];
-    };
-  };
-  fs.swap.label = "@swap";
-
-  hardware.cpu.intel.updateMicrocode = true;
-  boot.initrd.availableKernelModules = [
-    "ata_piix"
-    "uhci_hcd"
-    "virtio_pci"
-    "virtio_scsi"
-    "virtio_blk"
-    "virtio_net"
-    "virtio"
-    "sd_mod"
-    "sr_mod"
-  ];
-  boot.loader.systemd-boot.enable = lib.mkForce false;
-  boot.loader.grub.enable = lib.mkForce true;
-  boot.loader.efi.canTouchEfiVariables = lib.mkForce false;
-  boot.loader.grub.devices = [ "/dev/sda" ];
-
-  virtualisation.docker.listenTcp = { enable = true; };
-
-  networking.useNetworkd = true;
-
-  networking.wireguard.networks = [
+  config =
+    let
+      infra_node_ip = "192.168.128.2";
+      wan = "ens18";
+    in
     {
-      ip = [ "192.168.128.2/24" ];
-      privateKeyFile = config.sops.secrets.wg-private.path;
+      system.stateVersion = "23.05";
 
-      peers = [
+      base.gl.enable = false;
+
+      fs.normal.volumes = {
+        "/" = {
+          fsType = "ext4";
+          label = "@";
+          options =
+            [ "noatime" "data=writeback" "barrier=0" "nobh" "errors=remount-ro" ];
+        };
+      };
+      fs.swap.label = "@swap";
+
+      hardware.cpu.intel.updateMicrocode = true;
+      boot.initrd.availableKernelModules = [
+        "ata_piix"
+        "uhci_hcd"
+        "virtio_pci"
+        "virtio_scsi"
+        "virtio_blk"
+        "virtio_net"
+        "virtio"
+        "sd_mod"
+        "sr_mod"
+      ];
+      boot.loader.systemd-boot.enable = lib.mkForce false;
+      boot.loader.grub.enable = lib.mkForce true;
+      boot.loader.efi.canTouchEfiVariables = lib.mkForce false;
+      boot.loader.grub.devices = [ "/dev/sda" ];
+
+      virtualisation.docker.listenTcp = { enable = true; };
+
+      networking.useNetworkd = true;
+
+      networking.wireguard.networks = [
         {
-          allowedIPs = [ "192.168.128.1/24" ];
-          publicKey = "nzARKMdkzfy1lMN9xk10yiMfAMzB889NROSa5jvDUBo=";
-          endpoint = "portal:30005";
+          ip = [ "${infra_node_ip}/24" ];
+          privateKeyFile = config.sops.secrets.wg-private.path;
+
+          peers = [
+            {
+              allowedIPs = [ "192.168.128.3/32" "192.168.6.1/24" ];
+              publicKey = "RYZS5mHgkmjW+/D40Zxn9d/h8NzvN4pzJVbnWK3DbXg=";
+            }
+
+            {
+              allowedIPs = [ "192.168.128.1/32" ];
+              endpoint = "portal-origin:51820";
+              publicKey = "nzARKMdkzfy1lMN9xk10yiMfAMzB889NROSa5jvDUBo=";
+            }
+          ];
         }
       ];
-    }
-  ];
 
-  networking.firewall.allowedTCPPorts = [ 80 443 ];
+      networking.firewall.allowedTCPPorts = [ 80 443 ];
 
-  services.rke2 = {
-    enable = true;
-    role = "agent";
+      services.rke2 = {
+        enable = true;
+        role = "agent";
 
-    configFile = config.sops.secrets.rke2.path;
-    params = [ "--node-ip=192.168.128.2" ];
-  };
+        configFile = config.sops.secrets.rke2.path;
+        params = [ "--node-ip=${infra_node_ip}" ];
+      };
+    };
 }

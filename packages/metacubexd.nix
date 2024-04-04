@@ -1,11 +1,11 @@
 { stdenv, fetchurl, ... }:
 let
-  version = "1.134.0";
+  version = "1.136.1";
   src = fetchurl {
     name = "metacubexd";
     url =
       "https://github.com/MetaCubeX/metacubexd/releases/download/v${version}/compressed-dist.tgz";
-    sha256 = "sha256-Xx2UReUAxHg4CrKqGs9vGmWRsosJE1OqnYSmp2wOC9M=";
+    sha256 = "sha256-5hYanG3tUSfsHdVBo/roNoZPcbBpBeals/4wHvYWhUs=";
   };
 in stdenv.mkDerivation {
   pname = "metacubexd";

@@ -2,7 +2,7 @@
   description = "mt's configuration of machines";
 
   inputs = {
-    nixpkgs-stable.url = "github:NixOS/nixpkgs/release-23.05";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/release-23.11";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     flake-utils.url = "github:numtide/flake-utils";
@@ -24,45 +24,55 @@
     plasma-manager.inputs.home-manager.follows = "home-manager";
   };
 
-  outputs = { self, nixpkgs, nixpkgs-stable, flake-utils, home-manager, nur
-    , sops-nix, ... }@inputs:
-    with flake-utils.lib;
-    let
-      stateVersion = "24.05";
+  outputs =
+    { self
+    , nixpkgs
+    , nixpkgs-stable
+    , flake-utils
+    , home-manager
+    , nur
+    , sops-nix
+    , ...
+    }@inputs:
+      with flake-utils.lib;
+      let
 
-      lib = import ./packages/lib.nix inputs;
+        lib = import ./packages/lib.nix inputs;
 
-      nixosConfigurations = {
-        mtswork = lib.mkSystem "mtswork" system.x86_64-linux stateVersion [ ];
+        nixosConfigurations = {
+          mtswork = lib.mkSystem "mtswork" system.x86_64-linux [ ];
 
-        mtspc = lib.mkSystem "mtspc" system.x86_64-linux stateVersion [ ];
+          mtspc = lib.mkSystem "mtspc" system.x86_64-linux [ ];
 
-        homeserver =
-          lib.mkSystem "homeserver" system.x86_64-linux stateVersion [ ];
+          homeserver =
+            lib.mkSystem "homeserver" system.x86_64-linux [ ];
 
-        router = lib.mkSystem "router" system.x86_64-linux stateVersion [ ];
+          router = lib.mkSystem "router" system.x86_64-linux [ ];
 
-        vps-hk = lib.mkSystem "vps-hk" system.x86_64-linux stateVersion [ ];
+          vps-hk = lib.mkSystem "vps-hk" system.x86_64-linux [ ];
 
-        portal = lib.mkSystem "portal" system.x86_64-linux stateVersion [ ];
+          portal = lib.mkSystem "portal" system.x86_64-linux [ ];
 
-        live = lib.mkSystem "live" system.x86_64-linux stateVersion [ ];
-      };
+          live = lib.mkSystem "live" system.x86_64-linux [ ];
+        };
 
-      homeConfigurations = {
-        mt = lib.mkUser "mt" system.x86_64-linux stateVersion;
-      };
-    in {
-      nixosConfigurations = nixosConfigurations;
-      homeConfigurations = homeConfigurations;
-    } // eachSystem [ system.x86_64-linux ] (system:
+        homeConfigurations = {
+          mt = lib.mkUser "mt" system.x86_64-linux;
+        };
+      in
+      {
+        nixosConfigurations = nixosConfigurations;
+        homeConfigurations = homeConfigurations;
+      } // eachSystem [ system.x86_64-linux ] (system:
       let
         pkgs = import nixpkgs {
           system = system;
           config.allowUnfree = true;
         };
-      in {
+      in
+      {
         formatter = pkgs.nixpkgs-fmt;
         packages.metacubexd = pkgs.callPackage ./packages/metacubexd.nix { };
+        packages.phantun = pkgs.callPackage ./packages/phantun.nix { };
       });
 }

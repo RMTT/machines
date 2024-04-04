@@ -45,7 +45,7 @@ let
 
 in
 {
-  mkSystem = name: system: nixosVersion: extraModules:
+  mkSystem = name: system: extraModules:
     let
       overlay-stable = final: prev: {
         stable = import nixpkgs-stable {
@@ -73,20 +73,18 @@ in
         {
           nix.registry =
             builtins.mapAttrs (name: value: { flake = value; }) inputs;
-          system.stateVersion = nixosVersion;
           networking.hostName = name;
         }
       ] ++ extraModules;
     };
 
-  mkUser = name: system: stateVersion:
+  mkUser = name: system:
     home-manager.lib.homeManagerConfiguration {
       pkgs = import nixpkgs { inherit system; };
       extraSpecialArgs.sops = sops-nix.homeManagerModules.sops;
       modules = [
         {
           nixpkgs.overlays = [ overlay-libvterm ];
-          home.stateVersion = stateVersion;
           home.username = name;
           home.homeDirectory = "/home/${name}";
           programs.home-manager.enable = true;

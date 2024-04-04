@@ -11,6 +11,8 @@
     docker
   ];
 
+  system.stateVersion = "23.05";
+
   # set filesystems mount
   fs.btrfs.label = "@";
   fs.btrfs.volumes = {
@@ -20,9 +22,9 @@
   fs.swap.label = "@swap";
   fs.boot.label = "@boot";
 
-	boot.kernel.sysctl = {
-		"kernel.yama.ptrace_scope" = 0;
-	};
+  boot.kernel.sysctl = {
+    "kernel.yama.ptrace_scope" = 0;
+  };
 
   # default shell
   users.users.mt.shell = pkgs.zsh;
@@ -45,7 +47,7 @@
   environment.systemPackages = with pkgs; [
     config.boot.kernelPackages.perf
     moonlight-qt
-    vmware-horizon-client
+		steam
   ];
 
   services.xserver.videoDrivers = [ "amdgpu" ];
@@ -55,7 +57,6 @@
 
   virtualisation.docker = {
     storageDriver = "btrfs";
-    daemon.settings = { exec-opts = [ "native.cgroupdriver=cgroupfs" ]; };
   };
 
   # kvm settings
