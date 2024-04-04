@@ -12,6 +12,10 @@ let
     						192.168.128.2 vps-hk.infra.rmtt.host
     						192.168.128.3 router.infra.rmtt.host
     						192.168.128.4 homeserver.infra.rmtt.host
+
+								192.168.6.1 router.home.rmtt.host
+								192.168.6.2 homeserver.home.rmtt.host
+								192.168.6.3 pikvm.home.rmtt.host
   '';
 in
 with lib; {

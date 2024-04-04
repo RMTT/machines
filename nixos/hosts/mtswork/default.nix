@@ -5,6 +5,7 @@
     networking
     plasma
     nvidia
+		docker
     pipewire
     developments
     services
@@ -56,4 +57,9 @@
 
   # default shell
   users.users.mt.shell = pkgs.zsh;
+
+  services.tailscale = {
+    enable = true;
+    openFirewall = true;
+  };
 }

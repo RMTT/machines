@@ -36,13 +36,6 @@ let
       });
   };
 
-  overlay-tailscale = final: prev: {
-    tailscale = prev.tailscale.overrideAttrs
-      (finalAttrs: oldAttrs: {
-        subPackages = oldAttrs.subPackages ++ [ "cmd/derper" ];
-      });
-  };
-
 in
 {
   mkSystem = name: system: extraModules:
@@ -68,7 +61,7 @@ in
         home-manager.nixosModules.home-manager
         disko.nixosModules.disko
         ({ config, pkgs, ... }: {
-          nixpkgs.overlays = [ overlay-stable overlay-ownpkgs overlay-tailscale ];
+          nixpkgs.overlays = [ overlay-stable overlay-ownpkgs ];
         })
         {
           nix.registry =

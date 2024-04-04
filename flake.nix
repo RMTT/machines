@@ -73,6 +73,6 @@
       {
         formatter = pkgs.nixpkgs-fmt;
         packages.metacubexd = pkgs.callPackage ./packages/metacubexd.nix { };
-        packages.phantun = pkgs.callPackage ./packages/phantun.nix { };
+        packages.derper = pkgs.callPackage ./packages/derp.nix { };
       });
 }

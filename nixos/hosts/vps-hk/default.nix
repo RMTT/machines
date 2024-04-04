@@ -57,7 +57,7 @@
 
           peers = [
             {
-              allowedIPs = [ "192.168.128.3/32" "192.168.6.1/24" ];
+              allowedIPs = [ "192.168.128.3/24" "192.168.6.1/24" ];
               publicKey = "RYZS5mHgkmjW+/D40Zxn9d/h8NzvN4pzJVbnWK3DbXg=";
             }
 
