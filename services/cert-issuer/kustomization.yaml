@@ -1,0 +1,9 @@
+resources:
+  - https://github.com/cert-manager/cert-manager/releases/download/v1.14.4/cert-manager.yaml
+  - issuer.yaml
+
+generators:
+  - secrets.yaml
+
+configurations:
+  - namereference.yaml

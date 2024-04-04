@@ -1,0 +1,47 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ddns-go-homeserver
+  labels:
+    app: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ddns-go-homeserver
+  template:
+    metadata:
+      labels:
+        app: ddns-go-homeserver
+    spec:
+      containers:
+      - name: ddns-go
+        image: jeessy/ddns-go
+        command: ["/app/ddns-go","-l", ":9876", "-f", "300", "-dns", "223.5.5.5"]
+        ports:
+        - containerPort: 9876
+        volumeMounts:
+          - name: config
+            mountPath: "/root"
+            readOnly: false
+      nodeName: homeserver
+      volumes:
+        - name: config
+          hostPath:
+            path: /opt/kubernetes_data/ddns-go
+            type: DirectoryOrCreate
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ddns-go-homeserver
+spec:
+  type: NodePort
+  selector:
+      app: ddns-go-homeserver
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 9876
+      nodePort: 30000
