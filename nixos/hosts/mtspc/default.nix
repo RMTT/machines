@@ -47,7 +47,7 @@
   environment.systemPackages = with pkgs; [
     config.boot.kernelPackages.perf
     moonlight-qt
-		steam
+    steam
   ];
 
   services.xserver.videoDrivers = [ "amdgpu" ];
@@ -74,4 +74,5 @@
   environment.variables = {
     NIXOS_OZONE_WL = "1";
   };
+
 }

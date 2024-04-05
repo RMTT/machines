@@ -22,6 +22,12 @@ let
       privateKeyFile = mkOption {
         type = path;
       };
+
+      openFirewall = mkOption {
+        type = types.bool;
+        default = true;
+      };
+
       listenPort = mkOption {
         type = int;
         default = 51820;
@@ -32,7 +38,7 @@ let
 
       mtu = mkOption {
         type = int;
-        default = 1280;
+        default = 1330;
       };
 
       name = mkOption {
@@ -120,8 +126,11 @@ in
             };
           }
         )
-        (builtins.filter (config: config.script != null) cfg.networks)
+        (filter (config: config.script != null) cfg.networks)
       );
+
+      networking.firewall.allowedUDPPorts = map (config: config.listenPort)
+        (filter (config: config.openFirewall) cfg.networks);
 
       systemd.network.networks = listToAttrs (lists.imap0
         (i: config:

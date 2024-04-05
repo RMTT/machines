@@ -59,7 +59,7 @@ with lib; {
         wan = { interfaces = [ wan ]; };
       };
       # bypass lan
-      networking.firewall.trustedInterfaces = [ "lan" ];
+      networking.firewall.trustedInterfaces = [ "lan" "tailscale0" ];
       systemd.network = {
         networks = {
           wan = {
@@ -98,7 +98,10 @@ with lib; {
       # enable nat from lan
       networking.nat = {
         enable = true;
-        internalIPs = [ "${lan_gateway}/${toString lan_ip_prefix}" ];
+        internalIPs = [
+          "${lan_gateway}/${toString lan_ip_prefix}"
+          "198.18.0.1/30" # clash tun ip
+        ];
         externalInterface = "wan";
       };
 
@@ -122,6 +125,15 @@ with lib; {
         };
       };
 
+      # wireguard and udp2raw
+      services.udp2raw = {
+        enable = true;
+        localAddress = "127.0.0.1";
+        openFirewall = false;
+        remoteAddress = "103.39.79.110";
+        role = "client";
+        passwordFile = config.sops.secrets.udp2raw.path;
+      };
       networking.wireguard.networks = [
         {
           ip = [ "${infra_node_ip}/24" ];
@@ -130,13 +142,13 @@ with lib; {
           peers = [
             {
               allowedIPs = [ "${infra_node_ip}/24" ];
-              endpoint = "vps-hk:51820";
+              endpoint = "127.0.0.1:51821";
               publicKey = "2nzzD9C33j6loxVcrjfeWvokbUBXpyxEryUk6HN60nE=";
             }
             {
               allowedIPs = [ "192.168.128.4/32" ];
               publicKey = "CN+zErqQ3JIlksx51LgY6exZgjDNIGJih73KhO1WpkI=";
-						}
+            }
           ];
         }
       ];
@@ -145,5 +157,21 @@ with lib; {
         enable = true;
         openFirewall = true;
       };
+
+      networking.routeFromIpset = [
+        {
+          rule = {
+            fwmark = "6";
+          };
+          name = "chnroute";
+
+          ipset = {
+            script = ''
+              					wget https://raw.githubusercontent.com/fernvenue/chn-cidr-list/master/ipv4.txt -O $V4_FILE
+              					wget https://raw.githubusercontent.com/fernvenue/chn-cidr-list/master/ipv6.txt -O $V6_FILE
+            '';
+          };
+        }
+      ];
     };
 }

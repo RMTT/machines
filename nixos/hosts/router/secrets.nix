@@ -9,4 +9,10 @@
     sopsFile = ./secrets/wg-private.key;
     format = "binary";
   };
+
+  sops.secrets.udp2raw = {
+    mode = "0400";
+    sopsFile = ./secrets/udp2raw;
+    format = "binary";
+  };
 }

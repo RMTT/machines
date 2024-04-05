@@ -7,8 +7,9 @@
 
     flake-utils.url = "github:numtide/flake-utils";
 
+    nixpkgs-hm.url = "github:NixOS/nixpkgs/nixos-unstable";
     home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs-hm";
 
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
@@ -74,5 +75,6 @@
         formatter = pkgs.nixpkgs-fmt;
         packages.metacubexd = pkgs.callPackage ./packages/metacubexd.nix { };
         packages.derper = pkgs.callPackage ./packages/derp.nix { };
+        packages.udp2raw-bin = pkgs.callPackage ./packages/udp2raw-bin.nix { };
       });
 }

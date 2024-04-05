@@ -8,7 +8,7 @@
     ./modules/tmux.nix
     ./modules/git.nix
   ];
-  system.stateVersion = "23.05";
+  home.stateVersion = "23.05";
 
   # configure gpg
   programs.gpg = {
@@ -22,7 +22,6 @@
     enableSshSupport = true;
     enableExtraSocket = true;
     enableZshIntegration = true;
-    pinentryFlavor = "qt";
     extraConfig = "	allow-loopback-pinentry\n";
   };
 

@@ -4,7 +4,6 @@
     workspace = {
       clickItemTo = "select";
       theme = "breeze-dark";
-      colorscheme = "BreezeDark";
     };
     shortcuts = {
       "Alacritty.desktop"."New" = "Meta+Return";

@@ -46,10 +46,16 @@
       boot.loader.efi.canTouchEfiVariables = lib.mkForce false;
       boot.loader.grub.devices = [ "/dev/sda" ];
 
-      virtualisation.docker.listenTcp = { enable = true; };
-
       networking.useNetworkd = true;
 
+      # wireguard and udp2raw
+      services.udp2raw = {
+        enable = true;
+        openFirewall = true;
+        role = "server";
+				remotePort = 51820;
+        passwordFile = config.sops.secrets.udp2raw.path;
+      };
       networking.wireguard.networks = [
         {
           ip = [ "${infra_node_ip}/24" ];

@@ -32,6 +32,9 @@ in
       after = [ "network-online.target" ];
       wantedBy = [ "multi-user.target" ];
 
+      serviceConfig = {
+        Type = "exec";
+      };
       script = "${cfg.package}/bin/derper -c /etc/derper/config -a ${cfg.listen} -hostname ${cfg.hostname} -certdir /etc/derper/certs";
     };
 

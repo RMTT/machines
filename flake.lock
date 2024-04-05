@@ -41,7 +41,7 @@
     "home-manager": {
       "inputs": {
         "nixpkgs": [
-          "nixpkgs"
+          "nixpkgs-hm"
         ]
       },
       "locked": {
@@ -65,6 +65,22 @@
         "owner": "NixOS",
         "repo": "nixpkgs",
         "rev": "d691274a972b3165335d261cc4671335f5c67de9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs-hm": {
+      "locked": {
+        "lastModified": 1712163089,
+        "narHash": "sha256-Um+8kTIrC19vD4/lUCN9/cU9kcOsD1O1m+axJqQPyMM=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "fd281bd6b7d3e32ddfa399853946f782553163b5",
         "type": "github"
       },
       "original": {
@@ -134,6 +150,7 @@
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
+        "nixpkgs-hm": "nixpkgs-hm",
         "nixpkgs-stable": "nixpkgs-stable",
         "nur": "nur",
         "plasma-manager": "plasma-manager",
