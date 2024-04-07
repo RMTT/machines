@@ -12,6 +12,7 @@
   config =
     let
       infra_node_ip = "192.168.128.2";
+      infra_node_ip6 = "fd12:3456:789a:1::2";
       wan = "ens18";
     in
     {
@@ -53,17 +54,18 @@
         enable = true;
         openFirewall = true;
         role = "server";
-				remotePort = 51820;
+        remotePort = 51820;
         passwordFile = config.sops.secrets.udp2raw.path;
       };
       networking.wireguard.networks = [
         {
-          ip = [ "${infra_node_ip}/24" ];
+          ip = [ "${infra_node_ip}/24" "${infra_node_ip6}/64" ];
           privateKeyFile = config.sops.secrets.wg-private.path;
+					mtu = 1350;
 
           peers = [
             {
-              allowedIPs = [ "192.168.128.3/24" "192.168.6.1/24" ];
+              allowedIPs = [ "192.168.128.3/24" "192.168.6.1/24" "${infra_node_ip6}/64" ];
               publicKey = "RYZS5mHgkmjW+/D40Zxn9d/h8NzvN4pzJVbnWK3DbXg=";
             }
 
@@ -83,7 +85,7 @@
         role = "agent";
 
         configFile = config.sops.secrets.rke2.path;
-        params = [ "--node-ip=${infra_node_ip}" ];
+        params = [ "--node-ip=${infra_node_ip},${infra_node_ip6}" ];
       };
     };
 }

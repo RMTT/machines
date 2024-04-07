@@ -12,6 +12,7 @@
   config =
     let
       infra_node_ip = "192.168.128.4";
+      infra_node_ip6 = "fd12:3456:789a:1::4";
       wan = "enp2s0";
     in
     {
@@ -122,12 +123,12 @@
 
       networking.wireguard.networks = [
         {
-          ip = [ "${infra_node_ip}/24" ];
+          ip = [ "${infra_node_ip}/24" "${infra_node_ip6}/64" ];
           privateKeyFile = config.sops.secrets.wg-private.path;
 
           peers = [
             {
-              allowedIPs = [ "${infra_node_ip}/24" ];
+              allowedIPs = [ "${infra_node_ip}/24" "${infra_node_ip6}/64" ];
               endpoint = "router.home.rmtt.host:51820";
               publicKey = "RYZS5mHgkmjW+/D40Zxn9d/h8NzvN4pzJVbnWK3DbXg=";
             }
@@ -138,7 +139,11 @@
       services.rke2 = {
         enable = true;
         role = "server";
-        params = [ "--node-ip=${infra_node_ip}" ];
+
+        configFile = config.sops.secrets.rke2.path;
+        params = [
+          "--node-ip=${infra_node_ip},${infra_node_ip6}"
+        ];
       };
 
       networking.interfaces."${wan}" = {

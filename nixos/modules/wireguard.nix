@@ -38,7 +38,7 @@ let
 
       mtu = mkOption {
         type = int;
-        default = 1330;
+        default = 1420;
       };
 
       name = mkOption {

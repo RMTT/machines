@@ -21,6 +21,7 @@ with lib; {
       lan_ip_end = "192.168.6.233";
 
       infra_node_ip = "192.168.128.3";
+      infra_node_ip6 = "fd12:3456:789a:1::3";
     in
     {
       system.stateVersion = "23.05";
@@ -136,17 +137,18 @@ with lib; {
       };
       networking.wireguard.networks = [
         {
-          ip = [ "${infra_node_ip}/24" ];
+          ip = [ "${infra_node_ip}/24" "${infra_node_ip6}/64" ];
           privateKeyFile = config.sops.secrets.wg-private.path;
+					mtu = 1350;
 
           peers = [
             {
-              allowedIPs = [ "${infra_node_ip}/24" ];
+              allowedIPs = [ "${infra_node_ip}/24" "${infra_node_ip6}/64" ];
               endpoint = "127.0.0.1:51821";
               publicKey = "2nzzD9C33j6loxVcrjfeWvokbUBXpyxEryUk6HN60nE=";
             }
             {
-              allowedIPs = [ "192.168.128.4/32" ];
+              allowedIPs = [ "192.168.128.4/32" "fd12:3456:789a:1::4/128" ];
               publicKey = "CN+zErqQ3JIlksx51LgY6exZgjDNIGJih73KhO1WpkI=";
             }
           ];

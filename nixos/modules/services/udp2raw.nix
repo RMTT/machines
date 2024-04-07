@@ -63,7 +63,7 @@ with lib;{
         postStop = "${execStr} --clear || true";
         script = ''
           								pass=$(<${cfg.passwordFile})
-                    			${execStr} -k $pass -a --fix-gro'';
+                    			${execStr} -k $pass -a --fix-gro --mtu-warn 1400'';
         serviceConfig = {
           Type = "exec";
         };
