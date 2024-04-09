@@ -1,0 +1,17 @@
+resources:
+  - namespace.yaml
+
+namespace: intel-device-plugins
+
+helmCharts:
+  - name: intel-device-plugins-operator
+    releaseName: intel-device-plugins-operator
+    repo: https://intel.github.io/helm-charts
+    version: 0.29.0
+    includeCRDs: true
+
+  - name: intel-device-plugins-gpu
+    releaseName: gpu-device-plugin
+    repo: https://intel.github.io/helm-charts/
+    version: 0.29.0
+    includeCRDs: true

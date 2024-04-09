@@ -1,0 +1,39 @@
+resources:
+  - namespace.yaml
+  - volume.yaml
+
+namespace: homarr
+
+helmCharts:
+  - name: homarr
+    releaseName: homarr
+    repo: https://oben01.github.io/charts
+    version: 1.2.4
+    valuesInline:
+      image:
+        tag: "0.14.2"
+      persistence:
+        - name: homarr-config
+          enabled: enable
+          namespace: homarr
+          storageClassName: "local-storage"
+          accessMode: "ReadWriteOnce"
+          size: "50Mi"
+          mountPath: "/app/data/configs"
+      ingress:
+        enabled: true
+        className: "nginx"
+        annotations:
+          cert-manager.io/cluster-issuer: "letsencrypt-all"
+        hosts:
+          - host: rmtt.tech
+            paths:
+              - path: /
+          - host: rmtt.fun
+            paths:
+              - path: /
+        tls:
+          - hosts:
+            - "rmtt.tech"
+            - "rmtt.fun"
+            secretName: homarr-tls

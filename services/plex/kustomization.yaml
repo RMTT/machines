@@ -1,0 +1,38 @@
+resources:
+  - namespace.yaml
+  - volumes.yaml
+
+namespace: plex
+commonLabels:
+  app: plex
+
+helmCharts:
+  - name: plex-media-server
+    releaseName: plex
+    repo: https://raw.githubusercontent.com/plexinc/pms-docker/gh-pages
+    version: 0.3.0
+    valuesInline:
+      nodeSelector:
+        "kubernetes.io/hostname": homeserver
+      pms:
+        storageClassName: local-path
+        resources:
+          requests:
+            gpu.intel.com/i915: 1
+          limits:
+            gpu.intel.com/i915: 1
+      ingress:
+        enabled: true
+        ingressClassName: nginx
+        url: plex.rmtt.tech
+        annotations:
+          cert-manager.io/cluster-issuer: "letsencrypt-all"
+      extraVolumeMounts:
+        - name: data
+          mountPath: "/media"
+      extraVolumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: plex-data
+      extraEnv:
+        PLEX_CLAIM: "claim-kDmsbazTodqEQF5ex2Mn"

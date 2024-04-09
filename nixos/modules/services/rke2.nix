@@ -16,6 +16,19 @@ let
           flannel:
             iface: "${cfg.iface}"'';
   };
+  nginxConfig = pkgs.writeTextFile {
+    name = "rke2-ingress-nginx-config.yaml";
+    text = ''
+      apiVersion: helm.cattle.io/v1
+      kind: HelmChartConfig
+      metadata:
+        name: rke2-ingress-nginx
+        namespace: kube-system
+      spec:
+        valuesContent: |-
+          controller:
+            allowSnippetAnnotations: true'';
+  };
 in
 {
   options = {
@@ -68,6 +81,7 @@ in
       postStart = mkIf (cfg.role == "server") ''
         							mkdir -p /var/lib/rancher/rke2/server/manifests/
         							cp ${canalConfig} /var/lib/rancher/rke2/server/manifests/rke2-canal-config.yaml
+        							cp ${nginxConfig} /var/lib/rancher/rke2/server/manifests/rke2-ingress-nginx-config.yaml
         				'';
       script = ''rke2 ${cfg.role} ${builtins.concatStringsSep " " cfg.params}'';
       postStop = ''

@@ -56,7 +56,8 @@
         						DNSSEC = false
       '';
 
-      base.onedrive.enable = true;
+      # enable onedrive
+      services.onedrive.enable = true;
 
       # set msmtp, for sending notification
       programs.msmtp = {
@@ -145,7 +146,18 @@
           "--node-ip=${infra_node_ip},${infra_node_ip6}"
         ];
       };
+      # for port forward
+      services.socat = {
+        enable = true;
+        listen = "TCP-LISTEN:1443";
+        remote = "TCP:127.0.0.1:443";
+      };
 
+      networking.firewall.prerouting = true;
+      networking.firewall.trustedSubnets = {
+        ipv4 = [ "10.42.0.0/16" "10.43.0.0/16" ];
+        ipv6 = [ "2001:cafe:42::/56" "2001:cafe:43::/112" ];
+      };
       networking.interfaces."${wan}" = {
         wakeOnLan.enable = true;
         useDHCP = true;

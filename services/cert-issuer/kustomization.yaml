@@ -1,9 +1,26 @@
+generatorOptions:
+  disableNameSuffixHash: true
+
 resources:
-  - https://github.com/cert-manager/cert-manager/releases/download/v1.14.4/cert-manager.yaml
+  - namespace.yaml
   - issuer.yaml
 
-generators:
-  - secrets.yaml
+namespace: cert-manager
 
-configurations:
-  - namereference.yaml
+secretGenerator:
+- name: cloudflare-api-token
+  envs:
+    - keys.env.dec
+
+helmCharts:
+  - name: cert-manager
+    releaseName: cert-manager
+    namespace: cert-manager
+    repo: https://charts.jetstack.io
+    version: 1.14.4
+    includeCRDs: true
+    valuesInline:
+      installCRDs: true
+      dns01RecursiveNameservers: "1.1.1.1:53,8.8.8.8:53,223.5.5.5:53"
+      dns01RecursiveNameserversOnly: true
+

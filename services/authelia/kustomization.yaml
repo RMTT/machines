@@ -3,6 +3,6 @@ resources:
   - volume.yaml
   - deployment.yaml
 
-namespace: ddns-go
+namespace: authelia
 commonLabels:
-  app: ddns-go
+  app: authelia

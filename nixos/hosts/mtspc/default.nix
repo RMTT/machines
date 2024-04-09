@@ -75,4 +75,9 @@
     NIXOS_OZONE_WL = "1";
   };
 
+  services.tailscale = {
+    enable = true;
+    openFirewall = true;
+  };
+
 }

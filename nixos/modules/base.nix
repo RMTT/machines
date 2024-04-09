@@ -5,11 +5,6 @@ in with lib; {
   imports = [ ./libvirtd.nix ];
 
   options.base = {
-    onedrive.enable = mkOption {
-      type = types.bool;
-      default = false;
-    };
-
     gl.enable = mkOption {
       type = types.bool;
       default = true;
@@ -54,6 +49,7 @@ in with lib; {
     boot.kernel.sysctl = {
       "net.ipv4.conf.all.forwarding" = true;
       "net.ipv6.conf.all.forwarding" = true;
+      "net.ipv4.conf.all.route_localnet" = true;
     };
 
     # timezone
@@ -227,7 +223,5 @@ in with lib; {
       ];
     };
 
-    # enable onedrive
-    services.onedrive.enable = cfg.onedrive.enable;
   };
 }

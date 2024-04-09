@@ -1,0 +1,29 @@
+resources:
+  - namespace.yaml
+  - users.yaml
+
+namespace: dashboard
+
+helmCharts:
+  - name: kubernetes-dashboard
+    releaseName: dashboard
+    repo: https://kubernetes.github.io/dashboard/
+    version: 7.2.0
+    valuesInline:
+      app:
+        scheduling:
+          nodeSelector:
+            "kubernetes.io/hostname": homeserver
+          settings:
+            global:
+              clusterName: Homelab
+        ingress:
+          enabled: enable
+          hosts:
+            - dashboard.rmtt.tech
+          ingressClassName: nginx
+          issuer:
+            name: letsencrypt-all
+            scope: cluster
+          tls:
+            secretName: dashboard-tls

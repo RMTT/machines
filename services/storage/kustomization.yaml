@@ -1,0 +1,10 @@
+resources:
+  - https://raw.githubusercontent.com/rancher/local-path-provisioner/v0.0.26/deploy/local-path-storage.yaml
+  - storageclass.yaml
+
+patches:
+- target:
+    version: v1
+    kind: ConfigMap
+    name: local-path-config
+  path: patchNodePath.yaml

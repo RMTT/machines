@@ -1,7 +1,5 @@
 { lib, config, pkgs, ... }:
 let
-  defaltLocalSubnet4 = "192.168.6.1/24";
-  wgSubnet4 = [ "192.168.128.0/24" ];
   cfg = config.networking;
   hosts_internet = ''
             				85.237.205.152 portal-origin
@@ -87,12 +85,8 @@ let
   };
 in
 {
+  imports = [ ./firewall.nix ];
   options = {
-    networking.bypassSubnet4 = mkOption {
-      type = types.listOf types.str;
-      default = [ "${defaltLocalSubnet4}" ] ++ wgSubnet4;
-    };
-
     networking.routeFromIpset = mkOption {
       type = types.listOf (types.submodule routeFromIpsetModule);
       default = [ ];
@@ -100,9 +94,6 @@ in
   };
 
   config =
-    let
-      subnet4 = builtins.concatStringsSep "," cfg.bypassSubnet4;
-    in
     {
       networking.iproute2.enable = true;
       systemd.network = mkIf cfg.useNetworkd {
@@ -129,15 +120,6 @@ in
       networking.extraHosts = "	${hosts_internet}\n";
 
       networking.useDHCP = false;
-      networking.firewall = {
-        enable = true;
-        checkReversePath = "loose";
-        logRefusedConnections = false;
-        logRefusedUnicastsOnly = false;
-        extraInputRules = "ip saddr {${subnet4}} accept";
-
-        allowedUDPPorts = [ 68 67 ]; # DHCP and wireguard
-      };
 
       networking.networkmanager = mkIf (!cfg.useNetworkd) {
         enable = true;

@@ -15,6 +15,7 @@
       clang-tools
       pkg-config
       pgcli
+			yq
     ];
 
   };

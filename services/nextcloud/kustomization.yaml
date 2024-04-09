@@ -1,0 +1,14 @@
+resources:
+  - namespace.yaml
+  - volumes.yaml
+
+namespace: nextcloud
+commonLabels:
+  app: nextcloud
+
+helmCharts:
+  - name: nextcloud
+    repo: https://nextcloud.github.io/helm/
+    releaseName: nextcloud
+    valuesFile: values.yaml.dec
+    version: 4.6.5
