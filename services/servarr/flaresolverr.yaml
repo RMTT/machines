@@ -1,0 +1,40 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flaresolverr
+  labels:
+    servarr: flaresolverr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      servarr: flaresolverr
+  template:
+    metadata:
+      labels:
+        servarr: flaresolverr
+    spec:
+      nodeSelector:
+        "kubernetes.io/hostname": homeserver
+      containers:
+      - name: flaresolverr
+        image: ghcr.io/flaresolverr/flaresolverr
+        env:
+          - name: TZ
+            value: "Asia/Shanghai"
+        ports:
+        - containerPort: 8191
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: flaresolverr
+spec:
+  type: ClusterIP
+  selector:
+      servarr: flaresolverr
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8191

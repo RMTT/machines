@@ -1,0 +1,78 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: qbittorrent
+  labels:
+    servarr: qbittorrent
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      servarr: qbittorrent
+  template:
+    metadata:
+      labels:
+        servarr: qbittorrent
+    spec:
+      nodeSelector:
+        "kubernetes.io/hostname": homeserver
+      containers:
+      - name: qbittorrent
+        image: lscr.io/linuxserver/qbittorrent
+        ports:
+        - containerPort: 8080
+        env:
+          - name: TZ
+            value: "Asia/Shanghai"
+          - name: PUID
+            value: "1000"
+        volumeMounts:
+          - name: downloads
+            mountPath: "/downloads"
+          - name: config
+            mountPath: "/config"
+      volumes:
+        - name: downloads
+          persistentVolumeClaim:
+            claimName: servarr-data-downloads
+        - name: config
+          persistentVolumeClaim:
+            claimName: qbittorrent-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: qbittorrent
+spec:
+  type: ClusterIP
+  selector:
+      servarr: qbittorrent
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: qbittorrent
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-all"
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - qb.rmtt.tech
+    secretName: qbittorrent-tls
+  rules:
+  - host: qb.rmtt.tech
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: qbittorrent
+            port:
+              number: 8080

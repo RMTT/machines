@@ -3,8 +3,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ddns-go-homeserver
-  labels:
-    app: nginx
 spec:
   replicas: 1
   selector:
@@ -34,14 +32,13 @@ kind: Service
 metadata:
   name: ddns-go-homeserver
 spec:
-  type: NodePort
+  type: ClusterIP
   selector:
       app: ddns-go-homeserver
   ports:
     - protocol: TCP
       port: 80
       targetPort: 9876
-      nodePort: 30000
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress

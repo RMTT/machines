@@ -1,0 +1,78 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bazarr
+  labels:
+    servarr: bazarr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      servarr: bazarr
+  template:
+    metadata:
+      labels:
+        servarr: bazarr
+    spec:
+      nodeSelector:
+        "kubernetes.io/hostname": homeserver
+      containers:
+      - name: bazarr
+        image: lscr.io/linuxserver/bazarr
+        env:
+          - name: TZ
+            value: "Asia/Shanghai"
+          - name: PUID
+            value: "1000"
+        ports:
+        - containerPort: 6767
+        volumeMounts:
+          - name: config
+            mountPath: "/config"
+          - name: media
+            mountPath: "/media"
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: bazarr-config
+        - name: media
+          persistentVolumeClaim:
+            claimName: servarr-data-media
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bazarr
+spec:
+  type: ClusterIP
+  selector:
+      servarr: bazarr
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 6767
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: bazarr
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-all"
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - bazarr.rmtt.tech
+    secretName: bazarr-tls
+  rules:
+  - host: bazarr.rmtt.tech
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: bazarr
+            port:
+              number: 6767

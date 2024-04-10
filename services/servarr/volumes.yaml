@@ -1,0 +1,176 @@
+---
+# for whole servarr project
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: servarr-data-media
+spec:
+  capacity:
+    storage: 8Ti
+  volumeMode: Filesystem
+  accessModes:
+  - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-storage
+  local:
+    path: /data/media
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - homeserver
+---
+# for whole servarr project
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: servarr-data-downloads
+spec:
+  capacity:
+    storage: 8Ti
+  volumeMode: Filesystem
+  accessModes:
+  - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-storage
+  local:
+    path: /data/downloads
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - homeserver
+---
+# for whole servarr project
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: servarr-data-media
+spec:
+  accessModes:
+  - ReadWriteMany
+  volumeMode: Filesystem
+  volumeName: servarr-data-media
+  storageClassName: local-storage
+  resources:
+    requests:
+      storage: 8Ti
+---
+# for whole servarr project
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: servarr-data-downloads
+spec:
+  accessModes:
+  - ReadWriteMany
+  volumeMode: Filesystem
+  volumeName: servarr-data-downloads
+  storageClassName: local-storage
+  resources:
+    requests:
+      storage: 8Ti
+---
+# for qbittorrent
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: qbittorrent-config
+spec:
+  accessModes:
+  - ReadWriteOnce
+  volumeMode: Filesystem
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 50Mi
+---
+# for overseerr
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: overseerr-config
+spec:
+  accessModes:
+  - ReadWriteOnce
+  volumeMode: Filesystem
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 50Mi
+---
+# for jproxy
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: jproxy-config
+spec:
+  accessModes:
+  - ReadWriteOnce
+  volumeMode: Filesystem
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 50Mi
+---
+# for prowlarr
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: prowlarr-config
+spec:
+  accessModes:
+  - ReadWriteOnce
+  volumeMode: Filesystem
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 50Mi
+---
+# for sonarr
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: sonarr-config
+spec:
+  accessModes:
+  - ReadWriteOnce
+  volumeMode: Filesystem
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 50Mi
+---
+# for radarr
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: radarr-config
+spec:
+  accessModes:
+  - ReadWriteOnce
+  volumeMode: Filesystem
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 50Mi
+---
+# for bazarr
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: bazarr-config
+spec:
+  accessModes:
+  - ReadWriteOnce
+  volumeMode: Filesystem
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 50Mi

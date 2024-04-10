@@ -40,8 +40,6 @@
         "net.ipv6.route.max_size" = 409600;
       };
 
-      virtualisation.docker.portainer.enable = true;
-
       # gpu setting
       services.xserver.videoDrivers = [ "i915" ];
 

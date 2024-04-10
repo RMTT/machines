@@ -1,0 +1,71 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jproxy
+  labels:
+    servarr: jproxy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      servarr: jproxy
+  template:
+    metadata:
+      labels:
+        servarr: jproxy
+    spec:
+      nodeSelector:
+        "kubernetes.io/hostname": homeserver
+      containers:
+      - name: jproxy
+        image: luckypuppy514/jproxy
+        env:
+          - name: TZ
+            value: "Asia/Shanghai"
+        ports:
+        - containerPort: 8117
+        volumeMounts:
+          - name: config
+            mountPath: "/app/database"
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: jproxy-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jproxy
+spec:
+  type: ClusterIP
+  selector:
+      servarr: jproxy
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8117
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: jproxy
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-all"
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - jproxy.rmtt.tech
+    secretName: jproxy-tls
+  rules:
+  - host: jproxy.rmtt.tech
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: jproxy
+            port:
+              number: 8117

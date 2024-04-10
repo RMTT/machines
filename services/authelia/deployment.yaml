@@ -45,14 +45,13 @@ kind: Service
 metadata:
   name: authelia
 spec:
-  type: NodePort
+  type: ClusterIP
   selector:
       app: authelia
   ports:
     - protocol: TCP
       port: 80
       targetPort: 9091
-      nodePort: 30001
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress

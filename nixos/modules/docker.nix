@@ -5,19 +5,6 @@ let
 in
 with lib; {
   options = {
-    # when launch portainer, you need specify a data dir to create a common volume
-    virtualisation.docker.portainer = {
-      enable = mkOption {
-        type = types.bool;
-        default = false;
-      };
-
-      docker_data_path = mkOption {
-        type = types.str;
-        default = "/opt/docker_data";
-      };
-    };
-
     virtualisation.docker.listenTcp = {
       enable = mkOption {
         type = types.bool;
@@ -70,16 +57,5 @@ with lib; {
         tlskey = cfg.listenTcp.tlskey;
       })
     ];
-
-    systemd.services.portainer = mkIf cfg.portainer.enable {
-      enable = true;
-      environment = { DOCKER_DATA_PATH = "${cfg.portainer.docker_data_path}"; };
-      path = [ cfg.package ];
-      script = ''
-        docker compose -f ${portainerYml} up
-      '';
-      wantedBy = [ "multi-user.target" ];
-      after = [ "docker.service" "docker.socket" ];
-    };
   };
 }

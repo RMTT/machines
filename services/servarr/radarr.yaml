@@ -1,0 +1,83 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: radarr
+  labels:
+    servarr: radarr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      servarr: radarr
+  template:
+    metadata:
+      labels:
+        servarr: radarr
+    spec:
+      nodeSelector:
+        "kubernetes.io/hostname": homeserver
+      containers:
+      - name: radarr
+        image: lscr.io/linuxserver/radarr
+        env:
+          - name: TZ
+            value: "Asia/Shanghai"
+          - name: PUID
+            value: "1000"
+        ports:
+        - containerPort: 7878
+        volumeMounts:
+          - name: config
+            mountPath: "/config"
+          - name: media
+            mountPath: "/media"
+          - name: downloads
+            mountPath: "/downloads"
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: radarr-config
+        - name: media
+          persistentVolumeClaim:
+            claimName: servarr-data-media
+        - name: downloads
+          persistentVolumeClaim:
+            claimName: servarr-data-downloads
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: radarr
+spec:
+  type: ClusterIP
+  selector:
+      servarr: radarr
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 7878
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: radarr
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-all"
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - radarr.rmtt.tech
+    secretName: radarr-tls
+  rules:
+  - host: radarr.rmtt.tech
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: radarr
+            port:
+              number: 7878
