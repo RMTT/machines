@@ -46,6 +46,7 @@
 
       package.disabled = true;
       gcloud.disabled = true;
+      kubernetes.disabled = false;
     };
   };
 }

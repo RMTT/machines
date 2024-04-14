@@ -106,6 +106,39 @@ with lib; {
         externalInterface = "wan";
       };
 
+      # ups
+      power.ups = {
+        enable = true;
+        mode = "netserver";
+        ups.main = {
+          driver = "usbhid-ups";
+          port = "auto";
+          directives = [
+            "default.battery.charge.low = 20"
+            "default.battery.runtime.low = 180"
+          ];
+        };
+
+        upsmon.enable = false;
+
+        users.mt = {
+          upsmon = "primary";
+          instcmds = [ "ALL" ];
+          actions = [ "SET" ];
+          passwordFile = config.sops.secrets.ups_pass.path;
+        };
+
+        upsd = {
+          enable = true;
+          listen = [
+            {
+              address = "0.0.0.0";
+              port = 3493;
+            }
+          ];
+        };
+      };
+
       # enable clash and adguardhome (for DNS and DHCP)
       services.split_flow = {
         enable = true;
@@ -139,7 +172,7 @@ with lib; {
         {
           ip = [ "${infra_node_ip}/24" "${infra_node_ip6}/64" ];
           privateKeyFile = config.sops.secrets.wg-private.path;
-					mtu = 1350;
+          mtu = 1350;
 
           peers = [
             {

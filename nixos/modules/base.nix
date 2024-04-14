@@ -83,7 +83,8 @@ in with lib; {
       bind
       htop
       gitFull
-      gh
+			git-lfs
+			file
       wget
       curl
       pciutils
@@ -168,16 +169,22 @@ in with lib; {
     # main user
     security.sudo = { wheelNeedsPassword = false; };
     users.mutableUsers = true;
+    users.groups.mt = {
+      gid = 1000;
+    };
     users.users.mt = {
       isNormalUser = true;
       home = "/home/mt";
       description = "mt";
+      group = "mt";
+      uid = 1000;
       extraGroups = [
         "wheel"
         "networkmanager"
         (mkIf config.virtualisation.docker.enable "docker")
         "video"
         "kvm"
+        "users"
       ];
       initialHashedPassword =
         "$y$j9T$RHlCoWbFSwNhdz9.5Y7Hy.$6CrlIcp6sl9vbBJL.ZcvJaq1KCZJ3RLV228gMezSBGA";

@@ -16,6 +16,7 @@
       pkg-config
       pgcli
 			yq
+			gh
     ];
 
   };

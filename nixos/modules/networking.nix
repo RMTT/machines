@@ -174,44 +174,68 @@ in
         (i: config:
           let
             name = config.name;
-            ipsetUpdateScript = ''
-                                                      V4_FILE=$STATE_DIRECTORY/ip.v4
-                                                      V6_FILE=$STATE_DIRECTORY/ip.v6
-              																				NFT_FILE=$STATE_DIRECTORY/${name}.nft
+            ipsetUpdateScript = pkgs.writeScript "route-from-ipset" ''
+							V4_FILE=$STATE_DIRECTORY/ip.v4
+            	V6_FILE=$STATE_DIRECTORY/ip.v6
+            	NFT_FILE=$STATE_DIRECTORY/${name}.nft
 
-              																				echo -en "flush set inet nixos-route ${name}-v4\n" > $NFT_FILE
-              																				echo -en "flush set inet nixos-route ${name}-v6\n" >> $NFT_FILE
-              																				echo -en "table inet nixos-route { \n" >> $NFT_FILE
+							setupRouteV4() {
+								echo -en "flush set inet nixos-route ${name}-v4\n" > $NFT_FILE
+								echo -en "table inet nixos-route { \n" >> $NFT_FILE
+								echo -en "set ${name}-v4 {type ipv4_addr; flags interval;\n" >> $NFT_FILE
+            		echo -en "elements={\n" >> $NFT_FILE
+            		mapfile -t lines < $V4_FILE
+            		for line in ''${lines[@]}
+            		do
+            			echo -en "$line," >> $NFT_FILE
+            		done
+            		echo -en "}}\n" >> $NFT_FILE
 
-                                                      ${config.ipset.script}
+            		echo -en "}" >> $NFT_FILE
+            		nft -f $NFT_FILE
+							}
 
-              																				echo -en "set ${name}-v4 {type ipv4_addr; flags interval;\n" >> $NFT_FILE
-              																				echo -en "elements={\n" >> $NFT_FILE
-              																				mapfile -t lines < $V4_FILE
-              																				for line in ''${lines[@]}
-              																				do
-              																					echo -en "$line," >> $NFT_FILE
-              																				done
-              																				echo -en "}}\n" >> $NFT_FILE
+							setupRouteV6() {
+								echo -en "flush set inet nixos-route ${name}-v6\n" > $NFT_FILE
+								echo -en "table inet nixos-route { \n" >> $NFT_FILE
+            		echo -en "set ${name}-v6 {type ipv6_addr; flags interval;\n" >> $NFT_FILE
+            		echo -en "elements={\n" >> $NFT_FILE
+            		mapfile -t lines < $V6_FILE
+            		for line in ''${lines[@]}
+            		do
+            			echo -en "$line," >> $NFT_FILE
+            		done
+            		echo -en "}}\n" >> $NFT_FILE
 
-              																				echo -en "set ${name}-v6 {type ipv6_addr; flags interval;\n" >> $NFT_FILE
-              																				echo -en "elements={\n" >> $NFT_FILE
-              																				mapfile -t lines < $V6_FILE
-              																				for line in ''${lines[@]}
-              																				do
-              																					echo -en "$line," >> $NFT_FILE
-              																				done
-              																				echo -en "}}\n" >> $NFT_FILE
+            		echo -en "}" >> $NFT_FILE
+            		nft -f $NFT_FILE
+							}
 
-              																				echo -en "}" >> $NFT_FILE
-              																				nft -f $NFT_FILE
-                                          						'';
+							if [ -e $V4_FILE ]; then
+								setupRouteV4
+							fi
+
+							if [ -e $V6_FILE ]; then
+								setupRouteV4
+							fi
+
+            	${config.ipset.script}
+
+							if [ -e $V4_FILE ]; then
+								setupRouteV4
+							fi
+
+							if [ -e $V6_FILE ]; then
+								setupRouteV4
+							fi
+						'';
           in
           {
             name = "route-from-ipset@" + name;
             value = {
               enable = true;
               wantedBy = [ "multi-user.target" ];
+              after = [ "network-online.target" ];
               serviceConfig = {
                 Type = "oneshot";
                 StateDirectory = "route-from-ipset@${name}";
@@ -222,10 +246,10 @@ in
 													ip -6 rule del fwmark ${config.rule.fwmark} lookup ${config.table.name} || true
 								'';
               script = ''
-                                              ip rule add preference ${toString config.rule.priority} fwmark ${config.rule.fwmark} lookup ${config.table.name}
-                                              ip -6 rule add preference ${toString config.rule.priority} fwmark ${config.rule.fwmark} lookup ${config.table.name}
-                															${if (config.ipset.script != "") then ipsetUpdateScript else ""}
-                															'';
+								ip rule add preference ${toString config.rule.priority} fwmark ${config.rule.fwmark} lookup ${config.table.name}
+              	ip -6 rule add preference ${toString config.rule.priority} fwmark ${config.rule.fwmark} lookup ${config.table.name}
+              	${if (config.ipset.script != "") then ipsetUpdateScript else ""}
+              '';
 
             };
           }

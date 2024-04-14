@@ -89,32 +89,11 @@
       # ups
       power.ups = {
         enable = true;
-        ups.main = {
-          driver = "usbhid-ups";
-          port = "auto";
-        };
-
-        users.mt = {
-          upsmon = "primary";
-          instcmds = [ "ALL" ];
-          actions = [ "SET" ];
-          passwordFile = config.sops.secrets.ups_pass.path;
-        };
-
-        upsd = {
-          enable = true;
-          listen = [
-            {
-              address = "0.0.0.0";
-              port = 3493;
-            }
-          ];
-        };
-
+        mode = "netclient";
         upsmon = {
           monitor.mt = {
             user = "mt";
-            system = "main";
+            system = "main@router.home.rmtt.host";
             passwordFile = config.sops.secrets.ups_pass.path;
           };
         };

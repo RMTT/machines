@@ -1,8 +1,9 @@
 resources:
   - namespace.yaml
-  - volume.yaml
 
 namespace: homarr
+commonLabels:
+  app.kubernetes.io/name: homarr
 
 helmCharts:
   - name: homarr
@@ -16,10 +17,16 @@ helmCharts:
         - name: homarr-config
           enabled: enable
           namespace: homarr
-          storageClassName: "local-storage"
-          accessMode: "ReadWriteOnce"
+          storageClassName: local-path
+          accessMode: ReadWriteOnce
           size: "50Mi"
           mountPath: "/app/data/configs"
+        - name: homarr-database
+          enabled: true
+          storageClassName: "local-path"
+          accessMode: "ReadWriteOnce"
+          size: "50Mi"
+          mountPath: "/app/database"
       ingress:
         enabled: true
         className: "nginx"
