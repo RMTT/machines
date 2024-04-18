@@ -140,12 +140,15 @@ with lib; {
       };
 
       # enable clash and adguardhome (for DNS and DHCP)
-      services.split_flow = {
+      services.clash = {
         enable = true;
         config = config.sops.secrets.clash_config.path;
+      };
 
-        ad = {
-          enable = true;
+      services.adguardhome = {
+        enable = true;
+        openFirewall = true;
+        settings = {
           dhcp = {
             enabled = true;
             interface_name = "lan";

@@ -103,7 +103,6 @@ in with lib; {
       gnupg
       bitwarden-cli
       sops
-      bitwarden-cli
       yubikey-manager
       yubikey-touch-detector
       yubikey-personalization

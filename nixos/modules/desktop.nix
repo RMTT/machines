@@ -25,6 +25,7 @@ in with lib; {
       obsidian
       virt-manager
       zoom-us
+			openconnect
     ];
 
     # fonts

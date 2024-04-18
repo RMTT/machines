@@ -15,7 +15,7 @@
       clang-tools
       pkg-config
       pgcli
-			yq
+			yq-go
 			gh
     ];
 

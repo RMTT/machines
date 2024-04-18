@@ -235,7 +235,6 @@ in
             value = {
               enable = true;
               wantedBy = [ "multi-user.target" ];
-              after = [ "network-online.target" ];
               serviceConfig = {
                 Type = "oneshot";
                 StateDirectory = "route-from-ipset@${name}";

@@ -1,10 +1,10 @@
 { config, lib, pkgs, ... }:
 with lib;
 
-let cfg = config.services.split_flow;
+let cfg = config.services.clash;
 in {
   options = {
-    services.split_flow = {
+    services.clash = {
       enable =
         mkEnableOption "Clash service with adguardhome dns and dhcp server";
 
@@ -12,21 +12,6 @@ in {
         type = types.path;
         default = null;
         description = "clash config file path";
-      };
-
-      ui = mkOption {
-        type = types.package;
-        default = pkgs.ownpkgs.metacubexd;
-      };
-
-      ad = {
-        enable = mkEnableOption "Enable AdGuardHome";
-
-        dhcp = mkOption {
-          type = types.attrs;
-          default = { };
-          description = "dhcp settings for adguardhome";
-        };
       };
     };
   };
@@ -46,16 +31,6 @@ in {
         LimitNOFILE = 1000000;
         StateDirectory = "clash";
         StateDirectoryMode = "0750";
-      };
-    };
-
-    systemd.services.adguardhome.serviceConfig.AmbientCapabilities =
-      mkIf cfg.ad.enable [ "CAP_NET_RAW" ];
-    services.adguardhome = mkIf cfg.ad.enable {
-      enable = true;
-      settings = {
-        dhcp = cfg.ad.dhcp;
-        dns.upstream_dns = [ "127.0.0.1:1053" ];
       };
     };
   };
