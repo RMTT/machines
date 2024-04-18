@@ -13,6 +13,7 @@ spec:
       labels:
         app: ddns-go-homeserver
     spec:
+      hostNetwork: true
       containers:
       - name: ddns-go
         image: jeessy/ddns-go
