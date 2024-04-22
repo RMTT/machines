@@ -123,7 +123,6 @@ in
 
       networking.networkmanager = mkIf (!cfg.useNetworkd) {
         enable = true;
-        dns = mkForce "dnsmasq";
       };
 
       # for route

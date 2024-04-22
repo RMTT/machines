@@ -39,10 +39,6 @@
 
   # nvidia related
   hardware.nvidia.prime = {
-    offload = {
-      enable = true;
-      enableOffloadCmd = true;
-    };
     intelBusId = "PCI:0:2:0";
 
     nvidiaBusId = "PCI:1:0:0";
@@ -59,8 +55,16 @@
 
   virtualisation.docker.storageDriver = "btrfs";
 
+  environment.systemPackages = with pkgs; [ kubernetes ];
+
   # default shell
   users.users.mt.shell = pkgs.zsh;
+
+	programs.clash-verge = {
+		enable = true;
+		package = pkgs.clash-verge-rev;
+		tunMode = true;
+	};
 
   services.tailscale = {
     enable = true;
