@@ -21,7 +21,6 @@ in with lib; {
       [ "https://mirrors.ustc.edu.cn/nix-channels/store" ];
     nix.settings.trusted-users = [ "root" "mt" ];
     nix.optimise.automatic = true;
-    nix.gc.automatic = true;
 
     # enable flakes
     nix.settings.experimental-features = [ "nix-command" "flakes" ];

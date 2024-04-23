@@ -19,7 +19,8 @@ let
   };
   compute = (cfg.usage == "compute");
   full = (cfg.usage == "full");
-in {
+in
+{
 
   options = {
     nvidia.usage = mkOption {
@@ -48,9 +49,7 @@ in {
         # Modesetting is required for display.
         modesetting.enable = true;
 
-        powerManagement.enable = true;
-        nvidiaPersistenced = true;
-
+        powerManagement = { enable = true; };
         nvidiaSettings = true;
         package = nvidia-package;
       };

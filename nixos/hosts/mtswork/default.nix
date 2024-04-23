@@ -38,10 +38,13 @@
   boot.kernelModules = [ "kvm-intel" "i915" ];
 
   # nvidia related
-  hardware.nvidia.prime = {
-    intelBusId = "PCI:0:2:0";
+  hardware.nvidia = {
+    powerManagement.enable = lib.mkForce false;
+    prime = {
+      intelBusId = "PCI:0:2:0";
 
-    nvidiaBusId = "PCI:1:0:0";
+      nvidiaBusId = "PCI:1:0:0";
+    };
   };
 
   services.xserver.videoDrivers = [ "intel" ];
@@ -55,16 +58,16 @@
 
   virtualisation.docker.storageDriver = "btrfs";
 
-  environment.systemPackages = with pkgs; [ kubernetes ];
+  environment.systemPackages = with pkgs; [ kubernetes rclone ];
 
   # default shell
   users.users.mt.shell = pkgs.zsh;
 
-	programs.clash-verge = {
-		enable = true;
-		package = pkgs.clash-verge-rev;
-		tunMode = true;
-	};
+  programs.clash-verge = {
+    enable = true;
+    package = pkgs.clash-verge-rev;
+    tunMode = true;
+  };
 
   services.tailscale = {
     enable = true;
