@@ -71,7 +71,6 @@ in with lib; {
     hardware.bluetooth.settings = {
       General = {
         Experimental = true;
-        KernelExperimental = true;
       };
     };
 

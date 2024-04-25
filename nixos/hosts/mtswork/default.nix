@@ -59,6 +59,7 @@
   virtualisation.docker.storageDriver = "btrfs";
 
   environment.systemPackages = with pkgs; [ kubernetes rclone ];
+	virtualisation.vmware.host.enable = true;
 
   # default shell
   users.users.mt.shell = pkgs.zsh;
@@ -73,4 +74,8 @@
     enable = true;
     openFirewall = true;
   };
+
+  boot.blacklistedKernelModules = [
+    "intel_hid"
+  ];
 }
