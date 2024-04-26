@@ -1,6 +1,7 @@
 { self
 , nixpkgs
 , nixpkgs-stable
+, nixpkgs-hm
 , home-manager
 , nur
 , sops-nix
@@ -73,7 +74,7 @@ in
 
   mkUser = name: system:
     home-manager.lib.homeManagerConfiguration {
-      pkgs = import nixpkgs { inherit system; };
+      pkgs = import nixpkgs-hm { inherit system; };
       extraSpecialArgs.sops = sops-nix.homeManagerModules.sops;
       modules = [
         {
