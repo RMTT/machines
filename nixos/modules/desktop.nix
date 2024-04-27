@@ -32,6 +32,7 @@ in with lib; {
     fonts.fontDir.enable = true;
     fonts.enableDefaultPackages = true;
     fonts.packages = with pkgs; [
+			wqy_zenhei
       noto-fonts
       sarasa-gothic
       joypixels
