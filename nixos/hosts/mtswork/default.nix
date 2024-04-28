@@ -58,7 +58,7 @@
 
   virtualisation.docker.storageDriver = "btrfs";
 
-  environment.systemPackages = with pkgs; [ kubernetes rclone ];
+  environment.systemPackages = with pkgs; [ kubernetes rclone steam ];
 	virtualisation.vmware.host.enable = true;
 
   # default shell

@@ -51,6 +51,7 @@ in
 			nvim-dap
 			nvim-dap-ui
 			nvim-dap-virtual-text
+			nvim-dap-go
       (fromGitHub "main" "65bbc52c27b0cd4b29976fe03be73cc943357528"
         "s1n7ax/nvim-window-picker")
       (fromGitHub "master" "e30e3de6c791a05cdc08f5346c9be56adf17f1fe"

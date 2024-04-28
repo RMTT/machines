@@ -390,6 +390,18 @@ local dap = require("dap")
 require("dapui").setup()
 require("nvim-dap-virtual-text").setup()
 
+require('dap-go').setup {
+    dap_configurations = {
+        {
+            -- Must be "go" or it will be ignored by the plugin
+            type = "go",
+            name = "Attach remote",
+            mode = "remote",
+            request = "attach",
+        },
+    },
+}
+
 vim.keymap.set('n', '<F5>', function() require('dap').continue() end)
 vim.keymap.set('n', '<F6>', function() require('dap').step_over() end)
 vim.keymap.set('n', '<F7>', function() require('dap').step_into() end)
@@ -415,23 +427,23 @@ vim.keymap.set('n', '<space>du', function()
 end)
 
 
-dap.adapters.delve_remote = {
-    type = "server",
-    port = 9004,
-}
-
-dap.configurations = {
-    go = {
-        {
-            type = "delve_remote",
-            name = "delve remote attach",
-            request = "attach",
-            mode = "remote",
-            substitutepath = { {
-                from = "${workspaceFolder}",
-                to = "/workspace",
-            } }
-        }
-    },
-}
+--dap.adapters.delve_remote = {
+--    type = "server",
+--    port = 9004,
+--}
+--
+--dap.configurations = {
+--    go = {
+--        {
+--            type = "delve_remote",
+--            name = "delve remote attach",
+--            request = "attach",
+--            mode = "remote",
+--            substitutepath = { {
+--                from = "${workspaceFolder}",
+--                to = "/workspace",
+--            } }
+--        }
+--    },
+--}
 ---- end ----
