@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nextcloud
+spec:
+  rules:
+  - host: cloud.rmtt.fun
+    http:
+      paths:
+      - backend:
+          service:
+            name: nextcloud
+            port:
+              number: 8080
+        path: /
+        pathType: Prefix
+  - host: cloud.rmtt.tech
+    http:
+      paths:
+      - backend:
+          service:
+            name: nextcloud
+            port:
+              number: 8080
+        path: /
+        pathType: Prefix

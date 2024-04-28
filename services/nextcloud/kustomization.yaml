@@ -6,6 +6,9 @@ namespace: nextcloud
 commonLabels:
   app: nextcloud
 
+patches:
+  - path: ./patches/ingress.yaml
+
 helmCharts:
   - name: nextcloud
     repo: https://nextcloud.github.io/helm/

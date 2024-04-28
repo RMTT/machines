@@ -6,10 +6,10 @@ nextcloud:
         runAsUser: ENC[AES256_GCM,data:a3hUaw==,iv:KHv6JYttdt15V/EEUyYOIQKH8cspXy1gGCNbkt4BU6c=,tag:5g3t0betXkodsVPjUJQT2g==,type:int]
         runAsGroup: ENC[AES256_GCM,data:XKTw/A==,iv:ZEI/PqcejvYPn/GAixyNvvwVpS+QIn9AjyvYunpkZL4=,tag:cKCRv3bDkxnzM+oiqMFUVg==,type:int]
     configs:
-        proxy.config.php: ENC[AES256_GCM,data:XYM6UXyWb1k+gThetc5cEjZ2iVkUqXPoEfODbS+JpVErJjP4p4uOthMqaF2/sqfndtR/eP7K9ZuWhcmCnJmitnSbm/YRUw4YExpBgdxLJYRD14Lx01OT0Yhbhf1Jx4chwxeYS+rwY6Tc1LejD0+bZmYulYFLWqCxFYtY0dMxHpLUQSI6xFlXyCoZsSlylizwsoE0hCk3tEad1L5rngJmbqwrd+wqb1F3KcBtDokJGvp1vqhKqB3BbRH2RDs82OzzlrNlv5uSujOtd4DxNm6CG0vkskAdN9wn8Mcz+JwwU82s1vBABf9MC7DhYsLe28+4jAJ6UfjWJ/0FSPYcXwsungDtko1kL7Lfw47cNf9bKYeSW14j2E2q/WjJ3y1AvrwiN58Cdpxv28CQ0wh9JFZ4m1tzjPVLG/yeOnUA4nUKrTJW4takApkCARmVV1ZQIIDO10kcNwyRzXYf6KWYKeUWeFxhA+jo0T/O4+P2hLEe1nb/v5jG2Wff,iv:N9jtQ94xo4bbyG7iWKmf38OwEV7I8mdEE73h9U9O+g8=,tag:lZET9H3O8X892gksiWmdrA==,type:str]
+        proxy.config.php: ENC[AES256_GCM,data:yJjFDRGtAeKbpeLhVKSNk5ZOwP4ydsePoQc2jlnKo6miIhIhYTjU48q1cvIt5llo114ERvXjGfGYzUenrPaBVewQHD2EM91SWdww4Y9aBw+OJnWCCXWPxV2GYbQ71C8MDuhRgEv1Abx5yMkO8XwjHVKBuT6qDJowQfuaqW1sKw2GO4FBqcoW6KhK/E6+2B7ZcDwup7v6bqA1xFy/taINbn70fFCcTG6AHNKSmENyOEIIQ/y8yPnEwxJxxvo+4XvaWQMu0BFAwu5dVo4KdB0jHx3qzvisFmV9B/KsjDoYDChUGm/22hXxtiLxtjThQWiJ80JS1ZIjV5a2Iu8UI1M0CtNC+qY37IOYxMs3j5uHv1Ou7zF9D0cnuGXPP9miXC0wPes=,iv:pgjsW7IL72UiUDErJRTZQ3rQa6hKIjGw+iM1THvspl4=,tag:bdnLcoLcwNEX8ZRhbEBUzQ==,type:str]
         extra.config.php: ENC[AES256_GCM,data:z1IWDXaN6ut2xX5cbJalrRp/eEZiJI0VBIewe5eYv07E7gpPRBX0d4s2Si5lDXC9uAvlZA4jMVbKGb2OW6tQ9eXWlgFGt7adolTBtR3Jy3nWZpnrjTbEKwOIYbPviLESoD9Tz+L+Mcv8+Tb6hF/L+NYzL/Bli5EaZQkRGXu0VXCdKQIRYW5E6a0/Z7yIM/OkRHgUMWALNUUjYiHtbra5vFX8ECeYxC2SAqc/ZkRCK22uki0=,iv:UVaqBKSUE9i/ML7DFcMqza0YrX7T8YBm/6SMIe839oY=,tag:jkKqO+btfEp+6McjtqgJig==,type:str]
     mail:
-        enabled: ENC[AES256_GCM,data:p1/A5g==,iv:PAEg1m+NCMDTMonYnZGbW5CPKqOkq79gwRqY4KbP9IM=,tag:Q/CQ1fLNSiu8b7ZyuDCOJw==,type:bool]
+        enabled: ENC[AES256_GCM,data:IlVlJ10=,iv:fTRWe7dgRNblrLIA3LJjR6aQTg/yPs6YWz55jylVOwQ=,tag:OSEWI5tNaLFpG2VoqKRQoA==,type:bool]
         fromAddress: ENC[AES256_GCM,data:43TtNNJT,iv:v18p9BuHOabnlQAn80RFaLbiv8UHshDI/aQW6PXfV3U=,tag:2JNWHz3yGAtNerFXpcCFjw==,type:str]
         domain: ENC[AES256_GCM,data:sFt0uxtZjWWA,iv:QSrw6t4docaKyyYws8/6du0DYkVPIqBH0wIbXO3DJ5g=,tag:/+h5pA0KFroRwQcAQ4d7Tg==,type:str]
         smtp:
@@ -61,8 +61,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2024-04-13T07:40:00Z"
-    mac: ENC[AES256_GCM,data:Sbj1UiQf+XfxkWUhczTfKECG5mJ7HQXQsHHVzRf99pt2B5NRm3vcJ4c7n1uh2CDTFhs1/AP0mUWL95RDpB6Rwap9o1i7r4P6S5JrQyVCITLjYcDHV4cxy29OhZ2mtgxitTSOB58PSaqYi7qSE+W5JtTpN16cOEBRTpOaCioa+T0=,iv:h5k0nT0NUoliQcr1DBf/r01svT3nAzTg/XQcezkwJ1k=,tag:t1M13ZPxxaoluRPoY0v0hA==,type:str]
+    lastmodified: "2024-04-28T13:38:20Z"
+    mac: ENC[AES256_GCM,data:rzId0/viGdiep+cCUZKh1ZbMr6x+Gf40XeEdoiWve612hxmBlBRsT+Alr0CiKg6emKEyURNg8+lkxmtGiKkMXupDVbL7ozWe4jBImmnz2NXF2AwfBPwm+QnJIjeCTfh+xKso1oKEdcDREMvMmsVHbjL/PNde3+T9HdR3Tf1YSg0=,iv:ECwJMRSVBhitu4xIUhDr7zvilWf4Q0SW/1Wb7ARzHng=,tag:ERglL4zAQevI2u0rmrr2WQ==,type:str]
     pgp:
         - created_at: "2024-04-09T02:29:17Z"
           enc: |-
