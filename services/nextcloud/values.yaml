@@ -23,6 +23,7 @@ ingress:
     className: ENC[AES256_GCM,data:R9tJxMg=,iv:a5qjvPc8LInTGDzLfTCQg/g1/+1jX2lF8+blinTmlWw=,tag:p6omtU6ClBwT8KmoW3NWuA==,type:str]
     annotations:
         cert-manager.io/cluster-issuer: ENC[AES256_GCM,data:PlH7MP0qIpnbPsyS5+H5,iv:VmkhI12Pcgz5U1nJLf1Ba5swPMrTCtUM5hYmPjn2LUU=,tag:ndGdFZ4lEDjXWQCCm7Clbw==,type:str]
+        nginx.ingress.kubernetes.io/proxy-body-size: ENC[AES256_GCM,data:68k=,iv:ZTZ9coO6j3syGCW/lVl6+GwAkF/pQApM5rIsQi9vn2U=,tag:rHoHRhThK+EXpDz4VOGTrg==,type:str]
         nginx.ingress.kubernetes.io/enable-cors: ENC[AES256_GCM,data:oK015wk=,iv:gZ5r6C8oHAqxALXgJqAfcPvAIlRYANCcNvejICmsoSs=,tag:ZrRqwZjQZ4PY/ib3Ry1Ssg==,type:str]
         nginx.ingress.kubernetes.io/cors-allow-headers: ENC[AES256_GCM,data:MaDMvI6JSCOsJdrxzQ40,iv:VnE1Rr9U+Pes5GiJnxQLs01teGhYaK5wPKEoeEVfFYU=,tag:QE2qo2HXASvMIkM4CHV9kQ==,type:str]
         nginx.ingress.kubernetes.io/server-snippet: ENC[AES256_GCM,data:0jgDaDloIfsMmLVdMsB0TOs/kJJYHUfTf1c9yha7mQAMO1luLrmmJg6M36A/D6PQWKXmIQDCZa68rE4aP/5qlyvu1up48HX14iFbia1QAFA9Q1vJbirWxLzF50CMJAVbQmjAGC6NvQyjfb7TCL2KjdgkXcVL4qDuG0beHu+MI005l2VDdG8n2V49xGhAM6Ag7yj2tWAHuTLnpJ8vQuDzCeZNO5fXjDJbKDqvrkzUTy7G4YSPyZjKi4NWWp2xU0uKT0uVIE+PXHJWxliahTLJ5F2uDR5aIg5nEudjbwO/k2w3owzVxniiFNcAcTbLt8HjczFfeyLqXLr8BD3oAp6mwtnM7+AoZcj50qsZmBBKUE53HaL5fej26J+cepCDv0Bpln2TwvpclAW9Gnx5T+oStp5SzHJzXcCsTNvbPMzHJUIEmu+ExbssEmY7srr02vmp1ipXwxDfqbL02FtYtxM9osSyMhJ9gZ97C7O9Ca78nxbZpb0hE2P9YiFI81A2COzRbrsUZeuTuRupBqPjDOr4PzotH3GY01srOTblJ5kCjybxNzSsw2dia0j3URFNsDB+K3pP1vQbtgLUWKUfIc6tKYFW5xk57N0RVZhvBEKpGygSCSqb6bMF80iISCAHtvDCw1bggTm0h011RxWMT1OJ36QAN7ITiZD2jeQ+3m6XBcv6pc5UQBcXpv8GJRrKIjA0HciVJOujcvJ7f0e2ow1IqztVmRYjRK5OwEhg01g0TS/rdjA1ghvpzVHHJqHpD86c2JVoU9DLi/YhY8yjU4CC3UlWM1I2WcAJEd7GEXDzrPNOXkTMMzMM0IeNxYPH2UL+XOfTnVf6ykMhQkmyfrqdLUdMNVgpNXo5YnFaq/na0RYmfi9rZOrNPapf75gwXAJxYzpPzFUv2AxMdyLJlO0uqfe+jBHJnydLrjZExSzT5Omqh7wSyslp2axzgUOvAPw+4OTTItmp+WahX3vUo5o=,iv:dmaUhNRoVQYubOn1hLClDt1XkH3mMjQMhdVoIVoKjUI=,tag:S56ST5PoIJESXFqehMSE8A==,type:str]
@@ -61,8 +62,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2024-04-28T13:38:20Z"
-    mac: ENC[AES256_GCM,data:rzId0/viGdiep+cCUZKh1ZbMr6x+Gf40XeEdoiWve612hxmBlBRsT+Alr0CiKg6emKEyURNg8+lkxmtGiKkMXupDVbL7ozWe4jBImmnz2NXF2AwfBPwm+QnJIjeCTfh+xKso1oKEdcDREMvMmsVHbjL/PNde3+T9HdR3Tf1YSg0=,iv:ECwJMRSVBhitu4xIUhDr7zvilWf4Q0SW/1Wb7ARzHng=,tag:ERglL4zAQevI2u0rmrr2WQ==,type:str]
+    lastmodified: "2024-05-01T11:46:30Z"
+    mac: ENC[AES256_GCM,data:oI1jM6JsWmxuqlmsvyY0en9wEqdA5wfrQND/Vi41hZELmtCQyVMR6Jd6CkcH1zt8oSgje/lPusbsRTGz5DFuGzXeIamljTXQWGdMaI4kr6YN+vTNBRqrda5pbDWpEyFCULoH8vyslt281j/WdLSAIsVO9MVYJuLC+YtQhZKJ9VI=,iv:XOfmAXyiS3LF6UEoK1JITcoqc5N8ym1eofFSYr5uKyM=,tag:NFzOM0+IUav5eUMSGnHVkg==,type:str]
     pgp:
         - created_at: "2024-04-09T02:29:17Z"
           enc: |-
