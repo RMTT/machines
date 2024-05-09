@@ -65,7 +65,7 @@
 
           peers = [
             {
-              allowedIPs = [ "192.168.128.3/24" "192.168.6.1/24" "${infra_node_ip6}/64" ];
+              allowedIPs = [ "${infra_node_ip}/24" "${infra_node_ip6}/64" ];
               publicKey = "RYZS5mHgkmjW+/D40Zxn9d/h8NzvN4pzJVbnWK3DbXg=";
             }
 

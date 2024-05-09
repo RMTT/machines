@@ -179,7 +179,7 @@ with lib; {
 
           peers = [
             {
-              allowedIPs = [ "${infra_node_ip}/24" "${infra_node_ip6}/64" ];
+              allowedIPs = [ "192.168.128.2/32" "fd12:3456:789a:1::2/128" ];
               endpoint = "127.0.0.1:51821";
               publicKey = "2nzzD9C33j6loxVcrjfeWvokbUBXpyxEryUk6HN60nE=";
             }
