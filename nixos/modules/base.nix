@@ -65,7 +65,7 @@ in with lib; {
     ];
 
     # swap caps and escape
-    services.xserver.xkb.options = "caps:swapescape";
+		services.xserver.xkb.options = "Caps_Lock=Escape";
 
     # console
     console = {
