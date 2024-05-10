@@ -52,9 +52,6 @@
 
   services.xserver.videoDrivers = [ "amdgpu" ];
 
-  # enable v2ray
-  services.v2raya.enable = true;
-
   virtualisation.docker = {
     storageDriver = "btrfs";
   };
