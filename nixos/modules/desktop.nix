@@ -11,7 +11,6 @@ in with lib; {
 
     # desktop apps
     environment.systemPackages = with pkgs; [
-      firefox
       telegram-desktop
       nextcloud-client
       element-desktop
