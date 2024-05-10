@@ -2,14 +2,13 @@
   description = "mt's configuration of machines";
 
   inputs = {
-    nixpkgs-stable.url = "github:NixOS/nixpkgs/release-23.11";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+		nixpkgs-fresh.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     flake-utils.url = "github:numtide/flake-utils";
 
-    nixpkgs-hm.url = "github:NixOS/nixpkgs/nixos-unstable";
     home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs-hm";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs-fresh";
 
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";

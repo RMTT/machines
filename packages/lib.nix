@@ -1,7 +1,6 @@
 { self
 , nixpkgs
-, nixpkgs-stable
-, nixpkgs-hm
+, nixpkgs-fresh
 , home-manager
 , nur
 , sops-nix
@@ -41,8 +40,8 @@ in
 {
   mkSystem = name: system: extraModules:
     let
-      overlay-stable = final: prev: {
-        stable = import nixpkgs-stable {
+      overlay-fresh = final: prev: {
+        fresh = import nixpkgs-fresh {
           inherit system;
           config.allowUnfree = true;
         };
@@ -54,6 +53,7 @@ in
       inherit system;
       specialArgs = {
         modules = modules;
+        nixpkgs-fresh = nixpkgs-fresh;
       };
       modules = [
         ../nixos/hosts/${name}/default.nix
@@ -62,7 +62,7 @@ in
         home-manager.nixosModules.home-manager
         disko.nixosModules.disko
         ({ config, pkgs, ... }: {
-          nixpkgs.overlays = [ overlay-stable overlay-ownpkgs ];
+          nixpkgs.overlays = [ overlay-fresh overlay-ownpkgs ];
         })
         {
           nix.registry =
@@ -74,7 +74,7 @@ in
 
   mkUser = name: system:
     home-manager.lib.homeManagerConfiguration {
-      pkgs = import nixpkgs-hm { inherit system; };
+      pkgs = import nixpkgs-fresh { inherit system; };
       extraSpecialArgs.sops = sops-nix.homeManagerModules.sops;
       modules = [
         {

@@ -64,7 +64,6 @@
 
   virtualisation.libvirtd.enable = true;
   virtualisation.libvirtd.qemuHook = ./scripts/vfio_auto_bind.sh;
-  networking.firewall.trustedInterfaces = [ "virbr0" ];
 
   environment.etc = {
     "NetworkManager/dnsmasq.d/vmware".text =
@@ -80,4 +79,10 @@
     openFirewall = true;
   };
 
+  programs.clash-verge = {
+    package = pkgs.fresh.clash-verge-rev;
+    enable = true;
+    tunMode = true;
+  };
+  networking.firewall.trustedInterfaces = [ "Meta" "virbr0" ];
 }

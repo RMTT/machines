@@ -41,7 +41,7 @@
     "home-manager": {
       "inputs": {
         "nixpkgs": [
-          "nixpkgs-hm"
+          "nixpkgs-fresh"
         ]
       },
       "locked": {
@@ -74,13 +74,13 @@
         "type": "github"
       }
     },
-    "nixpkgs-hm": {
+    "nixpkgs-fresh": {
       "locked": {
-        "lastModified": 1713895582,
-        "narHash": "sha256-cfh1hi+6muQMbi9acOlju3V1gl8BEaZBXBR9jQfQi4U=",
+        "lastModified": 1715266358,
+        "narHash": "sha256-doPgfj+7FFe9rfzWo1siAV2mVCasW+Bh8I1cToAXEE4=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "572af610f6151fd41c212f897c71f7056e3fb518",
+        "rev": "f1010e0469db743d14519a1efd37e23f8513d714",
         "type": "github"
       },
       "original": {
@@ -94,16 +94,13 @@
       "locked": {
         "lastModified": 1710542629,
         "narHash": "sha256-FdP5ENwCiMt5G+E6fCTcnKASKz2cTW19A5gOFgdiajw=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
+        "path": "/nix/store/9is6dscl7hn7q9xvmhwgqfi6m01s4hl0-source",
         "rev": "fc27eaa61bf866e03be1ea030fb1164fe4af02a3",
-        "type": "github"
+        "type": "path"
       },
       "original": {
-        "owner": "NixOS",
-        "ref": "release-23.11",
-        "repo": "nixpkgs",
-        "type": "github"
+        "id": "nixpkgs-stable",
+        "type": "indirect"
       }
     },
     "nur": {
@@ -150,7 +147,7 @@
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
-        "nixpkgs-hm": "nixpkgs-hm",
+        "nixpkgs-fresh": "nixpkgs-fresh",
         "nixpkgs-stable": "nixpkgs-stable",
         "nur": "nur",
         "plasma-manager": "plasma-manager",
