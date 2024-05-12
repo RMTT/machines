@@ -19,7 +19,7 @@ spec:
         "kubernetes.io/hostname": homeserver
       containers:
       - name: prowlarr
-        image: lscr.io/linuxserver/prowlarr
+        image: lscr.io/linuxserver/prowlarr:latest
         env:
           - name: TZ
             value: "Asia/Shanghai"
