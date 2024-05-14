@@ -10,6 +10,7 @@
     environment.systemPackages = with pkgs; [
       # plasma related
       libsForQt5.yakuake
+      libsForQt5.filelight
       wl-clipboard
       libsForQt5.sddm-kcm
     ];
