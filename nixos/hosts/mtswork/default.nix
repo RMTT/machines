@@ -76,6 +76,9 @@
     openFirewall = true;
   };
 
+  # fix for tarui, refer: https://github.com/NixOS/nixpkgs/issues/32580
+  environment.variables.WEBKIT_DISABLE_COMPOSITING_MODE = "1";
+
   boot.blacklistedKernelModules = [
     "intel_hid"
   ];
