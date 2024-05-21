@@ -12,7 +12,6 @@
 
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
-    sops-nix.inputs.nixpkgs-stable.follows = "nixpkgs-stable";
 
     nur.url = "github:nix-community/NUR";
 
@@ -27,7 +26,6 @@
   outputs =
     { self
     , nixpkgs
-    , nixpkgs-stable
     , flake-utils
     , home-manager
     , nur
