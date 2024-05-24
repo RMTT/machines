@@ -25,7 +25,7 @@ in with lib; {
       virt-manager
       zoom-us
       openconnect
-			fresh.kicad
+      kicad
     ];
 
     # fonts

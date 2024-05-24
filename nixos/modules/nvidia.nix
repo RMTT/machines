@@ -38,7 +38,7 @@ in
 
       # system packages for this machine
       environment.systemPackages = with pkgs; [
-        nvtop
+        nvtopPackages.full
         (mkIf compute nvidia-package.bin)
       ];
 

@@ -20,6 +20,7 @@
       "kwin"."Window to Desktop 4" = "Meta+$";
       "org.kde.dolphin.desktop"."_launch" = "Meta+E";
       "org.kde.krunner.desktop"."_launch" = [ "Meta+R" "Search" ];
+      "services/org.kde.spectacle.desktop"."RecordRegion" = "Meta+Shift+R";
       "org.kde.spectacle.desktop"."RectangularRegionScreenShot" =
         "Meta+Shift+S";
       "yakuake"."toggle-window-state" = [ "F12" "Meta+`" ];

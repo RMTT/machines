@@ -1,4 +1,4 @@
-{ pkgs, lib, config, modules, ... }: {
+{ pkgs, lib, config, modules, nur, ... }: {
   imports = with modules;[
     base
     fs
@@ -41,13 +41,20 @@
     efiSupport = true;
   };
 
+  # nvidia
+  hardware.nvidia.package = lib.mkForce config.boot.kernelPackages.nvidiaPackages.beta;
+
   hardware.cpu.amd.updateMicrocode = true;
 
+  nixpkgs.config.permittedInsecurePackages = [
+    "openssl-1.1.1w" # for wechat-uos
+  ];
   # additional system packages
   environment.systemPackages = with pkgs; [
     config.boot.kernelPackages.perf
     moonlight-qt
     steam
+    config.nur.repos.xddxdd.wechat-uos
   ];
 
   services.xserver.videoDrivers = [ "amdgpu" ];

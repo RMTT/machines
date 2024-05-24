@@ -14,11 +14,14 @@ in with lib; {
     # enable unfree pkgs
     nixpkgs.config.allowUnfree = true;
     nixpkgs.config.joypixels.acceptLicense = true;
-    nixpkgs.config.permittedInsecurePackages = [ "electron-25.9.0" ];
 
     # binary cache
     nix.settings.substituters =
-      [ "https://mirrors.ustc.edu.cn/nix-channels/store" ];
+      [
+        "https://mirrors.ustc.edu.cn/nix-channels/store"
+        config.nur.repos.xddxdd._meta.cachixUrl
+      ];
+    nix.settings.trusted-public-keys = [ config.nur.repos.xddxdd._meta.cachixPublicKey ];
     nix.settings.trusted-users = [ "root" "mt" ];
     nix.optimise.automatic = true;
 
@@ -65,7 +68,7 @@ in with lib; {
     ];
 
     # swap caps and escape
-		services.xserver.xkb.options = "Caps_Lock=Escape";
+    services.xserver.xkb.options = "Caps_Lock=Escape";
 
     # console
     console = {
@@ -82,8 +85,8 @@ in with lib; {
       bind
       htop
       gitFull
-			git-lfs
-			file
+      git-lfs
+      file
       wget
       curl
       pciutils
