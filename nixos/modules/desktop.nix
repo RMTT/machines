@@ -26,6 +26,7 @@ in with lib; {
       zoom-us
       openconnect
       kicad
+			easyeffects
     ];
 
     # fonts
