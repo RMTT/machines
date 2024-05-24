@@ -5,10 +5,6 @@
     services.displayManager.sddm.wayland.enable = true;
     services.desktopManager.plasma6.enable = true;
 
-    environment.sessionVariables = {
-      QT_AUTO_SCREEN_SCALE_FACTOR = "auto";
-    };
-
     # desktop apps
     environment.systemPackages = with pkgs; [
       # plasma related
