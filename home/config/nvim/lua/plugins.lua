@@ -78,6 +78,14 @@ vim.api.nvim_create_autocmd('LspAttach', {
 })
 ---- end ----
 
+---- settings for nvim-ufo ----
+require('ufo').setup({
+    provider_selector = function(bufnr, filetype, buftype)
+        return { 'treesitter', 'indent' }
+    end
+})
+--- end for nvim-ufo ----
+
 ---- setting for nvim-cmp ----
 -- Add additional capabilities supported by nvim-cmp
 local capabilities = require("cmp_nvim_lsp").default_capabilities()

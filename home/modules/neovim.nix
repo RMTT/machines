@@ -58,6 +58,7 @@ in
         "cappyzawa/starlark.vim")
       (fromGitHub "master" "bafa8feb15066d58a9de9a52719906343fb3af73"
         "carvel-dev/ytt.vim")
+			nvim-ufo
     ];
     # install luanguage servers
     extraPackages = with pkgs; [
