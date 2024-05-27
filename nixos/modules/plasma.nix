@@ -11,6 +11,7 @@
       kdePackages.yakuake
       kdePackages.filelight
       wl-clipboard
+			wayland-utils
       kdePackages.sddm-kcm
     ];
 

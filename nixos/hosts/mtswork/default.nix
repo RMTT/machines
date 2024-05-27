@@ -58,8 +58,11 @@
 
   virtualisation.docker.storageDriver = "btrfs";
 
-  environment.systemPackages = with pkgs; [ kubernetes rclone steam ];
-  virtualisation.vmware.host.enable = true;
+  nixpkgs.config.permittedInsecurePackages = [
+    "openssl-1.1.1w" # for wechat-uos
+  ];
+  environment.systemPackages = with pkgs; [ kubernetes rclone steam config.nur.repos.xddxdd.wechat-uos ];
+
 
   # default shell
   users.users.mt.shell = pkgs.zsh;
@@ -71,6 +74,10 @@
 
   # fix for tarui, refer: https://github.com/NixOS/nixpkgs/issues/32580
   environment.variables.WEBKIT_DISABLE_COMPOSITING_MODE = "1";
+
+  environment.variables = {
+    NIXOS_OZONE_WL = "1";
+  };
 
   boot.blacklistedKernelModules = [
     "intel_hid"
