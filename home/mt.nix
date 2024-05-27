@@ -7,6 +7,7 @@
     ./modules/plasma.nix
     ./modules/tmux.nix
     ./modules/git.nix
+    ./modules/fonts.nix
   ];
   home.stateVersion = "23.05";
 
@@ -39,6 +40,16 @@
   xdg.configFile.gitui = {
     source = ./config/gitui;
     recursive = true;
+  };
+
+  editorconfig = {
+    enable = true;
+    settings = {
+      "*" = {
+        indent_style = "space";
+        indent_size = 4;
+      };
+    };
   };
 
   # firefox related

@@ -53,9 +53,13 @@
   environment.systemPackages = with pkgs; [
     config.boot.kernelPackages.perf
     moonlight-qt
-    steam
     config.nur.repos.xddxdd.wechat-uos
   ];
+
+	programs.steam = {
+		enable = true;
+		extest.enable = true;
+	};
 
   services.xserver.videoDrivers = [ "amdgpu" ];
 

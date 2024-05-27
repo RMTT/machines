@@ -42,7 +42,8 @@ in with lib; {
       (nerdfonts.override { fonts = [ "FiraCode" ]; })
     ];
     fonts.fontconfig = {
-      allowBitmaps = false;
+			cache32Bit = true;
+      allowBitmaps = true;
       defaultFonts = {
         emoji = [ "JoyPixels" ];
         serif = [
