@@ -79,7 +79,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
 ---- end ----
 
 ---- settings for nvim-ufo ----
-vim.o.foldenable = false
 require('ufo').setup({
     provider_selector = function(bufnr, filetype, buftype)
         return { 'treesitter', 'indent' }
