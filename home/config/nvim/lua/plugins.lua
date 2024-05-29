@@ -21,7 +21,7 @@ vim.cmd('highlight NonText ctermbg=none guibg=none')
 
 ---- setting for window picker ----
 require 'window-picker'.setup {
-    include_current_win = true
+    include_current_win = true,
 }
 ---- end ----
 
@@ -80,7 +80,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
 ---- settings for nvim-ufo ----
 vim.o.foldcolumn = '1' -- '0' is not bad
-vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+vim.o.foldlevel = 99   -- Using ufo provider need a large value, feel free to decrease the value
 vim.o.foldlevelstart = 99
 vim.o.foldenable = true
 
