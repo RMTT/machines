@@ -38,6 +38,7 @@ in
       cmp-cmdline
       cmp-cmdline-history
       luasnip
+			friendly-snippets
       nvim-tree-lua
       barbar-nvim
       toggleterm-nvim
@@ -52,7 +53,7 @@ in
 			nvim-dap-ui
 			nvim-dap-virtual-text
 			nvim-dap-go
-      (fromGitHub "main" "65bbc52c27b0cd4b29976fe03be73cc943357528"
+      (fromGitHub "main" "41cfaa428577c53552200a404ae9b3a0b5719706"
         "s1n7ax/nvim-window-picker")
       (fromGitHub "master" "e30e3de6c791a05cdc08f5346c9be56adf17f1fe"
         "cappyzawa/starlark.vim")

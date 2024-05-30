@@ -97,6 +97,7 @@ local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 -- luasnip setup
 local luasnip = require("luasnip")
+require("luasnip.loaders.from_vscode").lazy_load()
 
 -- Setup nvim-cmp.
 local cmp = require('cmp')
@@ -114,9 +115,7 @@ cmp.setup {
             select = true,
         },
         ['<Tab>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-                cmp.select_next_item()
-            elseif luasnip.expand_or_jumpable() then
+            if luasnip.expand_or_jumpable() then
                 luasnip.expand_or_jump()
             else
                 fallback()
