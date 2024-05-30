@@ -72,11 +72,6 @@ in with lib; {
     # enable bluetooth
     hardware.bluetooth.enable = true;
     hardware.bluetooth.package = pkgs.bluez;
-    hardware.bluetooth.settings = {
-      General = {
-        Experimental = true;
-      };
-    };
 
     # enable logitech
     hardware.logitech.wireless.enable = true;
