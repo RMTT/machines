@@ -50,8 +50,6 @@
           vps-hk = lib.mkSystem "vps-hk" system.x86_64-linux [ ];
 
           portal = lib.mkSystem "portal" system.x86_64-linux [ ];
-
-          live = lib.mkSystem "live" system.x86_64-linux [ ];
         };
 
         homeConfigurations = {
