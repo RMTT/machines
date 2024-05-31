@@ -17,6 +17,7 @@
       pgcli
 			yq-go
 			gh
+			distrobox
     ];
 
   };
