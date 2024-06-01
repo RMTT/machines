@@ -3,3 +3,4 @@
 *.tar.gz
 *.tgz
 services/**/charts
+result
