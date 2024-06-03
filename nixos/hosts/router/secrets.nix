@@ -21,4 +21,11 @@
     sopsFile = ./secrets/ups_pass;
     format = "binary";
   };
+
+  sops.secrets.clash_config = {
+    sopsFile = ./secrets/clash_config;
+    format = "binary";
+    mode = "644";
+  };
+
 }

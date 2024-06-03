@@ -9,6 +9,7 @@
     pipewire
     developments
     services
+    ./secrets.nix
   ];
 
   system.stateVersion = "23.05";
@@ -53,9 +54,6 @@
   services.power-profiles-daemon.enable = false;
   services.tlp.enable = true;
 
-  # enable v2ray
-  services.v2raya.enable = true;
-
   virtualisation.docker.storageDriver = "btrfs";
 
   nixpkgs.config.permittedInsecurePackages = [
@@ -82,4 +80,9 @@
   boot.blacklistedKernelModules = [
     "intel_hid"
   ];
+
+  services.clash = {
+    enable = true;
+    config = config.sops.secrets.myclash.path;
+  };
 }
