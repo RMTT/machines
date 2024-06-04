@@ -9,7 +9,6 @@
     pipewire
     developments
     services
-    ./secrets.nix
   ];
 
   system.stateVersion = "23.05";
@@ -70,19 +69,14 @@
     openFirewall = true;
   };
 
-  # fix for tarui, refer: https://github.com/NixOS/nixpkgs/issues/32580
-  environment.variables.WEBKIT_DISABLE_COMPOSITING_MODE = "1";
-
-  environment.variables = {
-    NIXOS_OZONE_WL = "1";
-  };
-
   boot.blacklistedKernelModules = [
     "intel_hid"
   ];
 
-  services.clash = {
+  programs.clash-verge = {
+    package = pkgs.fresh.clash-verge-rev;
     enable = true;
-    config = config.sops.secrets.myclash.path;
+    tunMode = true;
   };
+  networking.firewall.trustedInterfaces = [ "Meta" ];
 }
