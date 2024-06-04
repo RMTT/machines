@@ -121,6 +121,7 @@ in with lib; {
       wireguard-tools
       efibootmgr
       virtiofsd
+			hwloc
     ];
 
     # set XDG viarables
