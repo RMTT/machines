@@ -96,7 +96,7 @@ in with lib; {
       pciutils
       usbutils
       inetutils
-      neofetch
+      fastfetch
       zsh
       python3Full
       tmux
