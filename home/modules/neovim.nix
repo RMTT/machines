@@ -53,8 +53,7 @@ in
 			nvim-dap-ui
 			nvim-dap-virtual-text
 			nvim-dap-go
-      (fromGitHub "main" "41cfaa428577c53552200a404ae9b3a0b5719706"
-        "s1n7ax/nvim-window-picker")
+			nvim-window-picker
       (fromGitHub "master" "e30e3de6c791a05cdc08f5346c9be56adf17f1fe"
         "cappyzawa/starlark.vim")
       (fromGitHub "master" "bafa8feb15066d58a9de9a52719906343fb3af73"
