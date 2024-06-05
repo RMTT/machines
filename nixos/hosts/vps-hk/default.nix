@@ -68,12 +68,6 @@
               allowedIPs = [ "${infra_node_ip}/24" "${infra_node_ip6}/64" ];
               publicKey = "RYZS5mHgkmjW+/D40Zxn9d/h8NzvN4pzJVbnWK3DbXg=";
             }
-
-            {
-              allowedIPs = [ "192.168.128.1/32" ];
-              endpoint = "portal-origin:51820";
-              publicKey = "nzARKMdkzfy1lMN9xk10yiMfAMzB889NROSa5jvDUBo=";
-            }
           ];
         }
       ];
