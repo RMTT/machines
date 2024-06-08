@@ -18,6 +18,7 @@
 			yq-go
 			gh
 			distrobox
+			go
     ];
 
   };
