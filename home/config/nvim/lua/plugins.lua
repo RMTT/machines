@@ -83,7 +83,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 ---- end ----
 
 ---- settings for nvim-ufo ----
-vim.o.foldcolumn = '1' -- '0' is not bad
+vim.o.foldcolumn = '0' -- '0' is not bad
 vim.o.foldlevel = 99   -- Using ufo provider need a large value, feel free to decrease the value
 vim.o.foldlevelstart = 99
 vim.o.foldenable = true
@@ -334,7 +334,9 @@ vim.api.nvim_set_keymap("t", "<C-q>", "<C-\\><C-n>", { noremap = true, silent = 
 ---- end ----
 
 ---- setting for gitsign ----
-require('gitsigns').setup()
+require('gitsigns').setup {
+  numhl      = true,
+}
 ---- end ----
 
 ---- setting for treesitter ----

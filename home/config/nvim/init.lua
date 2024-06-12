@@ -10,7 +10,6 @@ vim.o.shiftwidth = 4
 vim.o.shiftround = true
 vim.o.autowriteall = true
 vim.o.report = 0
-vim.o.relativenumber = true
 vim.o.number = true
 vim.o.secure = true
 vim.o.exrc = true
