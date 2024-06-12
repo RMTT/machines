@@ -1,8 +1,3 @@
----- setting for neodev ----
--- IMPORTANT: make sure to setup neodev BEFORE lspconfig
-require("neodev").setup({})
----- end ----
-
 ---- setting for lualine ----
 require('lualine').setup {
   options = { icon_enabled = true, theme = "catppuccin" },
@@ -335,7 +330,7 @@ vim.api.nvim_set_keymap("t", "<C-q>", "<C-\\><C-n>", { noremap = true, silent = 
 
 ---- setting for gitsign ----
 require('gitsigns').setup {
-  numhl      = true,
+  numhl = true,
 }
 ---- end ----
 

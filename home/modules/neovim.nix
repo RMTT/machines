@@ -48,7 +48,6 @@ in
       nvim-treesitter.withAllGrammars
       auto-session
       vim-better-whitespace
-      neodev-nvim
       nvim-dap
       nvim-dap-ui
       nvim-dap-virtual-text
