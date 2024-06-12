@@ -20,6 +20,7 @@ require("catppuccin").setup {
     barbar = true,
   },
 }
+vim.cmd.colorscheme "catppuccin"
 ---- end ----
 
 ---- setting for window picker ----
