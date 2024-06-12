@@ -27,7 +27,7 @@ in
       nvim-web-devicons
       lualine-nvim
       rainbow
-      tokyonight-nvim
+			catppuccin-nvim
       plenary-nvim
       telescope-nvim
       nvim-cmp
@@ -38,7 +38,7 @@ in
       cmp-cmdline
       cmp-cmdline-history
       luasnip
-			friendly-snippets
+      friendly-snippets
       nvim-tree-lua
       barbar-nvim
       toggleterm-nvim
@@ -49,17 +49,17 @@ in
       auto-session
       vim-better-whitespace
       neodev-nvim
-			nvim-dap
-			nvim-dap-ui
-			nvim-dap-virtual-text
-			nvim-dap-go
-			nvim-window-picker
+      nvim-dap
+      nvim-dap-ui
+      nvim-dap-virtual-text
+      nvim-dap-go
+      nvim-window-picker
       (fromGitHub "master" "e30e3de6c791a05cdc08f5346c9be56adf17f1fe"
         "cappyzawa/starlark.vim")
       (fromGitHub "master" "bafa8feb15066d58a9de9a52719906343fb3af73"
         "carvel-dev/ytt.vim")
-			promise-async
-			nvim-ufo
+      promise-async
+      nvim-ufo
     ];
     # install luanguage servers
     extraPackages = with pkgs; [
