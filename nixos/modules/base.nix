@@ -100,7 +100,6 @@ in with lib; {
       zsh
       python3Full
       tmux
-      gitui
       ripgrep
       iptables
       nftables
@@ -121,7 +120,7 @@ in with lib; {
       wireguard-tools
       efibootmgr
       virtiofsd
-			hwloc
+      hwloc
     ];
 
     # set XDG viarables
