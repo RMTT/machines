@@ -132,8 +132,6 @@ in with lib; {
       XDG_STATE_HOME = "$HOME/.local/state";
 
       PATH = [ "${XDG_BIN_HOME}" ];
-
-      NIXPKGS_ALLOW_UNFREE = "1";
     };
 
     # set default editor to nvim
