@@ -26,8 +26,9 @@ in
       nvim-lspconfig
       nvim-web-devicons
       lualine-nvim
+      comment-nvim
       rainbow
-			catppuccin-nvim
+      catppuccin-nvim
       plenary-nvim
       telescope-nvim
       nvim-cmp

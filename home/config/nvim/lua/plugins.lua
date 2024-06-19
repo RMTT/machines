@@ -459,3 +459,7 @@ end)
 --    },
 --}
 ---- end ----
+
+-- setting for Comment.nvim
+require('Comment').setup()
+-- end Comment.nvim
