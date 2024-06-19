@@ -3,7 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-		nixpkgs-fresh.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs-fresh.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
     flake-utils.url = "github:numtide/flake-utils";
 
@@ -35,7 +35,7 @@
       with flake-utils.lib;
       let
 
-        lib = import ./packages/lib.nix inputs;
+        lib = import ./lib inputs;
 
         nixosConfigurations = {
           mtswork = lib.mkSystem "mtswork" system.x86_64-linux [ ];
@@ -68,8 +68,6 @@
       in
       {
         formatter = pkgs.nixpkgs-fmt;
-        packages.metacubexd = pkgs.callPackage ./packages/metacubexd.nix { };
-        packages.derper = pkgs.callPackage ./packages/derp.nix { };
-        packages.udp2raw-bin = pkgs.callPackage ./packages/udp2raw-bin.nix { };
+        packages = import ./packages pkgs;
       });
 }

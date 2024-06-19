@@ -14,6 +14,7 @@ in with lib; {
     # enable unfree pkgs
     nixpkgs.config.allowUnfree = true;
     nixpkgs.config.joypixels.acceptLicense = true;
+    nixpkgs.config.segger-jlink.acceptLicense = true;
 
     # binary cache
     nix.settings.substituters =
