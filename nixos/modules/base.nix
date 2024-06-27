@@ -221,11 +221,9 @@ in with lib; {
     };
 
     # opengl and hardware acc
-    hardware.opengl = mkIf cfg.gl.enable {
+    hardware.graphics = mkIf cfg.gl.enable {
       enable = true;
-      driSupport = true;
-      driSupport32Bit = true;
-      setLdLibraryPath = true;
+			enable32Bit = true;
       extraPackages = with pkgs; [
         libva
         mesa.drivers

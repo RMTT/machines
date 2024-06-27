@@ -118,11 +118,10 @@
         enable = true;
         role = "server";
 
-        configFile = config.sops.secrets.rke2.path;
-        params = [
-          "--node-ip=${infra_node_ip},${infra_node_ip6}"
-        ];
+        configPath = config.sops.secrets.rke2.path;
+        nodeIP = "${infra_node_ip},${infra_node_ip6}";
       };
+
       # for port forward
       services.socat = {
         enable = true;

@@ -64,7 +64,7 @@ in
     # install luanguage servers
     extraPackages = with pkgs; [
       lua-language-server
-      nodePackages.pyright
+      pyright
       nil
       nixpkgs-fmt
       cmake-language-server
