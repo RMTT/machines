@@ -26,7 +26,7 @@ in with lib; {
       zoom-us
       openconnect
       kicad
-			easyeffects
+      easyeffects
     ];
 
     # fonts
@@ -42,7 +42,7 @@ in with lib; {
       (nerdfonts.override { fonts = [ "FiraCode" ]; })
     ];
     fonts.fontconfig = {
-			cache32Bit = true;
+      cache32Bit = true;
       allowBitmaps = true;
       defaultFonts = {
         emoji = [ "JoyPixels" ];
@@ -68,6 +68,8 @@ in with lib; {
         fcitx5-chinese-addons
       ];
     };
+
+    xdg.portal.enable = true;
 
     # enable bluetooth
     hardware.bluetooth.enable = true;

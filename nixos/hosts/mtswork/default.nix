@@ -26,7 +26,7 @@
   boot.kernelPackages = pkgs.linuxKernel.packages.linux_zen;
 
   # hardware settings
-  hardware.opengl.extraPackages = with pkgs; [
+  hardware.graphics.extraPackages = with pkgs; [
     intel-ocl
     intel-media-driver # LIBVA_DRIVER_NAME=iHD
     vaapiIntel # LIBVA_DRIVER_NAME=i965 (older but works better for Firefox/Chromium)
