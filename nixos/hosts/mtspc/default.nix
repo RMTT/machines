@@ -42,7 +42,7 @@
   };
 
   # nvidia
-  hardware.nvidia.package = lib.mkForce config.boot.kernelPackages.nvidiaPackages.beta;
+  hardware.nvidia.package = lib.mkForce config.boot.kernelPackages.nvidiaPackages.latest;
 
   hardware.cpu.amd.updateMicrocode = true;
 
@@ -56,10 +56,10 @@
     config.nur.repos.xddxdd.wechat-uos
   ];
 
-	programs.steam = {
-		enable = true;
-		extest.enable = true;
-	};
+  programs.steam = {
+    enable = true;
+    extest.enable = true;
+  };
 
   services.xserver.videoDrivers = [ "amdgpu" ];
 
@@ -75,6 +75,7 @@
 
   environment.variables = {
     NIXOS_OZONE_WL = "1";
+    MOZ_ENABLE_WAYLAND = "0"; # firefox is unstable in explicit sync now.
   };
 
   services.tailscale = {

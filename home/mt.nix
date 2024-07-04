@@ -24,7 +24,7 @@
     enableSshSupport = true;
     enableExtraSocket = true;
     enableZshIntegration = true;
-    pinentryPackage = pkgs.pinentry-qt;
+    pinentryPackage = pkgs.pinentry-tty;
     extraConfig = "	allow-loopback-pinentry\n";
   };
 
