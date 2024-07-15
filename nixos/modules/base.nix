@@ -99,7 +99,7 @@ in with lib; {
       inetutils
       fastfetch
       zsh
-      python3Full
+      python3
       tmux
       ripgrep
       iptables

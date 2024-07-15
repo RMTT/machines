@@ -12,7 +12,7 @@ in with lib; {
     # desktop apps
     environment.systemPackages = with pkgs; [
       telegram-desktop
-      nextcloud-client
+      fresh.nextcloud-client
       element-desktop
       zotero
       anki
@@ -25,7 +25,7 @@ in with lib; {
       virt-manager
       zoom-us
       openconnect
-      kicad
+#kicad
       easyeffects
     ];
 
