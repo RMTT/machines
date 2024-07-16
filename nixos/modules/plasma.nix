@@ -15,7 +15,6 @@
       wl-clipboard
 			wayland-utils
       kdePackages.sddm-kcm
-			kdePackages.xdg-desktop-portal-kde
     ];
 
     programs.kdeconnect.enable = true;

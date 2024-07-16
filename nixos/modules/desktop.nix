@@ -25,8 +25,13 @@ in with lib; {
       virt-manager
       ownpkgs.zoom-us
       openconnect
-#kicad
+      #kicad
       easyeffects
+    ];
+
+		# zoom will invoke "/usr/libexec/xdg-desktop-portal" for screen share
+    systemd.tmpfiles.rules = [
+      "L ${pkgs.xdg-desktop-portal}/libexec/xdg-desktop-portal - - - - /usr/libexec/xdg-desktop-portal"
     ];
 
     # fonts
@@ -69,7 +74,9 @@ in with lib; {
       ];
     };
 
-    xdg.portal.enable = true;
+    xdg.portal = {
+      enable = true;
+    };
 
     # enable bluetooth
     hardware.bluetooth.enable = true;
