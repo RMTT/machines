@@ -23,7 +23,7 @@ in with lib; {
       libreoffice-fresh
       obsidian
       virt-manager
-      zoom-us
+      ownpkgs.zoom-us
       openconnect
 #kicad
       easyeffects
