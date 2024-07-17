@@ -19,6 +19,7 @@
 			gh
 			distrobox
 			go
+			tldr
     ];
 
   };
