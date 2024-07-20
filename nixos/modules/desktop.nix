@@ -25,7 +25,7 @@ in with lib; {
       virt-manager
       ownpkgs.zoom-us
       openconnect
-      #kicad
+      fresh.kicad
       easyeffects
     ];
 
