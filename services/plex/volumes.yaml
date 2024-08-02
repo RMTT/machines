@@ -5,12 +5,12 @@ metadata:
   name: plex-data
 spec:
   capacity:
-    storage: 16Ti
+    storage: 8Ti
   volumeMode: Filesystem
   accessModes:
   - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
-  storageClassName: local-storage
+  storageClassName: local-path
   local:
     path: /data/media
   nodeAffinity:
@@ -31,7 +31,7 @@ spec:
   - ReadWriteOnce
   volumeMode: Filesystem
   volumeName: plex-data
-  storageClassName: local-storage
+  storageClassName: local-path
   resources:
     requests:
-      storage: 16Ti
+      storage: 8Ti

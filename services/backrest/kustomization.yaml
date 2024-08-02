@@ -1,8 +1,8 @@
 resources:
   - namespace.yaml
-  - volume.yaml
+  - volumes.yaml
   - deployment.yaml
 
-namespace: authelia
+namespace: backrest
 commonLabels:
-  app: authelia
+  app: backrest

@@ -10,8 +10,8 @@
     format = "binary";
   };
 
-  sops.secrets.rke2 = {
-    sopsFile = ./secrets/rke2-config;
+  sops.secrets.k3s_token = {
+    sopsFile = ./secrets/k3s_token;
     format = "binary";
   };
 

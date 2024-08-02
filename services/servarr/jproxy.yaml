@@ -52,8 +52,10 @@ metadata:
   name: jproxy
   annotations:
     cert-manager.io/cluster-issuer: "letsencrypt-all"
+    traefik.ingress.kubernetes.io/router.entrypoints: "web,websecure"
+    traefik.ingress.kubernetes.io/router.middlewares: authentik-ak-outpost-authentik-embedded-outpost@kubernetescrd
 spec:
-  ingressClassName: nginx
+  ingressClassName: traefik
   tls:
   - hosts:
     - jproxy.rmtt.tech
@@ -68,4 +70,30 @@ spec:
           service:
             name: jproxy
             port:
-              number: 8117
+              number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: jproxy-public
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-all"
+    traefik.ingress.kubernetes.io/router.entrypoints: "public"
+    traefik.ingress.kubernetes.io/router.middlewares: authentik-ak-outpost-public-access-for-rmtttech@kubernetescrd
+spec:
+  ingressClassName: traefik
+  tls:
+  - hosts:
+    - jproxy.rmtt.tech
+    secretName: jproxy-tls
+  rules:
+  - host: jproxy.rmtt.tech
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: jproxy
+            port:
+              number: 80

@@ -20,17 +20,15 @@ nextcloud:
             password: ENC[AES256_GCM,data:Mcyj2cFXA6p3Wh1r,iv:Ej1YOa6jisu2moLdhpkjSfd6Q2AHcSMZsteSeTb9Isg=,tag:qAY4SqzIZoOl9/X8ASsrbQ==,type:str]
 ingress:
     enabled: ENC[AES256_GCM,data:+8IE5w==,iv:CUH7Kadem+tebt1aeb8m9/YRtBhcUqYcYlUC6wC8Dko=,tag:oMrzPrvRnxbncilKQTIuDA==,type:bool]
-    className: ENC[AES256_GCM,data:R9tJxMg=,iv:a5qjvPc8LInTGDzLfTCQg/g1/+1jX2lF8+blinTmlWw=,tag:p6omtU6ClBwT8KmoW3NWuA==,type:str]
+    className: ENC[AES256_GCM,data:7wX4NeekFg==,iv:PUJFP9FnBnD6PMypurCzL05IfAHyHWDIRfvbiNNiPv0=,tag:XJCek2l3kEAxdL2AOq8bUg==,type:str]
     annotations:
         cert-manager.io/cluster-issuer: ENC[AES256_GCM,data:PlH7MP0qIpnbPsyS5+H5,iv:VmkhI12Pcgz5U1nJLf1Ba5swPMrTCtUM5hYmPjn2LUU=,tag:ndGdFZ4lEDjXWQCCm7Clbw==,type:str]
-        nginx.ingress.kubernetes.io/proxy-body-size: ENC[AES256_GCM,data:68k=,iv:ZTZ9coO6j3syGCW/lVl6+GwAkF/pQApM5rIsQi9vn2U=,tag:rHoHRhThK+EXpDz4VOGTrg==,type:str]
-        nginx.ingress.kubernetes.io/enable-cors: ENC[AES256_GCM,data:oK015wk=,iv:gZ5r6C8oHAqxALXgJqAfcPvAIlRYANCcNvejICmsoSs=,tag:ZrRqwZjQZ4PY/ib3Ry1Ssg==,type:str]
-        nginx.ingress.kubernetes.io/cors-allow-headers: ENC[AES256_GCM,data:MaDMvI6JSCOsJdrxzQ40,iv:VnE1Rr9U+Pes5GiJnxQLs01teGhYaK5wPKEoeEVfFYU=,tag:QE2qo2HXASvMIkM4CHV9kQ==,type:str]
-        nginx.ingress.kubernetes.io/server-snippet: ENC[AES256_GCM,data:0jgDaDloIfsMmLVdMsB0TOs/kJJYHUfTf1c9yha7mQAMO1luLrmmJg6M36A/D6PQWKXmIQDCZa68rE4aP/5qlyvu1up48HX14iFbia1QAFA9Q1vJbirWxLzF50CMJAVbQmjAGC6NvQyjfb7TCL2KjdgkXcVL4qDuG0beHu+MI005l2VDdG8n2V49xGhAM6Ag7yj2tWAHuTLnpJ8vQuDzCeZNO5fXjDJbKDqvrkzUTy7G4YSPyZjKi4NWWp2xU0uKT0uVIE+PXHJWxliahTLJ5F2uDR5aIg5nEudjbwO/k2w3owzVxniiFNcAcTbLt8HjczFfeyLqXLr8BD3oAp6mwtnM7+AoZcj50qsZmBBKUE53HaL5fej26J+cepCDv0Bpln2TwvpclAW9Gnx5T+oStp5SzHJzXcCsTNvbPMzHJUIEmu+ExbssEmY7srr02vmp1ipXwxDfqbL02FtYtxM9osSyMhJ9gZ97C7O9Ca78nxbZpb0hE2P9YiFI81A2COzRbrsUZeuTuRupBqPjDOr4PzotH3GY01srOTblJ5kCjybxNzSsw2dia0j3URFNsDB+K3pP1vQbtgLUWKUfIc6tKYFW5xk57N0RVZhvBEKpGygSCSqb6bMF80iISCAHtvDCw1bggTm0h011RxWMT1OJ36QAN7ITiZD2jeQ+3m6XBcv6pc5UQBcXpv8GJRrKIjA0HciVJOujcvJ7f0e2ow1IqztVmRYjRK5OwEhg01g0TS/rdjA1ghvpzVHHJqHpD86c2JVoU9DLi/YhY8yjU4CC3UlWM1I2WcAJEd7GEXDzrPNOXkTMMzMM0IeNxYPH2UL+XOfTnVf6ykMhQkmyfrqdLUdMNVgpNXo5YnFaq/na0RYmfi9rZOrNPapf75gwXAJxYzpPzFUv2AxMdyLJlO0uqfe+jBHJnydLrjZExSzT5Omqh7wSyslp2axzgUOvAPw+4OTTItmp+WahX3vUo5o=,iv:dmaUhNRoVQYubOn1hLClDt1XkH3mMjQMhdVoIVoKjUI=,tag:S56ST5PoIJESXFqehMSE8A==,type:str]
+        traefik.ingress.kubernetes.io/router.entrypoints: ENC[AES256_GCM,data:GXyUu6ce+k4w5BlsT2yLupLeBKg=,iv:EkQj3AWHge9HPpAKDGP2gl/3VMFg9S1wu977kfdIlmY=,tag:9E7Ti+BZIqLDOnXB+EnnEg==,type:str]
+        traefik.ingress.kubernetes.io/router.middlewares: ENC[AES256_GCM,data:HpBciy8FSk5gNwgqJOu8sfaqlq2oBL2zIFcspdmHrBPGQ1dQbBgYxU1qCVTpvkUjNY/PHoPa9GQdxcdOzJEn95x5AODcb1VdIn6fh2C4Tk+ubVCo453yX4o=,iv:qUL/0kwEyTXhEFCptRCjgDbbV2lnAJKCSGnW4wb1SSk=,tag:kAo6w44ssqQeF1mGQw2tnQ==,type:str]
     tls:
         - hosts:
             - ENC[AES256_GCM,data:Y68rRx6MfIi3fHGw+7sZ,iv:sbNDsHyTILb//9oVxfXo8Ft+YfKnfvu/xf1LQVg0S84=,tag:svjAXkNn8KD3OYpJX1UByQ==,type:str]
-            - ENC[AES256_GCM,data:MfnHfeWMjIxhKiZ3K1c=,iv:ShI5D+hUUa38wxcISa8IOigu9xEoW/eG1MPu8inDLzI=,tag:nIGl7EKwl3/GXLZ2xUQLhg==,type:str]
+            - ENC[AES256_GCM,data:sj4f3xhn25sNk7vh2+qHCwU=,iv:pih1l8bbQmpHUbtqVaMY4WmG6P5Pm6AZr/rw6CJSYE4=,tag:NnnbS5BYhxXyool9qEqNiw==,type:comment]
           secretName: ENC[AES256_GCM,data:kiC0T5ez+u/C1XJxsQ==,iv:6ly2EGnWGI1vIKUSA3WUrYk+sTH1U/6MPcvhxt9bfio=,tag:zFYvAjetoUWqlB2Q+feJMQ==,type:str]
 cronjob:
     enabled: ENC[AES256_GCM,data:ZOY45g==,iv:l20fpdlw7706m+Uw4bw8NAxLv9rzOSNLDrt1W/HOvV8=,tag:VeHCt9znDO4MNW6R/q+rig==,type:bool]
@@ -51,10 +49,10 @@ postgresql:
             existingClaim: ENC[AES256_GCM,data:mWNhKK0X99BaebK3mnO23Fp6tR7T4KMbqQ==,iv:tSwDRlZjadanRuN6FxqYYcLZeCibSvqKgbWAj11hlWA=,tag:acV26omOKEvgEQfLHKrwjw==,type:str]
 persistence:
     enabled: ENC[AES256_GCM,data:UKsspw==,iv:tPpxSDb5sj8Ba5BvcLkYNUTQ/iEznxXOvTzar06LOJM=,tag:QoOgDSjMbFk05VDfPNtV3Q==,type:bool]
-    storageClass: ENC[AES256_GCM,data:wlADnwhTCEh3+vKEJg==,iv:rLwsReZJIHnoViuB07/w73tU9DmNVQAao7UQhnlMiGQ=,tag:GPYfhxbYDSKa6BzDzzk+1A==,type:str]
+    storageClass: ENC[AES256_GCM,data:iWMbG7G8/XpHoA==,iv:446sgGNELKBKtRPGz6cVsRMpD36GoPmZ1wfvb9SifEA=,tag:1TGUgXEXjyzQoNBTg2/GKw==,type:str]
     nextcloudData:
         enabled: ENC[AES256_GCM,data:1zmpBw==,iv:yeNK3Oh5S9kfFGPYphZ9vt0TdZRjWyzjYohWesNNNn8=,tag:Q8Kt/voM2h+SMf0C1+d7JQ==,type:bool]
-        storageClass: ENC[AES256_GCM,data:L0IHhnIZzEa8+yrEwg==,iv:FJJSIEcAV/CqYy8mQ+cCHg5/w3j8aXSyl/LzbMCDLy8=,tag:89PWxK9c9osdz41GJLpdRQ==,type:str]
+        storageClass: ENC[AES256_GCM,data:4BLsdorhQlgl0w==,iv:wmHdbFZVN1TZW5nuE9Xs/MpSNjF1rE35PzEDqtDsdzs=,tag:FFfBBcYIi39aPRoBQI66Aw==,type:str]
         size: ENC[AES256_GCM,data:LOy5,iv:2dvPgE4escghdjnpAuIaQV3Lj1MM/rqH5mGZpFAI4G8=,tag:L+pJBKuQu6HCEXpVJVGdZg==,type:str]
 sops:
     kms: []
@@ -62,8 +60,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2024-05-01T11:46:30Z"
-    mac: ENC[AES256_GCM,data:oI1jM6JsWmxuqlmsvyY0en9wEqdA5wfrQND/Vi41hZELmtCQyVMR6Jd6CkcH1zt8oSgje/lPusbsRTGz5DFuGzXeIamljTXQWGdMaI4kr6YN+vTNBRqrda5pbDWpEyFCULoH8vyslt281j/WdLSAIsVO9MVYJuLC+YtQhZKJ9VI=,iv:XOfmAXyiS3LF6UEoK1JITcoqc5N8ym1eofFSYr5uKyM=,tag:NFzOM0+IUav5eUMSGnHVkg==,type:str]
+    lastmodified: "2024-08-02T10:11:39Z"
+    mac: ENC[AES256_GCM,data:xi4yBohxcjJVtcDkVZ1GtqCi21lD/TxvQfp0H+RJ47xf1iIpc8YAiPOhCVyQWrJq30uo6Kq/aPU+RuE76X7SPhVpVCfsMoXfQtkNev+wvnEWXqcWHn4FWveMlMZ4dAHopS1XU1+TL5lJq57PIwVrRepzr/P60NMA5R2UtebbF80=,iv:iQbbfEp5MHDDZTz5K0dT2FwWTn5kTxeMGyLAcJmVU4E=,tag:pyvNS8PFbvmLWwvCZX/PAg==,type:str]
     pgp:
         - created_at: "2024-04-09T02:29:17Z"
           enc: |-
@@ -80,4 +78,4 @@ sops:
             -----END PGP MESSAGE-----
           fp: F01B47BAD5FC895EE1F1B9E59FAD79271D7D461C
     unencrypted_suffix: _unencrypted
-    version: 3.8.1
+    version: 3.9.0

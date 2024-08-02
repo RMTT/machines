@@ -95,12 +95,10 @@ in
               };
               wireguardPeers = map
                 (peer: {
-                  wireguardPeerConfig = {
-                    AllowedIPs = peer.allowedIPs;
-                    PersistentKeepalive = 15;
-                    PublicKey = peer.publicKey;
-                    Endpoint = mkIf (peer.endpoint != null) peer.endpoint;
-                  };
+                  AllowedIPs = peer.allowedIPs;
+                  PersistentKeepalive = 15;
+                  PublicKey = peer.publicKey;
+                  Endpoint = mkIf (peer.endpoint != null) peer.endpoint;
                 })
                 config.peers;
             };

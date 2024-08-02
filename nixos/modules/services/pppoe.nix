@@ -54,7 +54,7 @@ in {
           WithoutRA = "solicit";
           UseDNS = false;
         };
-        routes = [{ routeConfig = { Gateway = "::"; }; }];
+        routes = [{ Gateway = "::"; }];
         dhcpPrefixDelegationConfig = {
           UplinkInterface = "ppp0";
           SubnetId = 0;

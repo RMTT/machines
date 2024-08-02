@@ -11,7 +11,7 @@ spec:
   accessModes:
   - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
-  storageClassName: local-storage
+  storageClassName: local-path
   local:
     path: /data/media
   nodeAffinity:
@@ -35,7 +35,7 @@ spec:
   accessModes:
   - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
-  storageClassName: local-storage
+  storageClassName: local-path
   local:
     path: /data/downloads
   nodeAffinity:
@@ -57,7 +57,7 @@ spec:
   - ReadWriteMany
   volumeMode: Filesystem
   volumeName: servarr-data-media
-  storageClassName: local-storage
+  storageClassName: local-path
   resources:
     requests:
       storage: 8Ti
@@ -72,7 +72,7 @@ spec:
   - ReadWriteMany
   volumeMode: Filesystem
   volumeName: servarr-data-downloads
-  storageClassName: local-storage
+  storageClassName: local-path
   resources:
     requests:
       storage: 8Ti

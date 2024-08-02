@@ -1,0 +1,92 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backrest
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backrest
+  template:
+    metadata:
+      labels:
+        app: backrest
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: homeserver
+      containers:
+      - name: backrest
+        image: garethgeorge/backrest
+        volumeMounts:
+          - name: config
+            mountPath: /config
+          - name: data
+            mountPath: /data
+          - name: cache
+            mountPath: /cache
+          - name: host
+            mountPath: /hostData
+        env:
+        - name: BACKREST_DATA
+          value: /data
+        - name: BACKREST_CONFIG
+          value: /config/config.json
+        - name: XDG_CACHE_HOME
+          value: /cache
+        - name: TZ
+          value: Asia/Shanghai
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: backrest-config
+        - name: data
+          persistentVolumeClaim:
+            claimName: backrest-data
+        - name: cache
+          persistentVolumeClaim:
+            claimName: backrest-cache
+        - name: host
+          hostPath:
+            path: /data
+            type: Directory
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backrest
+spec:
+  type: ClusterIP
+  selector:
+      app: backrest
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 9898
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: backrest
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-all"
+    traefik.ingress.kubernetes.io/router.entrypoints: "web,websecure"
+    traefik.ingress.kubernetes.io/router.middlewares: authentik-common-auth@kubernetescrd
+spec:
+  ingressClassName: traefik
+  tls:
+  - hosts:
+    - backrest.rmtt.tech
+    secretName: backrest-tls
+  rules:
+  - host: backrest.rmtt.tech
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: backrest
+            port:
+              number: 80

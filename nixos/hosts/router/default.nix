@@ -75,9 +75,13 @@ with lib; {
           };
           lan = {
             name = "lan";
+            linkConfig = {
+              ActivationPolicy = "always-up";
+            };
             networkConfig = {
               Address = "${lan_gateway}/${toString lan_ip_prefix}";
-              ConfigureWithoutCarrier = true;
+              ConfigureWithoutCarrier = "yes";
+              IgnoreCarrierLoss = "yes";
               IPv6AcceptRA = "no";
               IPv6SendRA = "yes";
               DHCPPrefixDelegation = "yes";
@@ -106,40 +110,7 @@ with lib; {
         externalInterface = "wan";
       };
 
-      # ups
-      power.ups = {
-        enable = true;
-        mode = "netserver";
-        ups.main = {
-          driver = "usbhid-ups";
-          port = "auto";
-          directives = [
-            "default.battery.charge.low = 20"
-            "default.battery.runtime.low = 180"
-          ];
-        };
-
-        upsmon.enable = false;
-
-        users.mt = {
-          upsmon = "primary";
-          instcmds = [ "ALL" ];
-          actions = [ "SET" ];
-          passwordFile = config.sops.secrets.ups_pass.path;
-        };
-
-        upsd = {
-          enable = true;
-          listen = [
-            {
-              address = "0.0.0.0";
-              port = 3493;
-            }
-          ];
-        };
-      };
-
-      # enable clash and adguardhome (for DNS and DHCP)
+      # enable clash and adguardhome (for DNS)
       services.clash = {
         enable = true;
         config = config.sops.secrets.clash_config.path;
@@ -148,16 +119,55 @@ with lib; {
       services.adguardhome = {
         enable = true;
         openFirewall = true;
-        settings = {
-          dhcp = {
-            enabled = true;
-            interface_name = "lan";
-            dhcpv4 = {
-              gateway_ip = lan_gateway;
-              subnet_mask = lan_ip_mask;
-              range_start = lan_ip_start;
-              range_end = lan_ip_end;
+      };
+
+      services.kea = {
+        dhcp4 = {
+          enable = true;
+          settings = {
+            option-data = [
+              {
+                name = "domain-name-servers";
+                data = "192.168.6.1";
+                always-send = true;
+              }
+
+              {
+                name = "routers";
+                data = "192.168.6.1";
+              }
+            ];
+            interfaces-config = {
+              interfaces = [
+                "lan"
+              ];
+              service-sockets-require-all = true;
+              service-sockets-max-retries = 50;
+              service-sockets-retry-wait-time = 5000;
             };
+            subnet4 = [
+              {
+                id = 1;
+                pools = [
+                  {
+                    pool = "192.168.6.10 - 192.168.6.240";
+                  }
+                ];
+                subnet = "192.168.6.0/24";
+                reservations = [
+                  {
+                    hw-address = "f4:b5:20:5d:1f:e7";
+                    hostname = "homeserver";
+                    ip-address = "192.168.6.2";
+                  }
+                  {
+                    hw-address = "9e:20:b6:6d:b6:50";
+                    hostname = "pikvm";
+                    ip-address = "192.168.6.3";
+                  }
+                ];
+              }
+            ];
           };
         };
       };
@@ -171,6 +181,15 @@ with lib; {
         role = "client";
         passwordFile = config.sops.secrets.udp2raw.path;
       };
+
+      networking.nftables.ruleset = ''
+        table ip nat {
+        	chain postrouting {
+						type nat hook postrouting priority 100 ;
+        		ip saddr != {${infra_node_ip}/24} oifname "wg0" masquerade
+        	}
+        }
+        				'';
       networking.wireguard.networks = [
         {
           ip = [ "${infra_node_ip}/24" "${infra_node_ip6}/64" ];

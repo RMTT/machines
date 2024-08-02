@@ -52,8 +52,10 @@ metadata:
   name: prowlarr
   annotations:
     cert-manager.io/cluster-issuer: "letsencrypt-all"
+    traefik.ingress.kubernetes.io/router.entrypoints: "web,websecure"
+    traefik.ingress.kubernetes.io/router.middlewares: authentik-ak-outpost-authentik-embedded-outpost@kubernetescrd
 spec:
-  ingressClassName: nginx
+  ingressClassName: traefik
   tls:
   - hosts:
     - prowlarr.rmtt.tech
@@ -68,4 +70,30 @@ spec:
           service:
             name: prowlarr
             port:
-              number: 9696
+              number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: prowlarr-public
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-all"
+    traefik.ingress.kubernetes.io/router.entrypoints: "public"
+    traefik.ingress.kubernetes.io/router.middlewares: authentik-ak-outpost-public-access-for-rmtttech@kubernetescrd
+spec:
+  ingressClassName: traefik
+  tls:
+  - hosts:
+    - prowlarr.rmtt.tech
+    secretName: prowlarr-tls
+  rules:
+  - host: prowlarr.rmtt.tech
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: prowlarr
+            port:
+              number: 80

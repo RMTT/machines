@@ -1,0 +1,8 @@
+write-kubeconfig-mode: "0644"
+tls-san:
+  - "homeserver.infra.rmtt.host"
+node-label:
+  - "intel.feature.node.kubernetes.io/gpu=true"
+cluster-init: true
+flannel-backend: host-gw
+node-ip: 192.168.128.4

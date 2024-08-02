@@ -14,6 +14,8 @@ spec:
         app: ddns-go-homeserver
     spec:
       hostNetwork: true
+      nodeSelector:
+        kubernetes.io/hostname: homeserver
       containers:
       - name: ddns-go
         image: jeessy/ddns-go
@@ -37,7 +39,8 @@ spec:
   selector:
       app: ddns-go-homeserver
   ports:
-    - protocol: TCP
+    - name: http
+      protocol: TCP
       port: 80
       targetPort: 9876
 ---
@@ -47,12 +50,9 @@ metadata:
   name: ddns-go-homeserver
   annotations:
     cert-manager.io/cluster-issuer: "letsencrypt-all"
-    nginx.ingress.kubernetes.io/auth-method: 'GET'
-    nginx.ingress.kubernetes.io/auth-url: 'http://authelia.authelia.svc.cluster.local/api/authz/auth-request'
-    nginx.ingress.kubernetes.io/auth-signin: 'https://auth.rmtt.host:1443?rm=$request_method'
-    nginx.ingress.kubernetes.io/auth-response-headers: 'Remote-User,Remote-Name,Remote-Groups,Remote-Email'
+    traefik.ingress.kubernetes.io/router.entrypoints: "web,websecure"
 spec:
-  ingressClassName: nginx
+  ingressClassName: traefik
   tls:
   - hosts:
     - ddns.homeserver.rmtt.host
@@ -67,4 +67,4 @@ spec:
           service:
             name: ddns-go-homeserver
             port:
-              number: 9876
+              number: 80

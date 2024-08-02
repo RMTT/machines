@@ -1,0 +1,11 @@
+resources:
+  - namespace.yaml
+
+namespace: authentik
+helmCharts:
+  - name: authentik
+    releaseName: authentik
+    namespace: authentik
+    repo: https://charts.goauthentik.io
+    version: 2024.6.2
+    valuesFile: values.yaml.dec

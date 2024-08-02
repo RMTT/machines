@@ -1,37 +1,12 @@
 ---
 apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: ddns-go-config
-spec:
-  capacity:
-    storage: 10Mi
-  volumeMode: Filesystem
-  accessModes:
-  - ReadWriteOnce
-  persistentVolumeReclaimPolicy: Retain
-  storageClassName: local-storage
-  local:
-    path: /opt/kubernetes_data/ddns-go
-  nodeAffinity:
-    required:
-      nodeSelectorTerms:
-      - matchExpressions:
-        - key: kubernetes.io/hostname
-          operator: In
-          values:
-          - homeserver
----
-apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: ddns-go-config
 spec:
   accessModes:
   - ReadWriteOnce
-  volumeMode: Filesystem
-  volumeName: ddns-go-config
-  storageClassName: local-storage
+  storageClassName: local-path
   resources:
     requests:
       storage: 10Mi

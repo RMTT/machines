@@ -18,8 +18,4 @@
 
   sops.secrets.zoho-pass = { mode = "644"; };
 
-  sops.secrets.rke2 = {
-    sopsFile = ./secrets/rke2-config;
-    format = "binary";
-  };
 }

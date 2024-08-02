@@ -46,7 +46,13 @@
       networking.useNetworkd = true;
 
       # networking related
-      networking.firewall.allowedTCPPorts = [ 1443 6443 ];
+      networking.firewall.allowedTCPPorts = [ 1443 ];
+      networking.firewall.trustedSubnets.ipv4 = [
+        "10.42.0.0/16" # k8s pod
+        "10.43.0.0/16" # k8s service
+        "100.64.0.0/16" # tailscale
+      ];
+
       services.resolved.extraConfig = ''
                     DNSStubListener = false
               			LLMNR = false
@@ -89,13 +95,39 @@
       # ups
       power.ups = {
         enable = true;
-        mode = "netclient";
+        mode = "netserver";
+        ups.main = {
+          driver = "usbhid-ups";
+          port = "auto";
+          directives = [
+            "default.battery.charge.low = 20"
+            "default.battery.runtime.low = 180"
+          ];
+        };
+
         upsmon = {
           monitor.mt = {
             user = "mt";
-            system = "main@router.home.rmtt.host";
+            system = "main@localhost";
             passwordFile = config.sops.secrets.ups_pass.path;
           };
+        };
+
+        users.mt = {
+          upsmon = "primary";
+          instcmds = [ "ALL" ];
+          actions = [ "SET" ];
+          passwordFile = config.sops.secrets.ups_pass.path;
+        };
+
+        upsd = {
+          enable = true;
+          listen = [
+            {
+              address = "0.0.0.0";
+              port = 3493;
+            }
+          ];
         };
       };
 
@@ -114,26 +146,19 @@
         }
       ];
 
-      services.rke2 = {
+      services.k3s = {
         enable = true;
+        configPath = ./config/k3s.yaml;
         role = "server";
-
-        configPath = config.sops.secrets.rke2.path;
-        nodeIP = "${infra_node_ip},${infra_node_ip6}";
       };
 
       # for port forward
       services.socat = {
         enable = true;
         listen = "TCP-LISTEN:1443";
-        remote = "TCP:127.0.0.1:443";
+        remote = "TCP:${infra_node_ip}:1443";
       };
 
-      networking.firewall.prerouting = true;
-      networking.firewall.trustedSubnets = {
-        ipv4 = [ "10.42.0.0/16" "10.43.0.0/16" ];
-        ipv6 = [ "2001:cafe:42::/56" "2001:cafe:43::/112" ];
-      };
       networking.interfaces."${wan}" = {
         wakeOnLan.enable = true;
         useDHCP = true;

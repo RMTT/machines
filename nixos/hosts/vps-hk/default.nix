@@ -49,6 +49,13 @@
 
       networking.useNetworkd = true;
 
+      services.k3s = {
+        enable = true;
+        configPath = ./config/k3s.yaml;
+        role = "agent";
+        tokenFile = config.sops.secrets.k3s_token.path;
+      };
+
       # wireguard and udp2raw
       services.udp2raw = {
         enable = true;
@@ -61,7 +68,7 @@
         {
           ip = [ "${infra_node_ip}/24" "${infra_node_ip6}/64" ];
           privateKeyFile = config.sops.secrets.wg-private.path;
-					mtu = 1350;
+          mtu = 1350;
 
           peers = [
             {
@@ -74,12 +81,5 @@
 
       networking.firewall.allowedTCPPorts = [ 80 443 ];
 
-      services.rke2 = {
-        enable = true;
-        role = "agent";
-
-        configFile = config.sops.secrets.rke2.path;
-        params = [ "--node-ip=${infra_node_ip},${infra_node_ip6}" ];
-      };
     };
 }
