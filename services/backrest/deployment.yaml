@@ -72,7 +72,7 @@ metadata:
   annotations:
     cert-manager.io/cluster-issuer: "letsencrypt-all"
     traefik.ingress.kubernetes.io/router.entrypoints: "web,websecure"
-    traefik.ingress.kubernetes.io/router.middlewares: authentik-common-auth@kubernetescrd
+    traefik.ingress.kubernetes.io/router.middlewares: authentik-ak-outpost-authentik-embedded-outpost@kubernetescrd
 spec:
   ingressClassName: traefik
   tls:
