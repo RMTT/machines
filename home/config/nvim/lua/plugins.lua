@@ -378,21 +378,39 @@ require 'nvim-treesitter.configs'.setup {
 ---- end ----
 
 ---- setting for auto-session ----
+local function clean_buffers()
+  local bufs = vim.api.nvim_list_bufs()
+  local wins = vim.api.nvim_list_wins()
+
+  local reserve_bufs = {}
+  for _, win in ipairs(wins) do
+    reserve_bufs[vim.api.nvim_win_get_buf(win)] = 1
+  end
+
+  for _, buf in ipairs(bufs) do
+    local name = vim.api.nvim_buf_get_name(buf)
+    local type = vim.api.nvim_get_option_value('buftype', { buf = buf })
+    if reserve_bufs[buf] ~= 1 then
+      vim.api.nvim_buf_delete(buf, {})
+    end
+  end
+end
+
 local session_name = require('auto-session.lib').escaped_session_name_from_cwd()
 local shadafile = vim.fn.stdpath('data') .. '/shada/' .. session_name .. '.shada'
-local loadshada_cmd = ""
 if vim.fn.filereadable(vim.fn.expand(shadafile)) == 1 then
   loadshada_cmd = "rshada! " .. shadafile
 end
 require("auto-session").setup {
   log_level = "error",
 
+  pre_save_cmds = { "NvimTreeClose", clean_buffers },
+  pre_restore_cmds = { "set shadafile=" .. shadafile },
   cwd_change_handling = {
     post_cwd_changed_hook = function()
       require("lualine").refresh()
     end,
   },
-  pre_restore_cmds = { "set shadafile=" .. shadafile, loadshada_cmd },
 }
 ---- end ----
 
