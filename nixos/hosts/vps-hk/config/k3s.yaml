@@ -1,6 +1,0 @@
-write-kubeconfig-mode: "0644"
-tls-san:
-  - "vps-hk.infra.rmtt.host"
-cluster-init: true
-flannel-backend: host-gw
-node-ip: 192.168.128.2

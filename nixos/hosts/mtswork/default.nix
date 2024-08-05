@@ -80,3 +80,4 @@
   };
   networking.firewall.trustedInterfaces = [ "Meta" ];
 }
+

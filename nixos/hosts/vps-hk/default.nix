@@ -51,9 +51,8 @@
 
       services.k3s = {
         enable = true;
-        configPath = ./config/k3s.yaml;
+        configPath = config.sops.secrets.k3s.path;
         role = "agent";
-        tokenFile = config.sops.secrets.k3s_token.path;
       };
 
       # wireguard and udp2raw

@@ -10,8 +10,8 @@
     format = "binary";
   };
 
-  sops.secrets.k3s_token = {
-    sopsFile = ./secrets/k3s_token;
+  sops.secrets.k3s = {
+    sopsFile = ./secrets/k3s;
     format = "binary";
   };
 
