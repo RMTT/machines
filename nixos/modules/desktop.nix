@@ -28,8 +28,9 @@ in with lib; {
       fresh.kicad
       easyeffects
     ];
+    services.flatpak.enable = true;
 
-		# zoom will invoke "/usr/libexec/xdg-desktop-portal" for screen share
+    # zoom will invoke "/usr/libexec/xdg-desktop-portal" for screen share
     systemd.tmpfiles.rules = [
       "L /usr/libexec/xdg-desktop-portal - - - - ${pkgs.xdg-desktop-portal}/libexec/xdg-desktop-portal"
     ];
