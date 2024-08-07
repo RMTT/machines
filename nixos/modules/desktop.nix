@@ -28,6 +28,10 @@ in with lib; {
       fresh.kicad
       easyeffects
     ];
+    programs.appimage = {
+      enable = true;
+      binfmt = true;
+    };
     services.flatpak.enable = true;
 
     # zoom will invoke "/usr/libexec/xdg-desktop-portal" for screen share
