@@ -20,7 +20,7 @@ appimageTools.wrapType1 {
         mv $out/bin/${name} $out/bin/${pname}
         install -m 444 -D ${appimageContents}/${pname}.desktop -t $out/share/applications
         substituteInPlace $out/share/applications/${pname}.desktop \
-          --replace-fail 'Exec=AppRun' 'Exec=${pname} --ozone-platform-hint=auto --enable-features=WaylandWindowDecorations'
+          --replace-fail 'Exec=AppRun' 'Exec=${pname} ''${NIXOS_OZONE_WL:+''${WAYLAND_DISPLAY:+--ozone-platform-hint=auto --enable-features=WaylandWindowDecorations}}'
         cp -r ${appimageContents}/usr/share/icons $out/share
     		'';
 

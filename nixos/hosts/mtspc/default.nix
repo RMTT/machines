@@ -54,6 +54,7 @@
     config.boot.kernelPackages.perf
     moonlight-qt
     config.nur.repos.xddxdd.wechat-uos
+    pkgs.ownpkgs.cider
   ];
 
   programs.steam = {

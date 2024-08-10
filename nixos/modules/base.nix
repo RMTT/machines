@@ -41,6 +41,7 @@ in with lib; {
     boot.loader.grub.configurationLimit = 10;
 
     boot.kernelModules = [ "wireguard" ];
+    boot.supportedFilesystems = [ "ntfs" ];
 
     # common initrd options
     boot.initrd.availableKernelModules = [
@@ -223,7 +224,7 @@ in with lib; {
     # opengl and hardware acc
     hardware.graphics = mkIf cfg.gl.enable {
       enable = true;
-			enable32Bit = true;
+      enable32Bit = true;
       extraPackages = with pkgs; [
         libva
         mesa.drivers
