@@ -5,7 +5,7 @@
     services.displayManager.sddm.wayland.enable = true;
     services.desktopManager.plasma6.enable = true;
 
-		environment.sessionVariables.NIXOS_OZONE_WL = "1";
+    environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
     # desktop apps
     environment.systemPackages = with pkgs; [
@@ -13,8 +13,9 @@
       kdePackages.yakuake
       kdePackages.filelight
       wl-clipboard
-			wayland-utils
+      wayland-utils
       kdePackages.sddm-kcm
+      xdg-desktop-portal-gtk # for GTK/GNOME applications to correctly apply cursor themeing on Wayland.
     ];
 
     programs.kdeconnect.enable = true;
