@@ -1,5 +1,6 @@
 builds:
-  exclude: []
+  exclude:
+  - packages.x86_64-linux.cider
   include:
   - 'packages.x86_64-linux.*'
   - homeConfigurations.*
