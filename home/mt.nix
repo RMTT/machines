@@ -9,7 +9,6 @@
     ./modules/tmux.nix
     ./modules/git.nix
     ./modules/fonts.nix
-		./modules/wezterm.nix
   ];
   home.stateVersion = "23.05";
 
