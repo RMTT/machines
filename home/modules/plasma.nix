@@ -6,7 +6,7 @@
       theme = "breeze-dark";
     };
     shortcuts = {
-      "Alacritty.desktop"."New" = "Meta+Return";
+      "kitty.desktop"."New" = "Meta+Return";
       "kwin"."Switch to Desktop 1" = "Meta+1";
       "kwin"."Switch to Desktop 2" = "Meta+2";
       "kwin"."Switch to Desktop 3" = "Meta+3";
