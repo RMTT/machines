@@ -8,8 +8,8 @@ let
   name = "${pname}-${version}";
 
   src = fetchurl {
-    url = "https://cloud.rmtt.tech/s/tZoLL3ojRooGPLc/download";
-    sha256 = "sha256-p1NH11+QvkhXrPnfsozsbmrY4ZkyVQ1wcFqLkmV+R7c=";
+    url = "https://cloud.rmtt.tech/s/qqzRgg5FN26BdEs/download";
+    sha256 = "sha256-HwfByY8av1AvI+t7wnaNbhDLXBxgzRKYiLG1hPUto9o=";
   };
   appimageContents = appimageTools.extractType1 { inherit name src; };
 in
