@@ -58,7 +58,7 @@
   nixpkgs.config.permittedInsecurePackages = [
     "openssl-1.1.1w" # for wechat-uos
   ];
-  environment.systemPackages = with pkgs; [ kubernetes rclone steam config.nur.repos.xddxdd.wechat-uos pkgs.ownpkgs.cider ];
+  environment.systemPackages = with pkgs; [ kubernetes rclone steam config.nur.repos.xddxdd.wechat-uos ];
 
 
   # default shell
