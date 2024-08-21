@@ -123,6 +123,7 @@ in with lib; {
       efibootmgr
       virtiofsd
       hwloc
+			openssl
     ];
 
     # set XDG viarables
