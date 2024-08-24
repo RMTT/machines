@@ -12,7 +12,6 @@
   config =
     let
       infra_node_ip = "192.168.128.2";
-      infra_node_ip6 = "fd12:3456:789a:1::2";
       wan = "ens18";
     in
     {
@@ -65,13 +64,13 @@
       };
       networking.wireguard.networks = [
         {
-          ip = [ "${infra_node_ip}/24" "${infra_node_ip6}/64" ];
+          ip = [ "${infra_node_ip}/24" ];
           privateKeyFile = config.sops.secrets.wg-private.path;
           mtu = 1350;
 
           peers = [
             {
-              allowedIPs = [ "${infra_node_ip}/24" "${infra_node_ip6}/64" ];
+              allowedIPs = [ "${infra_node_ip}/24" "10.42.0.0/24" ];
               publicKey = "RYZS5mHgkmjW+/D40Zxn9d/h8NzvN4pzJVbnWK3DbXg=";
             }
           ];

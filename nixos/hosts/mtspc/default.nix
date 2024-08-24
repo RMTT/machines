@@ -87,5 +87,5 @@
     enable = true;
     tunMode = true;
   };
-  networking.firewall.trustedInterfaces = [ "Meta" "virbr0" ];
+  networking.firewall.trustedInterfaces = [ "Meta" ];
 }

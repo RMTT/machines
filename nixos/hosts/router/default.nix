@@ -21,7 +21,6 @@ with lib; {
       lan_ip_end = "192.168.6.233";
 
       infra_node_ip = "192.168.128.3";
-      infra_node_ip6 = "fd12:3456:789a:1::3";
     in
     {
       system.stateVersion = "23.05";
@@ -185,25 +184,27 @@ with lib; {
       networking.nftables.ruleset = ''
         table ip nat {
         	chain postrouting {
-						type nat hook postrouting priority 100 ;
+        		type nat hook postrouting priority 100 ;
         		ip saddr != {${infra_node_ip}/24} oifname "wg0" masquerade
         	}
         }
         				'';
       networking.wireguard.networks = [
         {
-          ip = [ "${infra_node_ip}/24" "${infra_node_ip6}/64" ];
+          ip = [ "${infra_node_ip}/24" ];
           privateKeyFile = config.sops.secrets.wg-private.path;
           mtu = 1350;
 
           peers = [
             {
-              allowedIPs = [ "192.168.128.2/32" "fd12:3456:789a:1::2/128" ];
+              # vps-hk
+              allowedIPs = [ "192.168.128.2/32" "10.42.1.0/24" ];
               endpoint = "127.0.0.1:51821";
               publicKey = "2nzzD9C33j6loxVcrjfeWvokbUBXpyxEryUk6HN60nE=";
             }
             {
-              allowedIPs = [ "192.168.128.4/32" "fd12:3456:789a:1::4/128" ];
+              # homeserver
+              allowedIPs = [ "192.168.128.4/32" "10.42.0.0/24" ];
               publicKey = "CN+zErqQ3JIlksx51LgY6exZgjDNIGJih73KhO1WpkI=";
             }
           ];
