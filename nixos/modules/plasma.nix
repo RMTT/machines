@@ -15,9 +15,14 @@
       wl-clipboard
       wayland-utils
       kdePackages.sddm-kcm
+      kdePackages.print-manager
       xdg-desktop-portal-gtk # for GTK/GNOME applications to correctly apply cursor themeing on Wayland.
     ];
 
+    services.printing = {
+      enable = true;
+      drivers = with pkgs; [ fxlinuxprint ];
+    };
     programs.kdeconnect.enable = true;
   };
 }
