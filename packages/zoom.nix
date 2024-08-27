@@ -48,12 +48,12 @@ let
   # and often with different versions.  We write them on three lines
   # like this (rather than using {}) so that the updater script can
   # find where to edit them.
-  versions.x86_64-linux = "6.1.6.1013";
+  versions.x86_64-linux = "6.1.11.1545";
 
   srcs = {
     x86_64-linux = fetchurl {
       url = "https://cdn.zoom.us/prod/${versions.x86_64-linux}/zoom_x86_64.pkg.tar.xz";
-      hash = "sha256-mvCJft0suOxnwTkWWuH9OYKHwTMWx61ct10P5Q/EVBM=";
+      hash = "sha256-wkG/fYbn3EdbVJwZQI8EcRPmHFX+4zggmfM4sHUjD8I=";
     };
   };
 

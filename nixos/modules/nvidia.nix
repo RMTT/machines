@@ -2,7 +2,7 @@
 with lib;
 let
   cfg = config.nvidia;
-  nvidia-package = config.boot.kernelPackages.nvidiaPackages.stable;
+  nvidia-package = config.boot.kernelPackages.nvidiaPackages.latest;
   nvidia-compute = pkgs.stdenv.mkDerivation {
     pname = "nvidia-compute";
     version = "0.1";
@@ -34,7 +34,7 @@ in
   };
   config = mkMerge [
     {
-      virtualisation.docker.enableNvidia = config.virtualisation.docker.enable;
+      hardware.nvidia-container-toolkit.enable = config.virtualisation.docker.enable;
 
       # system packages for this machine
       environment.systemPackages = with pkgs; [

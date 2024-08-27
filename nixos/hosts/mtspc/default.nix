@@ -41,9 +41,6 @@
     efiSupport = true;
   };
 
-  # nvidia
-  hardware.nvidia.package = lib.mkForce config.boot.kernelPackages.nvidiaPackages.latest;
-
   hardware.cpu.amd.updateMicrocode = true;
 
   nixpkgs.config.permittedInsecurePackages = [
