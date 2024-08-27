@@ -396,16 +396,20 @@ local function clean_buffers()
   end
 end
 
-local session_name = require('auto-session.lib').escaped_session_name_from_cwd()
-local shadafile = vim.fn.stdpath('data') .. '/shada/' .. session_name .. '.shada'
-if vim.fn.filereadable(vim.fn.expand(shadafile)) == 1 then
-  loadshada_cmd = "rshada! " .. shadafile
+local auto_sesison_lib = require('auto-session.lib')
+local function set_shadafile()
+  local session_name = auto_sesison_lib.escape_session_name(vim.fn.getcwd())
+  local shadafile = vim.fn.stdpath('data') .. '/shada/' .. session_name .. '.shada'
+  vim.o.shadafile = shadafile
+  vim.cmd('rshada!')
 end
+
+vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
 require("auto-session").setup {
-  log_level = "error",
+  log_level = "warning",
 
   pre_save_cmds = { "NvimTreeClose", clean_buffers },
-  pre_restore_cmds = { "set shadafile=" .. shadafile },
+  post_restore_cmds = { set_shadafile },
   cwd_change_handling = {
     post_cwd_changed_hook = function()
       require("lualine").refresh()
