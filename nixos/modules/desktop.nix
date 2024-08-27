@@ -72,7 +72,7 @@ in with lib; {
     # fcitx5
     i18n.inputMethod = {
 			type = "fcitx5";
-      enabled = true;
+      enable = true;
       fcitx5.addons = with pkgs; [
         fcitx5-mozc
         fcitx5-gtk
