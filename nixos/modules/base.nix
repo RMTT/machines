@@ -73,9 +73,6 @@ in with lib; {
       "ja_JP.UTF-8/UTF-8"
     ];
 
-    # swap caps and escape
-    services.xserver.xkb.options = "Caps_Lock=Escape";
-
     # console
     console = {
       font = "${pkgs.terminus_font}/share/consolefonts/ter-v32n.psf.gz";
@@ -123,7 +120,7 @@ in with lib; {
       efibootmgr
       virtiofsd
       hwloc
-			openssl
+      openssl
     ];
 
     # set XDG viarables
@@ -153,7 +150,7 @@ in with lib; {
     };
 
     # cpu governor
-    powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
+    powerManagement.cpuFreqGovernor = mkIf config.hardware.cpu.intel.updateMicrocode "ondemand";
 
     # enable acpid
     services.acpid.enable = true;

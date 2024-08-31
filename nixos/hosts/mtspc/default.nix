@@ -25,22 +25,14 @@
   boot.kernel.sysctl = {
     "kernel.yama.ptrace_scope" = 0;
   };
+  boot.initrd.kernelModules = [ "nvidia" ];
+  boot.extraModulePackages = [ config.boot.kernelPackages.lenovo-legion-module ];
 
   # default shell
   users.users.mt.shell = pkgs.zsh;
 
   # kernel version
   boot.kernelPackages = pkgs.linuxKernel.packages.linux_zen;
-  boot.kernelParams = [ "nvidia-drm.modeset=1" ];
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.systemd-boot.enable = lib.mkForce false;
-  boot.loader.grub = {
-    enable = true;
-    useOSProber = true;
-    device = "nodev";
-    efiSupport = true;
-  };
-
   hardware.cpu.amd.updateMicrocode = true;
 
   nixpkgs.config.permittedInsecurePackages = [

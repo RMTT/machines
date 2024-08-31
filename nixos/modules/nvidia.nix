@@ -44,13 +44,13 @@ in
 
       # Load nvidia driver for Xorg and Wayland
       services.xserver.videoDrivers = mkIf full [ "nvidia" ];
+      boot.extraModulePackages = [ nvidia-package ];
 
       hardware.nvidia = {
         # Modesetting is required for display.
         modesetting.enable = true;
 
         powerManagement = { enable = true; };
-        nvidiaSettings = true;
         package = nvidia-package;
       };
 
