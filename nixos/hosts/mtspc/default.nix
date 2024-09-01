@@ -27,6 +27,9 @@
   };
   boot.initrd.kernelModules = [ "nvidia" ];
   boot.extraModulePackages = [ config.boot.kernelPackages.lenovo-legion-module ];
+  boot.kernelParams = [ "amd_pstate=guided" ];
+  powerManagement.enable = true;
+  powerManagement.cpuFreqGovernor = "schedutil";
 
   # default shell
   users.users.mt.shell = pkgs.zsh;
@@ -56,11 +59,7 @@
     storageDriver = "btrfs";
   };
 
-  # kvm settings
-  boot.kernelModules = [ "kvm_amd" ];
-
   virtualisation.libvirtd.enable = true;
-  virtualisation.libvirtd.qemuHook = ./scripts/vfio_auto_bind.sh;
 
   environment.variables = {
     NIXOS_OZONE_WL = "1";

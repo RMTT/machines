@@ -50,7 +50,9 @@ in
         # Modesetting is required for display.
         modesetting.enable = true;
 
-        powerManagement = { enable = true; };
+        powerManagement = {
+          enable = true;
+        };
         package = nvidia-package;
       };
 
