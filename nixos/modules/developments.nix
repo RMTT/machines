@@ -20,6 +20,7 @@
 			distrobox
 			go
 			tldr
+			rustup
     ];
 
   };

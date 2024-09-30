@@ -213,7 +213,7 @@ lspconfig.efm.setup {
 ---- cmake ----
 lspconfig.cmake.setup { capabilities = capabilities }
 
----- ccls ----
+---- clangd ----
 lspconfig.clangd.setup { capabilities = capabilities }
 ---- end ----
 
@@ -225,7 +225,7 @@ lspconfig.gopls.setup { capabilities = capabilities }
 lspconfig.terraformls.setup { capabilities = capabilities }
 ---- end ----
 
---- rust-analyzer --
+--- rust-analyzer ----
 require 'lspconfig'.rust_analyzer.setup { capabilities = capabilities }
 --- end ---
 

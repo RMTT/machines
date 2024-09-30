@@ -4,7 +4,6 @@
     fs
     networking
     plasma
-    nvidia
     pipewire
     developments
     services
@@ -25,18 +24,27 @@
   boot.kernel.sysctl = {
     "kernel.yama.ptrace_scope" = 0;
   };
-  boot.initrd.kernelModules = [ "nvidia" ];
   boot.extraModulePackages = [ config.boot.kernelPackages.lenovo-legion-module ];
   boot.kernelParams = [ "amd_pstate=guided" ];
   powerManagement.enable = true;
   powerManagement.cpuFreqGovernor = "schedutil";
-
-  # default shell
-  users.users.mt.shell = pkgs.zsh;
-
   # kernel version
   boot.kernelPackages = pkgs.linuxKernel.packages.linux_zen;
   hardware.cpu.amd.updateMicrocode = true;
+
+  base.gl.enable = true;
+  services.xserver.videoDrivers = [ "amdgpu" "nvidia" ];
+  boot.initrd.kernelModules = [ "nvidia" ];
+  hardware.nvidia = {
+    modesetting.enable = true;
+    powerManagement = {
+      enable = true;
+    };
+    package = config.boot.kernelPackages.nvidiaPackages.latest;
+  };
+
+  # default shell
+  users.users.mt.shell = pkgs.zsh;
 
   nixpkgs.config.permittedInsecurePackages = [
     "openssl-1.1.1w" # for wechat-uos
@@ -53,7 +61,6 @@
     extest.enable = true;
   };
 
-  services.xserver.videoDrivers = [ "amdgpu" ];
 
   virtualisation.docker = {
     storageDriver = "btrfs";
