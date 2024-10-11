@@ -1,7 +1,7 @@
 { pkgs, ... }: {
   programs.kitty = {
     enable = true;
-    theme = "Catppuccin-Mocha";
+    themeFile = "Catppuccin-Mocha";
     font = {
       package = (pkgs.nerdfonts.override { fonts = [ "FiraCode" ]; });
       name = "FiraCode Nerd Font Mono";

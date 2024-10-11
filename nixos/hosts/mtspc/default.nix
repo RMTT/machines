@@ -25,7 +25,13 @@
     "kernel.yama.ptrace_scope" = 0;
   };
   boot.extraModulePackages = [ config.boot.kernelPackages.lenovo-legion-module ];
-  boot.kernelParams = [ "amd_pstate=guided" ];
+  boot.kernelParams = [
+    "amd_pstate=guided"
+    "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
+    "nvme_core.default_ps_max_latency_us=0"
+    "pcie_aspm=off"
+    "pcie_port_pm=off"
+  ];
   powerManagement.enable = true;
   powerManagement.cpuFreqGovernor = "schedutil";
   # kernel version
@@ -40,6 +46,7 @@
     powerManagement = {
       enable = true;
     };
+    open = true;
     package = config.boot.kernelPackages.nvidiaPackages.latest;
   };
 
