@@ -15,9 +15,7 @@ in with lib; {
       fresh.nextcloud-client
       element-desktop
       zotero
-      anki
       tela-icon-theme
-      bitwarden
       yubikey-manager-qt
       solaar
       libreoffice-fresh

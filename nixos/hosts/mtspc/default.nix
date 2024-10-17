@@ -90,4 +90,7 @@
     tunMode = true;
   };
   networking.firewall.trustedInterfaces = [ "Meta" ];
+
+  services.power-profiles-daemon.enable = false;
+  services.tlp.enable = true;
 }

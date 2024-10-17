@@ -9,7 +9,6 @@
       cmake
       gradle
       gnumake
-      bear
       google-cloud-sdk
       nodejs
       clang-tools
