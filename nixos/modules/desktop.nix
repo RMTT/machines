@@ -15,7 +15,9 @@ in with lib; {
       fresh.nextcloud-client
       element-desktop
       zotero
+      anki
       tela-icon-theme
+      bitwarden
       yubikey-manager-qt
       solaar
       libreoffice-fresh
@@ -23,8 +25,10 @@ in with lib; {
       virt-manager
       ownpkgs.zoom-us
       openconnect
-      fresh.kicad
+      #      fresh.kicad
       easyeffects
+			motrix
+			bottles
     ];
     programs.appimage = {
       enable = true;
@@ -43,7 +47,6 @@ in with lib; {
     fonts.packages = with pkgs; [
       wqy_zenhei
       noto-fonts
-      noto-fonts-cjk
       sarasa-gothic
       joypixels
       noto-fonts-emoji
@@ -68,8 +71,17 @@ in with lib; {
     };
 
     # fcitx5
+    # https://codereview.qt-project.org/c/qt/qtbase/+/597856
+    environment.variables.QT_PLUGIN_PATH =
+      let
+        fcitx5Workaround = pkgs.runCommand "fcitx5-workaround" { } ''
+          plugins="${config.i18n.inputMethod.package}/${pkgs.qt6.qtbase.qtPluginPrefix}"
+          cp -r --dereference "$plugins" $out
+        '';
+      in
+      [ "${fcitx5Workaround}" ];
     i18n.inputMethod = {
-			type = "fcitx5";
+      type = "fcitx5";
       enable = true;
       fcitx5.addons = with pkgs; [
         fcitx5-mozc

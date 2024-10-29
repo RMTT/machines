@@ -15,11 +15,11 @@
   # set filesystems mount
   fs.btrfs.label = "@";
   fs.btrfs.volumes = {
-    "/" = [ "subvol=@" "rw" "relatime" "ssd" "space_cache=v2" ];
-    "/home" = [ "subvol=@home" "rw" "relatime" "ssd" "space_cache=v2" ];
+    "/" = [ "subvol=@" "compress=zstd" "rw" "relatime" "ssd" "space_cache=v2" ];
+    "/home" = [ "subvol=@home" "compress=zstd" "rw" "relatime" "ssd" "space_cache=v2" ];
   };
-  fs.swap.label = "@swap";
-  fs.boot.label = "@boot";
+  fs.boot.label = "@BOOT";
+  fs.swap.label = "@SWAP";
 
   boot.kernel.sysctl = {
     "kernel.yama.ptrace_scope" = 0;
@@ -27,10 +27,6 @@
   boot.extraModulePackages = [ config.boot.kernelPackages.lenovo-legion-module ];
   boot.kernelParams = [
     "amd_pstate=guided"
-    "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
-    "nvme_core.default_ps_max_latency_us=0"
-    "pcie_aspm=off"
-    "pcie_port_pm=off"
   ];
   powerManagement.enable = true;
   powerManagement.cpuFreqGovernor = "schedutil";
@@ -46,16 +42,14 @@
     powerManagement = {
       enable = true;
     };
+		nvidiaPersistenced = true;
     open = true;
-    package = config.boot.kernelPackages.nvidiaPackages.latest;
+    package = config.boot.kernelPackages.nvidiaPackages.beta;
   };
 
   # default shell
   users.users.mt.shell = pkgs.zsh;
 
-  nixpkgs.config.permittedInsecurePackages = [
-    "openssl-1.1.1w" # for wechat-uos
-  ];
   # additional system packages
   environment.systemPackages = with pkgs; [
     config.boot.kernelPackages.perf

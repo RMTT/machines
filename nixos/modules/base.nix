@@ -41,7 +41,7 @@ in with lib; {
     boot.loader.grub.configurationLimit = 10;
 
     boot.kernelModules = [ "wireguard" ];
-    boot.supportedFilesystems = [ "ntfs" ];
+    boot.supportedFilesystems = [ "ntfs" "btrfs" ];
 
     # common initrd options
     boot.initrd.availableKernelModules = [
@@ -121,6 +121,7 @@ in with lib; {
       virtiofsd
       hwloc
       openssl
+			sysstat
     ];
 
     # set XDG viarables

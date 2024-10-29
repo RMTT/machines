@@ -22,7 +22,8 @@ let
       };
     };
   };
-in {
+in
+{
   options.fs = {
     btrfs = {
       device = mkOption {
@@ -107,42 +108,50 @@ in {
 
   };
 
-  config = let
-    btrfs = if (cfg.btrfs.device != "" || cfg.btrfs.label != "") then
-      (mapAttrs (_: options: {
-        device = mkIf (cfg.btrfs.device != "")
-          "/dev/disk/by-label/${cfg.btrfs.device}";
-        label = mkIf (cfg.btrfs.label != "") cfg.btrfs.label;
-        fsType = "btrfs";
-        options = options;
-      }) cfg.btrfs.volumes)
-    else
-      { };
+  config =
+    let
+      btrfs =
+        if (cfg.btrfs.device != "" || cfg.btrfs.label != "") then
+          (mapAttrs
+            (_: options: {
+              device = mkIf (cfg.btrfs.device != "")
+                "/dev/disk/by-label/${cfg.btrfs.device}";
+              label = mkIf (cfg.btrfs.label != "") cfg.btrfs.label;
+              fsType = "btrfs";
+              options = options;
+            })
+            cfg.btrfs.volumes)
+        else
+          { };
 
-    others = mapAttrs (_: params: {
-      fsType = params.fsType;
-      label = mkIf (params.label != "") params.label;
-      device = mkIf (params.device != "") "/dev/disk/by-uuid/${params.device}";
-      options = mkIf (params.options != [ ]) params.options;
-    }) cfg.normal.volumes;
+      others = mapAttrs
+        (_: params: {
+          fsType = params.fsType;
+          label = mkIf (params.label != "") params.label;
+          device = mkIf (params.device != "") "/dev/disk/by-uuid/${params.device}";
+          options = mkIf (params.options != [ ]) params.options;
+        })
+        cfg.normal.volumes;
 
-    boot = if (cfg.boot.device != "" || cfg.boot.label != "") then {
-      "/boot" = {
+      boot =
+        if (cfg.boot.device != "" || cfg.boot.label != "") then {
+          "/boot" = {
+            device =
+              mkIf (cfg.boot.device != "") "/dev/disk/by-label/${cfg.boot.device}";
+            label = mkIf (cfg.boot.label != "") cfg.boot.label;
+            fsType = "vfat";
+          };
+        } else
+          { };
+    in
+    {
+      fileSystems = btrfs // others // boot;
+
+      swapDevices = mkIf (cfg.swap.device != "" || cfg.swap.label != "") [{
         device =
-          mkIf (cfg.boot.device != "") "/dev/disk/by-label/${cfg.boot.device}";
-        label = mkIf (cfg.boot.label != "") cfg.boot.label;
-        fsType = "vfat";
-      };
-    } else
-      { };
-  in {
-    fileSystems = btrfs // others // boot;
+          mkIf (cfg.swap.device != "") "/dev/disk/by-uuid/${cfg.swap.device}";
+        label = mkIf (cfg.swap.label != "") cfg.swap.label;
+      }];
 
-    swapDevices = mkIf (cfg.swap.device != "" || cfg.swap.label != "") [{
-      device =
-        mkIf (cfg.swap.device != "") "/dev/disk/by-uuid/${cfg.swap.device}";
-      label = mkIf (cfg.swap.label != "") cfg.swap.label;
-    }];
-
-  };
+    };
 }
