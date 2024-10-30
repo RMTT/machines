@@ -38,8 +38,6 @@
         lib = import ./lib inputs;
 
         nixosConfigurations = {
-          mtswork = lib.mkSystem "mtswork" system.x86_64-linux [ ];
-
           mtspc = lib.mkSystem "mtspc" system.x86_64-linux [ ];
 
           homeserver =

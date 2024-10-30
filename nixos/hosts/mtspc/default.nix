@@ -26,7 +26,7 @@
   };
   boot.extraModulePackages = [ config.boot.kernelPackages.lenovo-legion-module ];
   boot.kernelParams = [
-    "amd_pstate=guided"
+    "amd_pstate=active"
   ];
   powerManagement.enable = true;
   powerManagement.cpuFreqGovernor = "schedutil";
@@ -39,10 +39,17 @@
   boot.initrd.kernelModules = [ "nvidia" ];
   hardware.nvidia = {
     modesetting.enable = true;
+    prime = {
+      nvidiaBusId = "PCI:1:0:0";
+      amdgpuBusId = "PCI:6:0:0";
+      offload = {
+        enable = true;
+        enableOffloadCmd = true;
+      };
+    };
     powerManagement = {
       enable = true;
     };
-		nvidiaPersistenced = true;
     open = true;
     package = config.boot.kernelPackages.nvidiaPackages.beta;
   };
