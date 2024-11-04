@@ -1,7 +1,9 @@
 # Base configuratioj
 { pkgs, lib, config, ... }:
-let cfg = config.base;
-in with lib; {
+let
+  cfg = config.base;
+in
+with lib; {
   imports = [ ./libvirtd.nix ];
 
   options.base = {
@@ -29,6 +31,7 @@ in with lib; {
     ];
     nix.settings.trusted-users = [ "root" "mt" ];
     nix.optimise.automatic = true;
+    nix.gc.automatic = true;
 
     # enable flakes
     nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -107,7 +110,7 @@ in with lib; {
       gnupg
       bitwarden-cli
       sops
-      yubikey-manager
+      fresh.yubikey-manager
       yubikey-touch-detector
       yubikey-personalization
       yubico-pam
@@ -121,7 +124,8 @@ in with lib; {
       virtiofsd
       hwloc
       openssl
-			sysstat
+      sysstat
+      lm_sensors
     ];
 
     # set XDG viarables

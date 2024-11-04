@@ -6,7 +6,7 @@
       theme = "breeze-dark";
     };
     shortcuts = {
-      "kitty.desktop"."New" = "Meta+Return";
+      "services/net.local.kitty.desktop"."_launch" = "Meta+Return";
       "kwin"."Switch to Desktop 1" = "Meta+1";
       "kwin"."Switch to Desktop 2" = "Meta+2";
       "kwin"."Switch to Desktop 3" = "Meta+3";
@@ -23,7 +23,7 @@
       "services/org.kde.spectacle.desktop"."RecordRegion" = "Meta+Shift+R";
       "org.kde.spectacle.desktop"."RectangularRegionScreenShot" =
         "Meta+Shift+S";
-      "yakuake"."toggle-window-state" = [ "F12" "Meta+`" ];
+      "yakuake"."toggle-window-state" = [ "Meta+`" ];
     };
     configFile = {
       "kwinrc"."Desktops"."Id_1" = "ab85507c-da45-4238-9e40-0929234bf65d";
@@ -38,8 +38,8 @@
       "kwinrc"."Desktops"."Rows" = 1;
 
       "kdeglobals"."General"."BrowserApplication" = "firefox.desktop";
-      "kdeglobals"."General"."TerminalApplication" = "alacritty";
-      "kdeglobals"."General"."TerminalService" = "Alacritty.desktop";
+      "kdeglobals"."General"."TerminalApplication" = "kitty";
+      "kdeglobals"."General"."TerminalService" = "Kitty.desktop";
 
       "kdeglobals"."General"."fixed" =
         "Sarasa Mono Slab SC,10,-1,5,50,0,0,0,0,0";

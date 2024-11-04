@@ -18,17 +18,16 @@ in with lib; {
       anki
       tela-icon-theme
       bitwarden
-      yubikey-manager-qt
+      fresh.yubikey-manager-qt
       solaar
       libreoffice-fresh
       obsidian
       virt-manager
       ownpkgs.zoom-us
       openconnect
-      #      fresh.kicad
+      fresh.kicad
       easyeffects
-			motrix
-			bottles
+      motrix
     ];
     programs.appimage = {
       enable = true;

@@ -12,6 +12,7 @@
       # plasma related
       kdePackages.yakuake
       kdePackages.filelight
+			kdePackages.isoimagewriter
       wl-clipboard
       wayland-utils
       kdePackages.sddm-kcm

@@ -3,7 +3,6 @@
   imports = [
 		./modules/base.nix
     ./modules/shell.nix
-    ./modules/alacritty.nix
     ./modules/neovim.nix
     ./modules/plasma.nix
     ./modules/tmux.nix

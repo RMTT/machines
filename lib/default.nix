@@ -40,6 +40,8 @@ in
 {
   mkSystem = name: system: extraModules:
     let
+      collectFlakeInputs = input: [ input ] ++ builtins.concatMap collectFlakeInputs (builtins.attrValues (input.inputs or { }));
+
       overlay-fresh = final: prev: {
         fresh = import nixpkgs-fresh {
           inherit system;
@@ -53,7 +55,6 @@ in
       inherit system;
       specialArgs = {
         modules = modules;
-        nixpkgs-fresh = nixpkgs-fresh;
       };
       modules = [
         ../nixos/hosts/${name}/default.nix
@@ -63,6 +64,10 @@ in
         disko.nixosModules.disko
         ({ config, pkgs, ... }: {
           nixpkgs.overlays = [ overlay-fresh overlay-ownpkgs ];
+
+          # keep flake sources in system closure
+          # https://github.com/NixOS/nix/issues/3995
+          system.extraDependencies = builtins.concatMap collectFlakeInputs (builtins.attrValues inputs);
         })
         {
           nix.registry =
