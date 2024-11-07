@@ -2,10 +2,7 @@
 let
   cfg = config.networking;
   hosts_internet = ''
-                		103.39.79.110 vps-hk
-
         						192.168.128.1 portal.infra.rmtt.host
-        						192.168.128.2 vps-hk.infra.rmtt.host
         						192.168.128.3 router.infra.rmtt.host
         						192.168.128.4 homeserver.infra.rmtt.host
 

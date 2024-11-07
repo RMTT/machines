@@ -197,12 +197,6 @@ with lib; {
 
           peers = [
             {
-              # vps-hk
-              allowedIPs = [ "192.168.128.2/32" "10.42.1.0/24" ];
-              endpoint = "127.0.0.1:51821";
-              publicKey = "2nzzD9C33j6loxVcrjfeWvokbUBXpyxEryUk6HN60nE=";
-            }
-            {
               # homeserver
               allowedIPs = [ "192.168.128.4/32" "10.42.0.0/24" ];
               publicKey = "CN+zErqQ3JIlksx51LgY6exZgjDNIGJih73KhO1WpkI=";
