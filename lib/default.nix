@@ -22,6 +22,8 @@ let
     services = modulePath + "/services.nix";
     docker = modulePath + "/docker.nix";
     wireguard = modulePath + "/wireguard.nix";
+    gravity = modulePath + "/gravity";
+    globals = modulePath + "/globals.nix";
     secrets = secretsPath;
   };
 
@@ -49,7 +51,7 @@ in
         };
       };
 
-      overlay-ownpkgs = final: prev: { ownpkgs = self.packages.${system}; };
+      overlay-ownpkgs = final: prev: self.packages.${system};
     in
     nixpkgs.lib.nixosSystem {
       inherit system;

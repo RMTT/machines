@@ -49,7 +49,7 @@
     };
     powerManagement = {
       enable = true;
-			finegrained = true;
+      finegrained = true;
     };
     open = true;
     package = config.boot.kernelPackages.nvidiaPackages.beta;
@@ -62,7 +62,6 @@
   environment.systemPackages = with pkgs; [
     config.boot.kernelPackages.perf
     moonlight-qt
-    config.nur.repos.xddxdd.wechat-uos
   ];
 
   programs.steam = {
@@ -94,4 +93,6 @@
   networking.firewall.trustedInterfaces = [ "Meta" ];
 
   services.power-profiles-daemon.enable = false;
+
+  services.strongswan-swanctl.enable = true;
 }

@@ -11,7 +11,7 @@ in
       };
       package = mkOption {
         type = types.package;
-        default = pkgs.ownpkgs.derper;
+        default = pkgs.derper;
       };
       listen = mkOption {
         type = types.str;

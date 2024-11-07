@@ -6,6 +6,7 @@
     services
     docker
     wireguard
+    globals
     ./secrets.nix
   ];
 

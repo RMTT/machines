@@ -8,7 +8,7 @@ with lib;{
       enable = mkEnableOption "Enable udp2raw service";
       package = mkOption {
         type = types.package;
-        default = pkgs.ownpkgs.udp2raw-bin;
+        default = pkgs.udp2raw-bin;
       };
 
       openFirewall = mkOption {

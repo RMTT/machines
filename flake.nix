@@ -45,9 +45,7 @@
 
           router = lib.mkSystem "router" system.x86_64-linux [ ];
 
-          vps-hk = lib.mkSystem "vps-hk" system.x86_64-linux [ ];
-
-          portal = lib.mkSystem "portal" system.x86_64-linux [ ];
+          cn2-la = lib.mkSystem "cn2-la" system.x86_64-linux [ ];
         };
 
         homeConfigurations = {

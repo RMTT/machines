@@ -4,14 +4,13 @@ let
   cfg = config.base;
 in
 with lib; {
-  imports = [ ./libvirtd.nix ];
-
   options.base = {
     gl.enable = mkOption {
       type = types.bool;
       default = true;
     };
   };
+
   config = {
     # enable unfree pkgs
     nixpkgs.config.allowUnfree = true;
@@ -56,12 +55,6 @@ with lib; {
       "rtsx_pci_sdmmc"
       "btrfs"
     ];
-
-    boot.kernel.sysctl = {
-      "net.ipv4.conf.all.forwarding" = true;
-      "net.ipv6.conf.all.forwarding" = true;
-      "net.ipv4.conf.all.route_localnet" = true;
-    };
 
     # timezone
     time.timeZone = "Asia/Shanghai";
@@ -110,7 +103,7 @@ with lib; {
       gnupg
       bitwarden-cli
       sops
-      fresh.yubikey-manager
+      yubikey-manager
       yubikey-touch-detector
       yubikey-personalization
       yubico-pam
@@ -126,6 +119,7 @@ with lib; {
       openssl
       sysstat
       lm_sensors
+			iperf
     ];
 
     # set XDG viarables
@@ -195,7 +189,7 @@ with lib; {
         "users"
       ];
       initialHashedPassword =
-        "$y$j9T$RHlCoWbFSwNhdz9.5Y7Hy.$6CrlIcp6sl9vbBJL.ZcvJaq1KCZJ3RLV228gMezSBGA";
+        "$y$j9T$v3KSiMJEpJdcbN4osJbMF0$Qfgg9i/ozgLjDhOg/WZmSrg8vuiNQSrSWivWKvjATN7";
       openssh.authorizedKeys.keyFiles = [ ../../secrets/ssh_key.pub ];
     };
     users.users.root = {

@@ -18,12 +18,12 @@ in with lib; {
       anki
       tela-icon-theme
       bitwarden
-      fresh.yubikey-manager-qt
+      yubikey-manager-qt
       solaar
       libreoffice-fresh
       obsidian
       virt-manager
-      ownpkgs.zoom-us
+      zoom-us
       openconnect
       fresh.kicad
       easyeffects
@@ -70,15 +70,6 @@ in with lib; {
     };
 
     # fcitx5
-    # https://codereview.qt-project.org/c/qt/qtbase/+/597856
-    environment.variables.QT_PLUGIN_PATH =
-      let
-        fcitx5Workaround = pkgs.runCommand "fcitx5-workaround" { } ''
-          plugins="${config.i18n.inputMethod.package}/${pkgs.qt6.qtbase.qtPluginPrefix}"
-          cp -r --dereference "$plugins" $out
-        '';
-      in
-      [ "${fcitx5Workaround}" ];
     i18n.inputMethod = {
       type = "fcitx5";
       enable = true;
