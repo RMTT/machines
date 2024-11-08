@@ -280,31 +280,25 @@ vim.keymap.set('n', '<A-d>', '<cmd>NvimTreeToggle<CR>',
 ---- end ----
 
 ---- toggleterm setting ----
-require("toggleterm").setup {
-  on_create = function(_)
-    vim.cmd("DisableWhitespace")
-  end
-}
 local Terminal = require('toggleterm.terminal').Terminal
 local gitui    = Terminal:new({
   cmd = "gitui",
   hidden = true,
   direction = "float",
   on_open = function(term)
-    vim.cmd("startinsert!")
-    vim.api.nvim_buf_set_keymap(term.bufnr, "t", "<A-g>", "<C-\\><C-n><cmd>lua Gitui_toggle()<CR>",
+    vim.cmd('startinsert!')
+    vim.api.nvim_buf_set_keymap(term.bufnr, "t", "<A-g>", "<C-\\><C-n><cmd>close<CR>",
       { noremap = true, silent = true })
-  end
+  end,
 })
 local main     = Terminal:new({
   cmd = vim.o.shell,
   hidden = true,
   direction = "float",
   on_open = function(term)
-    vim.cmd("startinsert!")
-    vim.api.nvim_buf_set_keymap(term.bufnr, "t", "<A-i>", "<C-\\><C-n><cmd>lua MainTerm_toggle()<CR>",
-      { noremap = true, silent = true })
-  end
+    vim.cmd('startinsert!')
+    vim.api.nvim_buf_set_keymap(term.bufnr, "t", "<A-i>", "<C-\\><C-n><cmd>close<CR>", { noremap = true, silent = true })
+  end,
 })
 
 function Gitui_toggle()
@@ -317,7 +311,7 @@ end
 
 vim.api.nvim_set_keymap("n", "<A-g>", "<cmd>lua Gitui_toggle()<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<A-i>", "<cmd>lua MainTerm_toggle()<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("t", "<C-q>", "<C-\\><C-n>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("t", "<C-[>", "<C-\\><C-n>", { noremap = true, silent = true })
 ---- end ----
 
 ---- setting for gitsign ----
@@ -370,24 +364,6 @@ require 'nvim-treesitter.configs'.setup {
 ---- end ----
 
 ---- setting for auto-session ----
-local function clean_buffers()
-  local bufs = vim.api.nvim_list_bufs()
-  local wins = vim.api.nvim_list_wins()
-
-  local reserve_bufs = {}
-  for _, win in ipairs(wins) do
-    reserve_bufs[vim.api.nvim_win_get_buf(win)] = 1
-  end
-
-  for _, buf in ipairs(bufs) do
-    local name = vim.api.nvim_buf_get_name(buf)
-    local type = vim.api.nvim_get_option_value('buftype', { buf = buf })
-    if reserve_bufs[buf] ~= 1 then
-      vim.api.nvim_buf_delete(buf, {})
-    end
-  end
-end
-
 local auto_sesison_lib = require('auto-session.lib')
 local function set_shadafile()
   local session_name = auto_sesison_lib.escape_session_name(vim.fn.getcwd())
@@ -400,7 +376,7 @@ vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,
 require("auto-session").setup {
   log_level = "warning",
 
-  pre_save_cmds = { "NvimTreeClose", clean_buffers },
+  pre_save_cmds = { "NvimTreeClose" },
   post_restore_cmds = { set_shadafile },
   cwd_change_handling = {
     post_cwd_changed_hook = function()
