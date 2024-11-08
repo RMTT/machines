@@ -23,7 +23,7 @@ let
     docker = modulePath + "/docker.nix";
     wireguard = modulePath + "/wireguard.nix";
     gravity = modulePath + "/gravity";
-    globals = modulePath + "/globals.nix";
+    globals = modulePath + "/globals";
     secrets = secretsPath;
   };
 

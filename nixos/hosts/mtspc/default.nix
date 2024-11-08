@@ -1,5 +1,6 @@
 { pkgs, lib, config, modules, ... }: {
   imports = with modules;[
+		globals
     base
     fs
     networking

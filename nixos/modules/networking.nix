@@ -1,15 +1,6 @@
 { lib, config, pkgs, ... }:
 let
   cfg = config.networking;
-  hosts_internet = ''
-        						192.168.128.1 portal.infra.rmtt.host
-        						192.168.128.3 router.infra.rmtt.host
-        						192.168.128.4 homeserver.infra.rmtt.host
-
-    								192.168.6.1 router.home.rmtt.host
-    								192.168.6.2 homeserver.home.rmtt.host
-    								192.168.6.3 pikvm.home.rmtt.host
-  '';
 in
 with lib;
 let
@@ -118,8 +109,6 @@ in
         "net.ipv6.conf.all.forwarding" = mkDefault 1;
         "net.ipv4.conf.all.route_localnet" = mkDefault 1;
       };
-
-      networking.extraHosts = "	${hosts_internet}\n";
 
       networking.useDHCP = false;
 

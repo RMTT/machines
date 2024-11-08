@@ -1,6 +1,7 @@
 # global configurations
 { ... }:
 {
+  networking.extraHosts = builtins.readFile ./hosts;
   networking.firewall = {
     trustedSubnets = {
       ipv4 = [
