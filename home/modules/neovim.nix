@@ -65,8 +65,6 @@ in
     extraPackages = with pkgs; [
       lua-language-server
       pyright
-      nil
-      nixpkgs-fmt
       cmake-language-server
       tree-sitter
       clang-tools
@@ -76,6 +74,8 @@ in
       shellcheck
       nodePackages.bash-language-server
       shfmt
+			nixd
+			nixfmt
     ];
   };
 }

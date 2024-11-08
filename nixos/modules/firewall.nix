@@ -1,18 +1,7 @@
 { lib, config, pkgs, ... }:
 with lib;
-let
-  cfg = config.networking.firewall;
-
-  ifaceSet = concatStringsSep ", " (
-    map (x: ''"${x}"'') cfg.trustedInterfaces
-  );
-
-  portsToNftSet = ports: portRanges: concatStringsSep ", " (
-    map (x: toString x) ports
-    ++ map (x: "${toString x.from}-${toString x.to}") portRanges
-  );
-in
-{
+let cfg = config.networking.firewall;
+in {
   options = {
     networking.firewall = {
       trustedSubnets = {
@@ -28,21 +17,19 @@ in
     };
   };
 
-  config =
-    let
-      subnetsV4 = concatStringsSep "," (cfg.trustedSubnets.ipv4);
-      subnetsV6 = concatStringsSep "," cfg.trustedSubnets.ipv6;
-    in
-    {
-      networking.firewall = {
-        enable = true;
-        checkReversePath = "loose";
-        logRefusedConnections = false;
-        logRefusedUnicastsOnly = false;
-        extraInputRules = ''
-          ${optionalString (subnetsV4 != "") "ip saddr { ${subnetsV4} } accept"}
-          ${optionalString (subnetsV6 != "") "ip6 saddr { ${subnetsV6} } accept"}
-        '';
-      };
+  config = let
+    subnetsV4 = concatStringsSep "," (cfg.trustedSubnets.ipv4);
+    subnetsV6 = concatStringsSep "," cfg.trustedSubnets.ipv6;
+  in {
+    networking.firewall = {
+      enable = true;
+      checkReversePath = "loose";
+      logRefusedConnections = false;
+      logRefusedUnicastsOnly = false;
+      extraInputRules = ''
+        ${optionalString (subnetsV4 != "") "ip saddr { ${subnetsV4} } accept"}
+        ${optionalString (subnetsV6 != "") "ip6 saddr { ${subnetsV6} } accept"}
+      '';
     };
+  };
 }
