@@ -230,7 +230,26 @@ require 'lspconfig'.rust_analyzer.setup { capabilities = capabilities }
 --- end ---
 
 ---- nix ----
-require 'lspconfig'.nixd.setup {}
+require 'lspconfig'.nixd.setup {
+  settings = {
+    nixd = {
+      nixpkgs = {
+        expr = 'import (builtins.getFlake ("git+file://" + toString ./.)).inputs.nixpkgs { }',
+      },
+      formatting = {
+        command = { "nixfmt" },
+      },
+      options = {
+        nixos = {
+          expr = '(builtins.getFlake ("git+file://" + toString ./.)).nixosConfigurations.nixd.options',
+        },
+        home_manager = {
+          expr = '(builtins.getFlake ("git+file://" + toString ./.)).homeConfigurations.mt.options',
+        },
+      },
+    },
+  },
+}
 --- end ----
 
 require 'lspconfig'.bashls.setup {

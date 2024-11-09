@@ -24,45 +24,36 @@
   };
 
   outputs =
-    { self
-    , nixpkgs
-    , flake-utils
-    , home-manager
-    , nur
-    , sops-nix
-    , ...
-    }@inputs:
-      with flake-utils.lib;
-      let
+    { self, nixpkgs, flake-utils, home-manager, nur, sops-nix, ... }@inputs:
+    with flake-utils.lib;
+    let
 
-        lib = import ./lib inputs;
+      lib = import ./lib inputs;
 
-        nixosConfigurations = {
-          mtspc = lib.mkSystem "mtspc" system.x86_64-linux [ ];
+      nixosConfigurations = {
+        mtspc = lib.mkSystem "mtspc" system.x86_64-linux [ ];
 
-          homeserver =
-            lib.mkSystem "homeserver" system.x86_64-linux [ ];
+        homeserver = lib.mkSystem "homeserver" system.x86_64-linux [ ];
 
-          router = lib.mkSystem "router" system.x86_64-linux [ ];
+        router = lib.mkSystem "router" system.x86_64-linux [ ];
 
-          cn2-la = lib.mkSystem "cn2-la" system.x86_64-linux [ ];
-        };
+        cn2-la = lib.mkSystem "cn2-la" system.x86_64-linux [ ];
 
-        homeConfigurations = {
-          mt = lib.mkUser "mt" system.x86_64-linux;
-        };
-      in
-      {
-        nixosConfigurations = nixosConfigurations;
-        homeConfigurations = homeConfigurations;
-      } // eachSystem [ system.x86_64-linux ] (system:
+        # for nixd language server
+        nixd = lib.mkSystem "nixd" system.x86_64-linux [ ];
+      };
+
+      homeConfigurations = { mt = lib.mkUser "mt" system.x86_64-linux; };
+    in {
+      nixosConfigurations = nixosConfigurations;
+      homeConfigurations = homeConfigurations;
+    } // eachSystem [ system.x86_64-linux ] (system:
       let
         pkgs = import nixpkgs {
           system = system;
           config.allowUnfree = true;
         };
-      in
-      {
+      in {
         formatter = pkgs.nixpkgs-fmt;
         packages = import ./packages pkgs;
       });

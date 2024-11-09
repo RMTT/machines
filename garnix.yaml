@@ -1,6 +1,7 @@
 builds:
   exclude:
   - packages.x86_64-linux.cider
+  - nixosConfigurations.nixd
   include:
   - 'packages.x86_64-linux.*'
   - homeConfigurations.*

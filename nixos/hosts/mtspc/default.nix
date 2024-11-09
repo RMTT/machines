@@ -1,6 +1,6 @@
 { pkgs, lib, config, modules, ... }: {
-  imports = with modules;[
-		globals
+  imports = with modules; [
+    globals
     base
     fs
     networking
@@ -17,18 +17,16 @@
   fs.btrfs.label = "@";
   fs.btrfs.volumes = {
     "/" = [ "subvol=@" "compress=zstd" "rw" "relatime" "ssd" "space_cache=v2" ];
-    "/home" = [ "subvol=@home" "compress=zstd" "rw" "relatime" "ssd" "space_cache=v2" ];
+    "/home" =
+      [ "subvol=@home" "compress=zstd" "rw" "relatime" "ssd" "space_cache=v2" ];
   };
   fs.boot.label = "@BOOT";
   fs.swap.label = "@SWAP";
 
-  boot.kernel.sysctl = {
-    "kernel.yama.ptrace_scope" = 0;
-  };
-  boot.extraModulePackages = [ config.boot.kernelPackages.lenovo-legion-module ];
-  boot.kernelParams = [
-    "amd_pstate=guided"
-  ];
+  boot.kernel.sysctl = { "kernel.yama.ptrace_scope" = 0; };
+  boot.extraModulePackages =
+    [ config.boot.kernelPackages.lenovo-legion-module ];
+  boot.kernelParams = [ "amd_pstate=guided" ];
   powerManagement.enable = true;
   powerManagement.cpuFreqGovernor = "schedutil";
   # kernel version
@@ -70,16 +68,11 @@
     extest.enable = true;
   };
 
-
-  virtualisation.docker = {
-    storageDriver = "btrfs";
-  };
+  virtualisation.docker = { storageDriver = "btrfs"; };
 
   virtualisation.libvirtd.enable = true;
 
-  environment.variables = {
-    NIXOS_OZONE_WL = "1";
-  };
+  environment.variables = { NIXOS_OZONE_WL = "1"; };
 
   services.tailscale = {
     enable = true;
