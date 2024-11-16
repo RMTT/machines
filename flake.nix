@@ -39,6 +39,8 @@
 
         cn2-la = lib.mkSystem "cn2-la" system.x86_64-linux [ ];
 
+        mtslaptop = lib.mkSystem "mtslaptop" system.x86_64-linux [ ];
+
         # for nixd language server
         nixd = lib.mkSystem "nixd" system.x86_64-linux [ ];
       };

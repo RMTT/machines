@@ -137,7 +137,7 @@ in
         if (cfg.boot.device != "" || cfg.boot.label != "") then {
           "/boot" = {
             device =
-              mkIf (cfg.boot.device != "") "/dev/disk/by-label/${cfg.boot.device}";
+              mkIf (cfg.boot.device != "") "/dev/disk/by-uuid/${cfg.boot.device}";
             label = mkIf (cfg.boot.label != "") cfg.boot.label;
             fsType = "vfat";
           };

@@ -48,6 +48,8 @@ with lib; {
     # common initrd options
     boot.initrd.availableKernelModules = [
       "xhci_pci"
+      "ahci"
+      "uas"
       "nvme"
       "usbhid"
       "usb_storage"
