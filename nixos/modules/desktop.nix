@@ -92,7 +92,6 @@ in with lib; {
     hardware.logitech.wireless.enable = true;
     hardware.logitech.wireless.enableGraphical = true;
 
-    services.input-remapper.enable = true;
     services.fwupd.enable = true;
   };
 }

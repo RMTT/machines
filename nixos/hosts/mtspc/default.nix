@@ -28,10 +28,10 @@
     [ config.boot.kernelPackages.lenovo-legion-module ];
   boot.kernelParams = [ "amd_pstate=guided" ];
   powerManagement.enable = true;
-  powerManagement.cpuFreqGovernor = "schedutil";
+  hardware.cpu.amd.updateMicrocode = true;
+
   # kernel version
   boot.kernelPackages = pkgs.linuxKernel.packages.linux_zen;
-  hardware.cpu.amd.updateMicrocode = true;
 
   base.gl.enable = true;
   services.xserver.videoDrivers = [ "amdgpu" "nvidia" ];

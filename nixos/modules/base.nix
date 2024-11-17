@@ -1,9 +1,7 @@
 # Base configuratioj
 { pkgs, lib, config, ... }:
-let
-  cfg = config.base;
-in
-with lib; {
+let cfg = config.base;
+in with lib; {
   options.base = {
     gl.enable = mkOption {
       type = types.bool;
@@ -18,12 +16,11 @@ with lib; {
     nixpkgs.config.segger-jlink.acceptLicense = true;
 
     # binary cache
-    nix.settings.substituters =
-      [
-        "https://cache.garnix.io"
-        "https://mirrors.ustc.edu.cn/nix-channels/store"
-        config.nur.repos.xddxdd._meta.cachixUrl
-      ];
+    nix.settings.substituters = [
+      "https://cache.garnix.io"
+      "https://mirrors.ustc.edu.cn/nix-channels/store"
+      config.nur.repos.xddxdd._meta.cachixUrl
+    ];
     nix.settings.trusted-public-keys = [
       config.nur.repos.xddxdd._meta.cachixPublicKey
       "cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g="
@@ -121,7 +118,7 @@ with lib; {
       openssl
       sysstat
       lm_sensors
-			iperf
+      iperf
     ];
 
     # set XDG viarables
@@ -151,7 +148,13 @@ with lib; {
     };
 
     # cpu governor
-    powerManagement.cpuFreqGovernor = mkIf config.hardware.cpu.intel.updateMicrocode "ondemand";
+    powerManagement.cpuFreqGovernor = mkIf
+      (config.hardware.cpu.intel.updateMicrocode
+        || config.hardware.cpu.amd.updateMicrocode)
+      ((lib.strings.optionalString config.hardware.cpu.intel.updateMicrocode
+        "ondemand")
+        + (lib.strings.optionalString config.hardware.cpu.amd.updateMicrocode
+          "schedutil"));
 
     # enable acpid
     services.acpid.enable = true;
@@ -173,9 +176,7 @@ with lib; {
     # main user
     security.sudo = { wheelNeedsPassword = false; };
     users.mutableUsers = true;
-    users.groups.mt = {
-      gid = 1000;
-    };
+    users.groups.mt = { gid = 1000; };
     users.users.mt = {
       isNormalUser = true;
       home = "/home/mt";
@@ -189,15 +190,11 @@ with lib; {
         "video"
         "kvm"
         "users"
+        "uinput"
       ];
       initialHashedPassword =
         "$y$j9T$v3KSiMJEpJdcbN4osJbMF0$Qfgg9i/ozgLjDhOg/WZmSrg8vuiNQSrSWivWKvjATN7";
       openssh.authorizedKeys.keyFiles = [ ../../secrets/ssh_key.pub ];
-    };
-    users.users.root = {
-      openssh.authorizedKeys.keyFiles = [ ../../secrets/ssh_key.pub ];
-      initialHashedPassword =
-        "$y$j9T$I.Ih8kx/HR9/iI.Mhbsz./$apkdSpL9tpDTBJRjCgKCUikijFkA2cuUhJYecOBT0cC";
     };
 
     # configure tmux
@@ -230,6 +227,20 @@ with lib; {
         vaapiVdpau
         libvdpau-va-gl
       ];
+    };
+
+    # key mapper
+    services.kanata = {
+      enable = true;
+      keyboards.default = {
+        config = ''
+          (defsrc
+            caps)
+
+          (deflayermap (default-layer)
+            caps esc)
+        '';
+      };
     };
 
   };

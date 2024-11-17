@@ -23,9 +23,7 @@
   fs.boot.device = "A433-095D";
 
   powerManagement.enable = true;
-
-  # kernel version
-  #boot.kernelPackages = pkgs.linuxKernel.packages.linux_zen;
+  hardware.cpu.intel.updateMicrocode = true;
 
   base.gl.enable = true;
 
@@ -39,6 +37,4 @@
     enable = true;
     tunMode = true;
   };
-  networking.firewall.trustedInterfaces = [ "Meta" ];
-
 }
