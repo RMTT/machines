@@ -22,7 +22,6 @@
   };
   fs.boot.device = "A433-095D";
 
-  powerManagement.enable = true;
   hardware.cpu.intel.updateMicrocode = true;
 
   base.gl.enable = true;

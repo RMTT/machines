@@ -27,7 +27,6 @@
   boot.extraModulePackages =
     [ config.boot.kernelPackages.lenovo-legion-module ];
   boot.kernelParams = [ "amd_pstate=guided" ];
-  powerManagement.enable = true;
   hardware.cpu.amd.updateMicrocode = true;
 
   # kernel version
@@ -86,7 +85,6 @@
   };
   networking.firewall.trustedInterfaces = [ "Meta" ];
 
-  services.power-profiles-daemon.enable = false;
 
   services.strongswan-swanctl.enable = true;
 }
