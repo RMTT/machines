@@ -119,6 +119,7 @@ in with lib; {
       sysstat
       lm_sensors
       iperf
+      moreutils
     ];
 
     # set XDG viarables
