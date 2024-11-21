@@ -1,14 +1,14 @@
-{ pkgs, ... }: {
+{ pkgs, config, ... }: {
 
   imports = [
-		./modules/base.nix
+    ./modules/base.nix
     ./modules/shell.nix
     ./modules/neovim.nix
     ./modules/plasma.nix
     ./modules/tmux.nix
     ./modules/git.nix
     ./modules/fonts.nix
-		./modules/kitty.nix
+    ./modules/kitty.nix
   ];
   home.stateVersion = "23.05";
 

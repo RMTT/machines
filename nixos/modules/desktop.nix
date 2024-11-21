@@ -12,7 +12,6 @@ in with lib; {
     # desktop apps
     environment.systemPackages = with pkgs; [
       telegram-desktop
-      fresh.nextcloud-client
       element-desktop
       zotero
       anki
@@ -25,9 +24,11 @@ in with lib; {
       virt-manager
       zoom-us
       openconnect
-      fresh.kicad
       easyeffects
       motrix
+
+      fresh.kicad
+      fresh.nextcloud-client
     ];
     programs.appimage = {
       enable = true;
@@ -62,8 +63,13 @@ in with lib; {
           "Sarasa Mono Slab J"
           "Sarasa Mono Slab K"
         ];
-        sansSerif =
-          [ "Sarasa UI SC" "Sarasa UI TC" "Sarasa UI J" "Sarasa UI K" "Noto Sans CJK SC" ];
+        sansSerif = [
+          "Sarasa UI SC"
+          "Sarasa UI TC"
+          "Sarasa UI J"
+          "Sarasa UI K"
+          "Noto Sans CJK SC"
+        ];
         monospace =
           [ "Sarasa Mono SC" "Sarasa Mono TC" "Sarasa Mono J" "Sarasa Mono K" ];
       };
@@ -73,16 +79,20 @@ in with lib; {
     i18n.inputMethod = {
       type = "fcitx5";
       enable = true;
-      fcitx5.addons = with pkgs; [
-        fcitx5-mozc
-        fcitx5-gtk
-        fcitx5-chinese-addons
-      ];
+      fcitx5 = {
+        waylandFrontend = true;
+        addons = with pkgs; [
+          fcitx5-mozc
+          fcitx5-gtk
+          fcitx5-chinese-addons
+          fcitx5-material-color
+          fcitx5-pinyin-moegirl
+          fcitx5-pinyin-zhwiki
+        ];
+      };
     };
 
-    xdg.portal = {
-      enable = true;
-    };
+    xdg.portal = { enable = true; };
 
     # enable bluetooth
     hardware.bluetooth.enable = true;

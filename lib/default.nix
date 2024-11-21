@@ -1,11 +1,4 @@
-{ self
-, nixpkgs
-, nixpkgs-fresh
-, home-manager
-, nur
-, sops-nix
-, disko
-, ...
+{ self, nixpkgs, nixpkgs-fresh, home-manager, nur, sops-nix, disko, ...
 }@inputs:
 let
   modulePath = ../nixos/modules;
@@ -38,11 +31,12 @@ let
       });
   };
 
-in
-{
+in {
   mkSystem = name: system: extraModules:
     let
-      collectFlakeInputs = input: [ input ] ++ builtins.concatMap collectFlakeInputs (builtins.attrValues (input.inputs or { }));
+      collectFlakeInputs = input:
+        [ input ] ++ builtins.concatMap collectFlakeInputs
+        (builtins.attrValues (input.inputs or { }));
 
       overlay-fresh = final: prev: {
         fresh = import nixpkgs-fresh {
@@ -52,24 +46,22 @@ in
       };
 
       overlay-ownpkgs = final: prev: self.packages.${system};
-    in
-    nixpkgs.lib.nixosSystem {
+    in nixpkgs.lib.nixosSystem {
       inherit system;
-      specialArgs = {
-        modules = modules;
-      };
+      specialArgs = { modules = modules; };
       modules = [
         ../nixos/hosts/${name}/default.nix
         nur.nixosModules.nur
         sops-nix.nixosModules.sops
         home-manager.nixosModules.home-manager
         disko.nixosModules.disko
-        ({ config, pkgs, ... }: {
+        ({ ... }: {
           nixpkgs.overlays = [ overlay-fresh overlay-ownpkgs ];
 
           # keep flake sources in system closure
           # https://github.com/NixOS/nix/issues/3995
-          system.extraDependencies = builtins.concatMap collectFlakeInputs (builtins.attrValues inputs);
+          system.extraDependencies =
+            builtins.concatMap collectFlakeInputs (builtins.attrValues inputs);
         })
         {
           nix.registry =
@@ -80,7 +72,7 @@ in
     };
 
   mkUser = name: system:
-    home-manager.lib.homeManagerConfiguration {
+    home-manager.lib.homeManagerConfiguration rec {
       pkgs = import nixpkgs-fresh { inherit system; };
       extraSpecialArgs.sops = sops-nix.homeManagerModules.sops;
       modules = [
@@ -91,6 +83,7 @@ in
           programs.home-manager.enable = true;
         }
         inputs.plasma-manager.homeManagerModules.plasma-manager
+        inputs.nur.hmModules.nur
         ../home/${name}.nix
       ];
     };
