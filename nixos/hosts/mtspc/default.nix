@@ -50,7 +50,7 @@
       finegrained = true;
     };
     open = true;
-    package = config.boot.kernelPackages.nvidiaPackages.beta;
+    package = config.boot.kernelPackages.nvidiaPackages.latest;
   };
 
   # default shell
@@ -85,6 +85,10 @@
   };
   networking.firewall.trustedInterfaces = [ "Meta" ];
 
+  services.daed = {
+    enable = true;
+    listen = "0.0.0.0:2023";
+  };
 
-  services.strongswan-swanctl.enable = true;
+  services.meshcentral.enable = true;
 }

@@ -21,6 +21,9 @@
     plasma-manager.url = "github:pjones/plasma-manager";
     plasma-manager.inputs.nixpkgs.follows = "nixpkgs";
     plasma-manager.inputs.home-manager.follows = "home-manager";
+
+    daeuniverse.url = "github:daeuniverse/flake.nix";
+    daeuniverse.inputs.nixpkgs.follows = "nixpkgs-fresh";
   };
 
   outputs =

@@ -78,7 +78,6 @@ in with lib; {
     # system packages
     environment.systemPackages = with pkgs; [
       smartmontools
-      eza
       parted
       bind
       htop

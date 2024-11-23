@@ -12,8 +12,8 @@
 
 
     allowedUDPPorts = [
-      68 # DHCP and wireguard
-      67 # DHCP and wireguard
+      68 # DHCP
+      67 # DHCP
       5201 # for iperf
     ];
     allowedTCPPorts = [

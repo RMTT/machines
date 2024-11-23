@@ -19,11 +19,8 @@ in with lib; {
       bitwarden
       yubikey-manager-qt
       solaar
-      libreoffice-fresh
       obsidian
       virt-manager
-      zoom-us
-      openconnect
       easyeffects
       motrix
 

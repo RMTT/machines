@@ -55,6 +55,8 @@ in {
         sops-nix.nixosModules.sops
         home-manager.nixosModules.home-manager
         disko.nixosModules.disko
+        inputs.daeuniverse.nixosModules.dae
+        inputs.daeuniverse.nixosModules.daed
         ({ ... }: {
           nixpkgs.overlays = [ overlay-fresh overlay-ownpkgs ];
 
