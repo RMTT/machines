@@ -23,4 +23,10 @@
     sopsFile = ./wg.key;
     format = "binary";
   };
+
+  sops.secrets.k3s = {
+    mode = "0400";
+    sopsFile = ./k3s;
+    format = "binary";
+  };
 }

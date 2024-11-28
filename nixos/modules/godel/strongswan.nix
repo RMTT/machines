@@ -28,6 +28,10 @@ in {
         type = types.str;
         description = "ip v4 address for infra network";
       };
+      routes = mkOption {
+        type = types.listOf types.str;
+        default = [ "10.42.0.0/16" ];
+      };
     };
   };
 
@@ -53,6 +57,7 @@ in {
         IgnoreCarrierLoss = true;
         Description = "rmt's infra network";
       };
+      routes = builtins.map (dest: { Destination = dest; }) cfg.routes;
     };
 
     environment.etc = {

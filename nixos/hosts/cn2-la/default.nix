@@ -66,6 +66,11 @@ with lib; {
       };
     };
 
+    services.k3s = {
+      enable = true;
+      configPath = config.sops.secrets.k3s.path;
+      role = "agent";
+    };
     services.godel = {
       enable = true;
       cert = ./secrets/godel.cert;
