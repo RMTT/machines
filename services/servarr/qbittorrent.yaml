@@ -17,6 +17,17 @@ spec:
     spec:
       nodeSelector:
         "kubernetes.io/hostname": homeserver
+      # to mark bittorrent traffic
+      initContainers:
+      - image: alpine
+        name: iptables-initcontainer
+        command: ["/bin/sh", "-c"]
+        args:
+          [
+            "apk add iptables && iptables -t mangle -A OUTPUT -j DSCP --set-dscp 4",
+          ]
+        securityContext:
+          privileged: true
       containers:
       - name: qbittorrent
         image: lscr.io/linuxserver/qbittorrent

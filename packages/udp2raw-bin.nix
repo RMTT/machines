@@ -1,5 +1,5 @@
 { stdenv }: stdenv.mkDerivation rec{
-  pname = "udp2raw-bin";
+  pname = "udp2raw";
   version = "20230206.0";
 
   src = builtins.fetchurl {

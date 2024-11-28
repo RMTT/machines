@@ -99,7 +99,7 @@ in {
     };
 
     boot.kernel.sysctl = {
-      "net.ipv4.conf.all.forwarding" = mkDefault 1;
+      "net.ipv4.conf.all.forwarding" = true;
       "net.ipv6.conf.all.forwarding" = mkDefault 1;
       "net.ipv4.conf.all.route_localnet" = mkDefault 1;
     };

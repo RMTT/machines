@@ -13,11 +13,10 @@ spec:
       dashboard:
         enabled: true
     ports:
-      traefik:
-        expose: true
       public:
         port: 20000
-        expose: true
+        expose:
+          default: true
         exposedPort: 1443
         protocol: TCP
         tls:

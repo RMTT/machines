@@ -39,6 +39,8 @@ externalDatabase:
     password: ENC[AES256_GCM,data:1Xf4J6kf2mxqsw==,iv:ZFR68Axp3OLo3Ea7ATB4IqSGF8Hy2z5cjtBs99sWV+4=,tag:XRONRzY6UtH908IQHu6VnA==,type:str]
 postgresql:
     enabled: ENC[AES256_GCM,data:Z8l4mg==,iv:bKL4jvNKjZwOzp/87HxY6tnGm8x7IouSeut/dZZhVl0=,tag:HTyDp4W1Yppsmvu3YBn0JA==,type:bool]
+    image:
+        tag: ENC[AES256_GCM,data:DQa+j82ezFILIpPSdjxTCmrS+Ns=,iv:foFYL8FLGAeKqVt8OUZhbe22h7E0igdSCQwIDpWCyd0=,tag:rJcwXdxcGi7we9dZ2abE4Q==,type:str]
     global:
         postgresql:
             auth:
@@ -60,8 +62,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2024-08-02T10:11:39Z"
-    mac: ENC[AES256_GCM,data:xi4yBohxcjJVtcDkVZ1GtqCi21lD/TxvQfp0H+RJ47xf1iIpc8YAiPOhCVyQWrJq30uo6Kq/aPU+RuE76X7SPhVpVCfsMoXfQtkNev+wvnEWXqcWHn4FWveMlMZ4dAHopS1XU1+TL5lJq57PIwVrRepzr/P60NMA5R2UtebbF80=,iv:iQbbfEp5MHDDZTz5K0dT2FwWTn5kTxeMGyLAcJmVU4E=,tag:pyvNS8PFbvmLWwvCZX/PAg==,type:str]
+    lastmodified: "2024-11-24T09:56:52Z"
+    mac: ENC[AES256_GCM,data:YR3lM1gSNq+haafuLHDV8RiZ1Z4noit+v8zPWgb6bsE2ImgxTvVrXb2B91Eac5VnGah2pgiaD+3XQEJ0hHDYt8oewimiEhzhrXI3h1AZX1E+zhGYqutoISbVo5Y7TIEt0cyQGqT0ayy5fzXkh27RihLtDiU+8tw7Nn6Sy+5UHeI=,iv:E15g7kTg4+9K1ksOCtgGnr8iJ7meox1inPfLZqiLeFg=,tag:9g3Jy1drgIOyuNtyKwQ2tw==,type:str]
     pgp:
         - created_at: "2024-04-09T02:29:17Z"
           enc: |-
@@ -78,4 +80,4 @@ sops:
             -----END PGP MESSAGE-----
           fp: F01B47BAD5FC895EE1F1B9E59FAD79271D7D461C
     unencrypted_suffix: _unencrypted
-    version: 3.9.0
+    version: 3.9.1

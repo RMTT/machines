@@ -119,6 +119,9 @@ in with lib; {
       lm_sensors
       iperf
       moreutils
+      kubernetes
+      kubernetes-helm
+      sshuttle
     ];
 
     # set XDG viarables
@@ -229,19 +232,7 @@ in with lib; {
       ];
     };
 
-    # key mapper
-    services.kanata = {
-      enable = true;
-      keyboards.default = {
-        config = ''
-          (defsrc
-            caps)
-
-          (deflayermap (default-layer)
-            caps esc)
-        '';
-      };
-    };
+    services.fwupd.enable = true;
 
   };
 }

@@ -17,6 +17,7 @@ let
     wireguard = modulePath + "/wireguard.nix";
     gravity = modulePath + "/gravity";
     globals = modulePath + "/globals";
+    godel = modulePath + "/godel";
     secrets = secretsPath;
   };
 

@@ -5,7 +5,6 @@ with lib; {
     base
     fs
     networking
-    wireguard
     ./secrets.nix
   ];
 
@@ -114,6 +113,7 @@ with lib; {
       openFirewall = true;
     };
 
+    # kea has bug when new interfaces added, use adguardhome as dhcp server now
     services.kea = {
       dhcp4 = {
         enable = false;
@@ -161,36 +161,6 @@ with lib; {
         };
       };
     };
-
-    # wireguard and udp2raw
-    services.udp2raw = {
-      enable = true;
-      localAddress = "127.0.0.1";
-      openFirewall = false;
-      remoteAddress = "103.39.79.110";
-      role = "client";
-      passwordFile = config.sops.secrets.udp2raw.path;
-    };
-
-    networking.nftables.ruleset = ''
-      table ip nat {
-      	chain postrouting {
-      		type nat hook postrouting priority 100 ;
-      		ip saddr != {${infra_node_ip}/24} oifname "wg0" masquerade
-      	}
-      }
-      				'';
-    networking.wireguard.networks = [{
-      ip = [ "${infra_node_ip}/24" ];
-      privateKeyFile = config.sops.secrets.wg-private.path;
-      mtu = 1350;
-
-      peers = [{
-        # homeserver
-        allowedIPs = [ "192.168.128.4/32" "10.42.0.0/24" ];
-        publicKey = "CN+zErqQ3JIlksx51LgY6exZgjDNIGJih73KhO1WpkI=";
-      }];
-    }];
 
     services.tailscale = {
       enable = true;

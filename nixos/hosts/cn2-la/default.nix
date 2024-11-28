@@ -5,11 +5,13 @@ with lib; {
     networking
     globals
     gravity
+    godel
     ./disk-config.nix
-    ./secrets.nix
+    ./secrets
   ];
 
-  config = {
+  config = let infra_node_ip = "192.168.128.5";
+  in {
     system.stateVersion = "24.11";
 
     hardware.cpu.intel.updateMicrocode = true;
@@ -31,18 +33,13 @@ with lib; {
     boot.loader.grub.enable = lib.mkForce true;
     boot.loader.efi.canTouchEfiVariables = lib.mkForce false;
 
-    networking.firewall.allowedUDPPorts = [
-      config.services.gravity.ipsec.port
-      6696 # for babel
-    ];
-
     services.gravity = {
       enable = true;
       ipsec = {
         enable = true;
         organization = "rmtt.tech";
         commonName = "cn2-la";
-        privateKey = config.sops.secrets.ipsec-private.path;
+        privateKey = config.sops.secrets.gravity-private.path;
         endpoints = [{
           serialNumber = "0";
           addressFamily = "ip4";
@@ -61,7 +58,7 @@ with lib; {
       };
       divi = {
         enable = true;
-        prefix = "2a0c:b641:69c:5210:8964::/96";
+        prefix = "2a0c:b641:69c:5214:0:4::/96";
       };
       srv6 = {
         enable = true;
@@ -69,20 +66,13 @@ with lib; {
       };
     };
 
-    systemd.network.netdevs.k3s = {
-      netdevConfig = {
-        Kind = "dummy";
-        Name = "k3s";
-      };
-    };
-
-    systemd.network.networks.k3s = {
-      matchConfig = { Name = "k3s"; };
-
-      networkConfig = {
-        Address = "192.168.128.32";
-        Description = "NIC for k3s";
-      };
+    services.godel = {
+      enable = true;
+      cert = ./secrets/cn2-la.cert;
+      privateKey = config.sops.secrets.godel-private.path;
+      address = "${infra_node_ip}";
+      internet = true;
+      remoteId = "homeserver.infra.rmtt.host";
     };
   };
 }

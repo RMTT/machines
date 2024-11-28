@@ -9,6 +9,7 @@
     developments
     services
     docker
+    godel
   ];
 
   system.stateVersion = "23.05";
@@ -91,4 +92,9 @@
   };
 
   services.meshcentral.enable = true;
+  services.godel = {
+    enable = true;
+    address = "1.2.3.4";
+    privateKey = ../.;
+  };
 }

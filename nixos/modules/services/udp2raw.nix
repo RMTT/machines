@@ -1,14 +1,12 @@
 { lib, config, pkgs, ... }:
-let
-  cfg = config.services.udp2raw;
-in
-with lib;{
+let cfg = config.services.udp2raw;
+in with lib; {
   options = {
     services.udp2raw = {
       enable = mkEnableOption "Enable udp2raw service";
       package = mkOption {
         type = types.package;
-        default = pkgs.udp2raw-bin;
+        default = pkgs.udp2raw;
       };
 
       openFirewall = mkOption {
@@ -31,7 +29,12 @@ with lib;{
       };
       remotePort = mkOption {
         type = types.int;
-        default = 51821;
+        default = 51820;
+      };
+
+      extraArgs = mkOption {
+        types = types.str;
+        default = "";
       };
 
       role = mkOption {
@@ -39,36 +42,35 @@ with lib;{
         default = "server";
       };
 
-      passwordFile = mkOption {
-        type = types.path;
-      };
+      passwordFile = mkOption { type = types.path; };
     };
   };
 
   config = mkIf cfg.enable {
-    systemd.services.udp2raw =
-      let
-        execStr = "${cfg.package}/bin/udp2raw ${if cfg.role == "server" then "-s" else "-c"} -l ${cfg.localAddress}:${toString cfg.localPort} -r ${cfg.remoteAddress}:${toString cfg.remotePort}";
-      in
-      {
-        enable = true;
-        description = "udp2raw";
-        wants = [ "network-online.target" ];
-        after = [ "network-online.target" ];
-        wantedBy = [ "multi-user.target" ];
+    systemd.services.udp2raw = let
+      execStr = "${cfg.package}/bin/udp2raw ${
+          if cfg.role == "server" then "-s" else "-c"
+        } -l ${cfg.localAddress}:${
+          toString cfg.localPort
+        } -r ${cfg.remoteAddress}:${toString cfg.remotePort}";
+    in {
+      enable = true;
+      description = "udp2raw";
+      wants = [ "network-online.target" ];
+      after = [ "network-online.target" ];
+      wantedBy = [ "multi-user.target" ];
 
-        path = with pkgs; [ iptables bash ];
+      path = with pkgs; [ iptables bash ];
 
-        preStart = "${execStr} --clear || true";
-        postStop = "${execStr} --clear || true";
-        script = ''
-          								pass=$(<${cfg.passwordFile})
-                    			${execStr} -k $pass -a --fix-gro --mtu-warn 1400'';
-        serviceConfig = {
-          Type = "exec";
-        };
-      };
+      preStart = "${execStr} --clear || true";
+      postStop = "${execStr} --clear || true";
+      script = ''
+        pass=$(<${cfg.passwordFile})
+        ${execStr} -k $pass -a --fix-gro ${cfg.extraArgs}'';
+      serviceConfig = { Type = "exec"; };
+    };
 
-    networking.firewall.allowedTCPPorts = mkIf cfg.openFirewall [ cfg.localPort ];
+    networking.firewall.allowedTCPPorts =
+      mkIf cfg.openFirewall [ cfg.localPort ];
   };
 }

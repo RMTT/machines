@@ -1,8 +1,7 @@
-{ lib, pkgs, config, ... }: with lib;
-let
-  cfg = config.services.gravity.divi;
-in
-{
+{ lib, pkgs, config, ... }:
+with lib;
+let cfg = config.services.gravity.divi;
+in {
   options = {
     services.gravity = {
       divi = {
@@ -33,9 +32,8 @@ in
   config = mkIf cfg.enable {
     systemd.network.networks.divi = {
       name = "divi";
-      linkConfig = {
-        MTUBytes = "1400";
-      };
+      linkConfig = { MTUBytes = "1400"; };
+      address = [ "10.200.0.1/32" ];
       routes = [
         {
           Destination = cfg.prefix;
@@ -49,12 +47,14 @@ in
 
     systemd.services.divi = {
       serviceConfig = {
-        ExecStart = "${pkgs.tayga}/bin/tayga -d --config ${pkgs.writeText "tayga.conf" ''
-            tun-device divi
-            ipv4-addr 10.200.0.1
-            prefix ${cfg.prefix}
-            dynamic-pool ${cfg.dynamic-pool}
-          ''}";
+        ExecStart = "${pkgs.tayga}/bin/tayga -d --config ${
+            pkgs.writeText "tayga.conf" ''
+              tun-device divi
+              ipv4-addr 10.200.0.1
+              prefix ${cfg.prefix}
+              dynamic-pool ${cfg.dynamic-pool}
+            ''
+          }";
       };
       after = [ "network.target" ];
       wantedBy = [ "multi-user.target" ];
@@ -79,7 +79,9 @@ in
           content = ''
             chain forward {
               type filter hook forward priority 0;
-              oifname "divi" ip6 saddr != { ${lib.concatStringsSep ", " cfg.allow} } reject
+              oifname "divi" ip6 saddr != { ${
+                lib.concatStringsSep ", " cfg.allow
+              } } reject
             }
           '';
         };

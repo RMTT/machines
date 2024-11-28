@@ -1,9 +1,4 @@
-{ config
-, pkgs
-, lib
-, inputs
-, ...
-}:
+{ config, pkgs, lib, inputs, ... }:
 with lib;
 let
   cfg = config.services.gravity;
@@ -20,18 +15,10 @@ let
     };
 
     cargoHash = "sha256-+f793L/qYdHaVP3S3wCn0d4URbXzGzgRwwCo5mrIEq8=";
-    checkFlags = [
-      "--skip=address::test::remote"
-    ];
+    checkFlags = [ "--skip=address::test::remote" ];
   };
-in
-{
-  imports = [
-    ./strongswan.nix
-    ./bird.nix
-    ./divi.nix
-    ./networkd.nix
-  ];
+in {
+  imports = [ ./strongswan.nix ./bird.nix ./divi.nix ./networkd.nix ];
 
   options.services.gravity = {
     enable = mkEnableOption "gravity overlay network, next generation";
@@ -48,18 +35,16 @@ in
         default = 13000;
       };
       endpoints = mkOption {
-        type = types.listOf (
-          types.submodule {
-            options = {
-              serialNumber = mkOption { type = types.str; };
-              addressFamily = mkOption { type = types.str; };
-              address = mkOption {
-                type = types.nullOr types.str;
-                default = null;
-              };
+        type = types.listOf (types.submodule {
+          options = {
+            serialNumber = mkOption { type = types.str; };
+            addressFamily = mkOption { type = types.str; };
+            address = mkOption {
+              type = types.nullOr types.str;
+              default = null;
             };
-          }
-        );
+          };
+        });
       };
     };
     reload = {
@@ -78,9 +63,9 @@ in
       boot.kernel.sysctl = {
         "net.vrf.strict_mode" = 1;
         "net.ipv6.conf.default.forwarding" = 1;
-        "net.ipv4.conf.default.forwarding" = 1;
+        "net.ipv4.conf.default.forwarding" = true;
         "net.ipv6.conf.all.forwarding" = 1;
-        "net.ipv4.conf.all.forwarding" = 1;
+        "net.ipv4.conf.all.forwarding" = mkForce true;
         # https://www.kernel.org/doc/html/latest/networking/vrf.html#applications
         # established sockets will be created in the VRF based on the ingress interface
         # in case ingress traffic comes from inside the VRF targeting VRF external addresses
@@ -91,10 +76,7 @@ in
       };
 
       systemd.services.gravity-rules = {
-        path = with pkgs; [
-          iproute2
-          coreutils
-        ];
+        path = with pkgs; [ iproute2 coreutils ];
         script = ''
           ip -4 ru del pref 0 || true
           ip -6 ru del pref 0 || true
@@ -108,16 +90,16 @@ in
         wantedBy = [ "multi-user.target" ];
       };
 
+      networking.firewall.allowedUDPPorts = [
+        config.services.gravity.ipsec.port
+        6696 # for babel
+      ];
 
     })
     (mkIf cfg.reload.enable {
       systemd.tmpfiles.rules = [ "d /var/lib/gravity 0755 root root - -" ];
       systemd.services.gravity-registry = {
-        path = with pkgs; [
-          curl
-          jq
-          coreutils
-        ];
+        path = with pkgs; [ curl jq coreutils ];
         script = ''
           set -euo pipefail
           for filename in registry.json combined.json
@@ -132,19 +114,17 @@ in
         serviceConfig.Type = "oneshot";
       };
       systemd.timers.gravity-registry = {
-        timerConfig = {
-          OnCalendar = "*:0/15";
-        };
+        timerConfig = { OnCalendar = "*:0/15"; };
         wantedBy = [ "timers.target" ];
       };
     })
     (mkIf cfg.ipsec.enable {
       environment.systemPackages = [ pkgs.strongswan ];
-      environment.etc."ranet/config.json".source = (pkgs.formats.json { }).generate "config.json" {
-        organization = cfg.ipsec.organization;
-        common_name = cfg.ipsec.commonName;
-        endpoints = builtins.map
-          (ep: {
+      environment.etc."ranet/config.json".source =
+        (pkgs.formats.json { }).generate "config.json" {
+          organization = cfg.ipsec.organization;
+          common_name = cfg.ipsec.commonName;
+          endpoints = builtins.map (ep: {
             serial_number = ep.serialNumber;
             address_family = ep.addressFamily;
             address = ep.address;
@@ -161,40 +141,27 @@ in
                   ;;
               esac
             '';
-          })
-          cfg.ipsec.endpoints;
-      };
-      systemd.services.gravity-ipsec =
-        let
-          command = "ranet -c /etc/ranet/config.json -r /var/lib/gravity/registry.json -k ${cfg.ipsec.privateKey}";
-        in
-        {
-          path = [
-            ranet
-            pkgs.iproute2
-          ];
-          script = "${command} up";
-          reload = "${command} up";
-          preStop = "${command} down";
-          serviceConfig = {
-            Type = "oneshot";
-            RemainAfterExit = true;
-          };
-          unitConfig = {
-            AssertFileNotEmpty = "/var/lib/gravity/registry.json";
-          };
-          bindsTo = [ "strongswan-swanctl.service" ];
-          wants = [
-            "network-online.target"
-            "strongswan-swanctl.service"
-          ];
-          after = [
-            "network-online.target"
-            "strongswan-swanctl.service"
-          ];
-          wantedBy = [ "multi-user.target" ];
-          reloadTriggers = [ config.environment.etc."ranet/config.json".source ];
+          }) cfg.ipsec.endpoints;
         };
+      systemd.services.gravity-ipsec = let
+        command =
+          "ranet -v /var/run/gravity.vici -c /etc/ranet/config.json -r /var/lib/gravity/registry.json -k ${cfg.ipsec.privateKey}";
+      in {
+        path = [ ranet pkgs.iproute2 ];
+        script = "${command} up";
+        reload = "${command} up";
+        preStop = "${command} down";
+        serviceConfig = {
+          Type = "oneshot";
+          RemainAfterExit = true;
+        };
+        unitConfig = { AssertFileNotEmpty = "/var/lib/gravity/registry.json"; };
+        bindsTo = [ "strongswan-gravity.service" ];
+        wants = [ "network-online.target" "strongswan-gravity.service" ];
+        after = [ "network-online.target" "strongswan-gravity.service" ];
+        wantedBy = [ "multi-user.target" ];
+        reloadTriggers = [ config.environment.etc."ranet/config.json".source ];
+      };
     })
   ]);
 }
