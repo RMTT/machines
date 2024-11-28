@@ -68,7 +68,7 @@ with lib; {
 
     services.godel = {
       enable = true;
-      cert = ./secrets/cn2-la.cert;
+      cert = ./secrets/godel.cert;
       privateKey = config.sops.secrets.godel-private.path;
       address = "${infra_node_ip}";
       internet = true;

@@ -135,7 +135,7 @@
     };
     services.godel = {
       enable = true;
-      cert = ./secrets/homeserver.cert;
+      cert = ./secrets/godel.cert;
       privateKey = config.sops.secrets.godel-private.path;
       address = "${infra_node_ip}";
       remoteId = "cn2-la.infra.rmtt.host";
