@@ -10,7 +10,9 @@ with lib; {
     ./secrets
   ];
 
-  config = let infra_node_ip = "192.168.128.5";
+  config = let
+    infra_node_ip = "192.168.128.5";
+    wan = "ens3";
   in {
     system.stateVersion = "24.11";
 
@@ -70,6 +72,11 @@ with lib; {
       enable = true;
       configPath = config.sops.secrets.k3s.path;
       role = "agent";
+      extraFlags = [
+        "--node-ip ${infra_node_ip}"
+        "--node-external-ip ${infra_node_ip}"
+        "--flannel-iface godel"
+      ];
     };
     services.godel = {
       enable = true;
@@ -78,6 +85,7 @@ with lib; {
       address = "${infra_node_ip}";
       internet = true;
       remoteId = "homeserver.infra.rmtt.host";
+      interface = "${wan}";
     };
   };
 }

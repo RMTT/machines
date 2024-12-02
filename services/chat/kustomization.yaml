@@ -1,0 +1,12 @@
+namespace: chat
+labels:
+  - pairs:
+      app: chat
+    includeSelectors: true
+
+resources:
+- namespace.yaml
+- deployment.yaml
+- chatEnv.yaml.dec
+- pgEnv.yaml.dec
+- volume.yaml

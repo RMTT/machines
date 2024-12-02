@@ -14,7 +14,8 @@ Use partition label to identify partitions
 
 `nixos-install/nixos-rebuild --flake github:RMTT/machines#{machine name}`
 
-## Services for kubernetes
+## Services
+> Based on Kubernetes now
 
 The order to apply:
 
@@ -27,3 +28,22 @@ and
 
 intel-device-plugin |--> plex
 ```
+
+### Architecture
+
++ network infrastructure: godel(based on ipsec). All nodes that be used to deploy services should be inserted into godel
++ runtime: k3s
+
+### Notes
+
+#### How to scale up Traefik?
+
+In default, k3s only install one traefik instance per cluster and one servicelb(forward traffic to traefik via netfilter) per node, to scale up traefik instance:
+
+1. configure `deployment.prelicas` in HelmChartConfig of Traefik, which located at `services/k3s/traefik-custom-config.yaml`
+
+2. via `kubectl scale --replicas x deployment -n kube-system traefik`
+
+#### How to scale up CoreDNS
+
+via `kubectl scale --replicas x deployment -n kube-system coredns`

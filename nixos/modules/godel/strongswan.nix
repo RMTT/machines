@@ -15,14 +15,14 @@ in {
       internet = mkEnableOption "does machine have public ip?";
       cert = mkOption { type = types.path; };
       privateKey = mkOption { type = types.path; };
+      interface = mkOption {
+        type = types.str;
+        description = "the interface strongswan will listen";
+      };
       remoteId = mkOption { type = types.string; };
       remoteAddress = mkOption {
         type = types.str;
         default = "";
-      };
-      localAddress = mkOption {
-        type = types.str;
-        default = config.services.godel.address;
       };
       address = mkOption {
         type = types.str;
@@ -30,14 +30,14 @@ in {
       };
       routes = mkOption {
         type = types.listOf types.str;
-        default = [ "10.42.0.0/16" ];
+        default = [ ];
       };
     };
   };
 
   config = mkIf cfg.enable {
     networking.firewall.trustedInterfaces = [ "godel" ];
-    networking.firewall.allowedUDPPorts = [ 500 4500 ];
+    networking.firewall.allowedUDPPorts = [ 12345 ];
     systemd.network.netdevs.godel = {
       netdevConfig = {
         Kind = "xfrm";
@@ -77,15 +77,25 @@ in {
     environment.systemPackages = with pkgs; [ strongswan ];
     services.strongswan-swanctl = {
       enable = true;
+      strongswan.extraConfig = ''
+        charon {
+          interfaces_use = ${cfg.interface}
+          port_nat_t = 12345
+          port = 0
+          retransmit_timeout = 30
+          retransmit_base = 1
+        }
+      '';
       swanctl = {
         authorities.default.cacert = "godel";
         connections = {
           main = {
             rekey_time = mkIf cfg.internet "0";
+            keyingtries = 0;
+            local_port = 12345;
+            remote_port = 12345;
             remote_addrs =
               mkIf (cfg.remoteAddress != "") [ "${cfg.remoteAddress}" ];
-            local_addrs =
-              mkIf (cfg.remoteAddress != "") [ "${cfg.localAddress}" ];
             remote.default = {
               auth = "pubkey";
               id = "CN=${cfg.remoteId}";
@@ -102,8 +112,9 @@ in {
                 config.systemd.network.netdevs.godel.xfrmConfig.InterfaceId;
               local_ts = [ "0.0.0.0/0" ];
               remote_ts = [ "0.0.0.0/0" ];
-              start_action = "start";
-              close_action = "start";
+              start_action = "trap";
+              close_action = "trap";
+              dpd_action = "restart";
             };
           };
         };

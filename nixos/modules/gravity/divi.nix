@@ -60,6 +60,7 @@ in {
       wantedBy = [ "multi-user.target" ];
     };
 
+    # TODO: when nftables.services restart, following tables will be deleted and then recreated. This behavior will destroy nftables rules inserted by other apps.
     networking.nftables = {
       enable = true;
       tables = {

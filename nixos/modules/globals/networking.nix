@@ -15,10 +15,10 @@
       68 # DHCP
       67 # DHCP
       5201 # for iperf
+      53 # for dns
     ];
     allowedTCPPorts = [
       5201 # for iperf
-      6696 # for babel protocol
     ];
   };
 }

@@ -7,20 +7,24 @@ spec:
   valuesContent: |-
     additionalArguments:
       - "--api"
-      - "--api.dashboard=true"
       - "--api.insecure=true"
-    ingressRoute:
-      dashboard:
-        enabled: true
     ports:
       public:
         port: 20000
-        expose:
-          default: true
+        hostPort: 1443
         exposedPort: 1443
         protocol: TCP
         tls:
            enabled: true
+      web:
+        hostPort: 80
+      websecure:
+        hostPort: 443
+
     providers:
       kubernetesCRD:
         allowCrossNamespace: true
+    deployment:
+      replicas: 2
+    service:
+      type: NodePort

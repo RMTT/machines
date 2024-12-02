@@ -1,0 +1,79 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chat
+spec:
+  replicas: 1
+  template:
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: cn2-la
+      dnsPolicy: "Default"
+      containers:
+      - name: chat-server
+        image: lobehub/lobe-chat-database:latest
+        ports:
+        - containerPort: 3210
+        resources:
+          requests:
+            cpu: "500m"
+            memory: "500Mi"
+          limits:
+            cpu: "2000m"
+            memory: "2Gi"
+        envFrom:
+        - configMapRef:
+            name: chat-env
+      - name: pgvector
+        image: pgvector/pgvector:pg16
+        env:
+        - name: PGDATA
+          value: /var/lib/postgresql/data/pgdata
+        envFrom:
+        - configMapRef:
+            name: pg-env
+        volumeMounts:
+          - name: pgdata
+            mountPath: "/var/lib/postgresql/data/pgdata"
+      volumes:
+        - name: pgdata
+          persistentVolumeClaim:
+            claimName: chat-pgdata
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: chat
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 3210
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: chat
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-all"
+    traefik.ingress.kubernetes.io/router.entrypoints: "web,websecure"
+spec:
+  ingressClassName: traefik
+  tls:
+  - hosts:
+    - ai.rmtt.tech
+    secretName: chat-tls
+  rules:
+  - host: ai.rmtt.tech
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: chat
+            port:
+              number: 80

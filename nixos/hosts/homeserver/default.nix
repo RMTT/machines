@@ -4,7 +4,6 @@
     fs
     networking
     services
-    docker
     globals
     godel
     gravity
@@ -46,11 +45,6 @@
 
     # networking related
     networking.firewall.allowedTCPPorts = [ 1443 ];
-    networking.firewall.trustedSubnets.ipv4 = [
-      "10.42.0.0/16" # k8s pod
-      "10.43.0.0/16" # k8s service
-      "100.64.0.0/16" # tailscale
-    ];
 
     services.resolved.extraConfig = ''
                   DNSStubListener = false
@@ -132,6 +126,13 @@
       enable = true;
       configPath = ./config/k3s.yaml;
       role = "server";
+      extraFlags = [
+        "--node-ip ${infra_node_ip}"
+        "--node-external-ip ${infra_node_ip}"
+        "--flannel-backend host-gw"
+        "--flannel-external-ip"
+        "--flannel-iface godel"
+      ];
     };
     services.godel = {
       enable = true;
@@ -140,7 +141,7 @@
       address = "${infra_node_ip}";
       remoteId = "cn2-la.infra.rmtt.host";
       remoteAddress = "cn2-la.rmtt.host";
-      localAddress = "192.168.6.2";
+      interface = "${wan}";
     };
 
     services.gravity = {
@@ -168,7 +169,7 @@
         headerFile = config.sops.secrets.header.path;
       };
 
-      strongswan = { interfaces = [ "enp2s0" ]; };
+      strongswan = { interfaces = [ "${wan}" ]; };
       address = [ "2a0c:b641:69c:5220::1/60" ];
       bird = {
         enable = true;

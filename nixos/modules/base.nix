@@ -39,7 +39,7 @@ in with lib; {
     boot.loader.systemd-boot.configurationLimit = 10;
     boot.loader.grub.configurationLimit = 10;
 
-    boot.kernelModules = [ "wireguard" ];
+    boot.kernelModules = [ "wireguard" "ip_vs" ];
     boot.supportedFilesystems = [ "ntfs" "btrfs" ];
 
     # common initrd options
@@ -83,6 +83,7 @@ in with lib; {
       htop
       gitFull
       git-lfs
+      ipvsadm
       file
       wget
       curl
