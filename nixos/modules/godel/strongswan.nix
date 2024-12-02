@@ -92,6 +92,9 @@ in {
           main = {
             rekey_time = mkIf cfg.internet "0";
             keyingtries = 0;
+            encap = true;
+            mobike = false;
+            unique = "replace";
             local_port = 12345;
             remote_port = 12345;
             remote_addrs =
@@ -106,6 +109,7 @@ in {
             };
             children.default = {
               rekey_time = mkIf cfg.internet "0";
+              mode = "tunnel";
               if_id_out = toString
                 config.systemd.network.netdevs.godel.xfrmConfig.InterfaceId;
               if_id_in = toString
