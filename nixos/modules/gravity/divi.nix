@@ -65,7 +65,7 @@ in {
       enable = true;
       tables = {
         filter4 = {
-          name = "filter";
+          name = "divi-filter";
           family = "inet";
           content = ''
             chain forward {
@@ -75,7 +75,7 @@ in {
           '';
         };
         filter6 = {
-          name = "filter";
+          name = "divi-filter";
           family = "ip6";
           content = ''
             chain forward {
@@ -87,6 +87,7 @@ in {
           '';
         };
         nat = {
+          name = "divi-nat";
           family = "ip";
           content = ''
             chain postrouting {
