@@ -4,3 +4,4 @@
 *.tgz
 services/**/charts
 result
+*.qcow2

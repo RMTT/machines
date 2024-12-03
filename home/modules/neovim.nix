@@ -1,5 +1,26 @@
 { pkgs, lib, ... }:
 let
+  rocks-nvim = { buildLuarocksPackage, fetchurl, fetchzip, luaOlder }:
+    buildLuarocksPackage {
+      pname = "rime.nvim";
+      version = "0.0.1-1";
+      knownRockspec = (fetchurl {
+        url = "mirror://luarocks/rime.nvim-0.0.1-1.rockspec";
+        sha256 = "1qv7m14vr6qydi4ckbf2bcdadg7frkvkg7hns5081nf8vf0nfaq9";
+      }).outPath;
+      src = fetchzip {
+        url = "https://github.com/Freed-Wu/rime.nvim/archive/0.0.1.zip";
+        sha256 = "0fa2by2r50l4vzjs2sz00k2pr137rzmlxa76acc7x72ldwsn0amx";
+      };
+
+      disabled = luaOlder "5.1";
+
+      meta = {
+        homepage = "https://luarocks.org/modules/Freed-Wu/rime.nvim";
+        description = "ㄓ rime for neovim";
+        license.fullName = "GPL-3.0";
+      };
+    };
   fromGitHub = ref: rev: repo:
     pkgs.vimUtils.buildVimPlugin {
       pname = "${lib.strings.sanitizeDerivationName repo}";
@@ -10,8 +31,7 @@ let
         rev = rev;
       };
     };
-in
-{
+in {
   programs.neovim = {
     enable = true;
     defaultEditor = true;
@@ -74,8 +94,8 @@ in
       shellcheck
       nodePackages.bash-language-server
       shfmt
-			nixd
-			nixfmt
+      nixd
+      nixfmt
     ];
   };
 }

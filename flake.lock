@@ -239,11 +239,11 @@
     },
     "nixpkgs-fresh": {
       "locked": {
-        "lastModified": 1731890469,
-        "narHash": "sha256-D1FNZ70NmQEwNxpSSdTXCSklBH1z2isPR84J6DQrJGs=",
+        "lastModified": 1733064805,
+        "narHash": "sha256-7NbtSLfZO0q7MXPl5hzA0sbVJt6pWxxtGWbaVUDDmjs=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "5083ec887760adfe12af64830a66807423a859a7",
+        "rev": "31d66ae40417bb13765b0ad75dd200400e98de84",
         "type": "github"
       },
       "original": {
@@ -279,6 +279,21 @@
         "ref": "nixos-24.05",
         "repo": "nixpkgs",
         "type": "github"
+      }
+    },
+    "nixpkgs-testing": {
+      "locked": {
+        "lastModified": 1733210713,
+        "narHash": "sha256-KClGkb7RRpGzy4W27r9RqX1KuTBibj3iEdvm4he3bn8=",
+        "ref": "refs/heads/k3s-nft",
+        "rev": "13a207828672a2c4ab2689e4b1e19811f40665ee",
+        "revCount": 7,
+        "type": "git",
+        "url": "file:///home/mt/Projects/nixpkgs"
+      },
+      "original": {
+        "type": "git",
+        "url": "file:///home/mt/Projects/nixpkgs"
       }
     },
     "nixpkgs_2": {
@@ -383,6 +398,7 @@
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs_3",
         "nixpkgs-fresh": "nixpkgs-fresh",
+        "nixpkgs-testing": "nixpkgs-testing",
         "nur": "nur",
         "plasma-manager": "plasma-manager",
         "sops-nix": "sops-nix"

@@ -3,7 +3,7 @@
     enable = true;
     themeFile = "Catppuccin-Mocha";
     font = {
-      package = (pkgs.nerdfonts.override { fonts = [ "FiraCode" ]; });
+      package = pkgs.nerd-fonts.fira-code;
       name = "FiraCode Nerd Font Mono";
     };
     shellIntegration = {

@@ -4,6 +4,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-fresh.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs-testing.url = "git+file:///home/mt/Projects/nixpkgs";
 
     flake-utils.url = "github:numtide/flake-utils";
 
@@ -34,18 +35,21 @@
       lib = import ./lib inputs;
 
       nixosConfigurations = {
-        mtspc = lib.mkSystem "mtspc" system.x86_64-linux [ ];
+        mtspc = lib.mkSystem "mtspc" system.x86_64-linux nixpkgs;
 
-        homeserver = lib.mkSystem "homeserver" system.x86_64-linux [ ];
+        homeserver = lib.mkSystem "homeserver" system.x86_64-linux nixpkgs;
 
-        router = lib.mkSystem "router" system.x86_64-linux [ ];
+        router = lib.mkSystem "router" system.x86_64-linux nixpkgs;
 
-        cn2-la = lib.mkSystem "cn2-la" system.x86_64-linux [ ];
+        cn2-la = lib.mkSystem "cn2-la" system.x86_64-linux nixpkgs;
 
-        mtslaptop = lib.mkSystem "mtslaptop" system.x86_64-linux [ ];
+        mtslaptop = lib.mkSystem "mtslaptop" system.x86_64-linux nixpkgs;
 
         # for nixd language server
-        nixd = lib.mkSystem "nixd" system.x86_64-linux [ ];
+        nixd = lib.mkSystem "nixd" system.x86_64-linux nixpkgs;
+
+        # for testing
+        test = lib.mkSystem "test" system.x86_64-linux inputs.nixpkgs-testing;
       };
 
       homeConfigurations = { mt = lib.mkUser "mt" system.x86_64-linux; };

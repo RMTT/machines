@@ -10,6 +10,8 @@
     services
     docker
     wireguard
+    godel
+    gravity
   ];
 
   fileSystems = {

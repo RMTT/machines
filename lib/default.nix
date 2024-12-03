@@ -1,5 +1,4 @@
-{ self, nixpkgs, nixpkgs-fresh, home-manager, nur, sops-nix, disko, ...
-}@inputs:
+{ self, nixpkgs-fresh, home-manager, nur, sops-nix, disko, ... }@inputs:
 let
   modulePath = ../nixos/modules;
   secretsPath = ../secrets/secrets.nix;
@@ -33,7 +32,7 @@ let
   };
 
 in {
-  mkSystem = name: system: extraModules:
+  mkSystem = name: system: nixpkgs:
     let
       collectFlakeInputs = input:
         [ input ] ++ builtins.concatMap collectFlakeInputs
@@ -67,15 +66,16 @@ in {
             builtins.concatMap collectFlakeInputs (builtins.attrValues inputs);
         })
         {
-          nix.registry =
-            builtins.mapAttrs (name: value: { flake = value; }) inputs;
+          # nixpkgs will be added automatically
+          nix.registry = builtins.mapAttrs (name: value: { flake = value; })
+            (builtins.removeAttrs inputs [ "nixpkgs" ]);
           networking.hostName = name;
         }
-      ] ++ extraModules;
+      ];
     };
 
   mkUser = name: system:
-    home-manager.lib.homeManagerConfiguration rec {
+    home-manager.lib.homeManagerConfiguration {
       pkgs = import nixpkgs-fresh { inherit system; };
       extraSpecialArgs.sops = sops-nix.homeManagerModules.sops;
       modules = [
