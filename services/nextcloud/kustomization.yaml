@@ -4,8 +4,10 @@ resources:
   - middlewares.yaml
 
 namespace: nextcloud
-commonLabels:
-  app: nextcloud
+labels:
+  - pairs:
+      app: nextcloud
+    includeSelectors: true
 
 patches:
   - path: ./patches/ingress.yaml
@@ -15,4 +17,4 @@ helmCharts:
     repo: https://nextcloud.github.io/helm/
     releaseName: nextcloud
     valuesFile: values.yaml.dec
-    version: 5.5.0
+    version: 6.2.4

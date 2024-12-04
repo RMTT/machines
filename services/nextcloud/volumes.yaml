@@ -24,15 +24,3 @@ spec:
           operator: In
           values:
           - homeserver
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: nextcloud-postgresql-data
-spec:
-  accessModes:
-    - ReadWriteOnce
-  storageClassName: local-path
-  resources:
-    requests:
-      storage: 4Gi

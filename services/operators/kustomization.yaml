@@ -1,0 +1,11 @@
+namespace: operators
+
+resources:
+  - namespace.yaml
+
+helmCharts:
+- name: cloudnative-pg
+  includeCRDs: true
+  releaseName: cloudnative-pg
+  version: 0.22.1
+  repo: https://cloudnative-pg.github.io/charts

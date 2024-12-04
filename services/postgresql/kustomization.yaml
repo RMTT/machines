@@ -1,0 +1,6 @@
+namespace: postgresql
+
+resources:
+  - namespace.yaml
+  - nextcloud.yaml
+  - secrets.yaml.dec
