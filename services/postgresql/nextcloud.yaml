@@ -16,6 +16,7 @@ spec:
     size: 50Gi
     storageClass: local-path
   backup:
+    retentionPolicy: "7d"
     barmanObjectStore:
       destinationPath: s3://mtsdatabase-backup
       endpointURL: https://s3.us-east-005.backblazeb2.com
