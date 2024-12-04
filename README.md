@@ -21,7 +21,9 @@ The order to apply:
 
 ```
 storage      
-            |--> other apps ....
+
+operators     |--> postgresql --> other apps ....
+            
 cert-issuer
 
 and 
