@@ -23,7 +23,7 @@ ingress:
     className: ENC[AES256_GCM,data:7wX4NeekFg==,iv:PUJFP9FnBnD6PMypurCzL05IfAHyHWDIRfvbiNNiPv0=,tag:XJCek2l3kEAxdL2AOq8bUg==,type:str]
     annotations:
         cert-manager.io/cluster-issuer: ENC[AES256_GCM,data:PlH7MP0qIpnbPsyS5+H5,iv:VmkhI12Pcgz5U1nJLf1Ba5swPMrTCtUM5hYmPjn2LUU=,tag:ndGdFZ4lEDjXWQCCm7Clbw==,type:str]
-        traefik.ingress.kubernetes.io/router.entrypoints: ENC[AES256_GCM,data:GXyUu6ce+k4w5BlsT2yLupLeBKg=,iv:EkQj3AWHge9HPpAKDGP2gl/3VMFg9S1wu977kfdIlmY=,tag:9E7Ti+BZIqLDOnXB+EnnEg==,type:str]
+        traefik.ingress.kubernetes.io/router.entrypoints: ENC[AES256_GCM,data:6e5elYzPbBNZ9+dxzw==,iv:0DHdmH3Hu+H3EVNAj5423T66OeopwKvwLqPgEn/PDCg=,tag:NaCz86fhbX1KdaNm4c52qA==,type:str]
         traefik.ingress.kubernetes.io/router.middlewares: ENC[AES256_GCM,data:HpBciy8FSk5gNwgqJOu8sfaqlq2oBL2zIFcspdmHrBPGQ1dQbBgYxU1qCVTpvkUjNY/PHoPa9GQdxcdOzJEn95x5AODcb1VdIn6fh2C4Tk+ubVCo453yX4o=,iv:qUL/0kwEyTXhEFCptRCjgDbbV2lnAJKCSGnW4wb1SSk=,tag:kAo6w44ssqQeF1mGQw2tnQ==,type:str]
     tls:
         - hosts:
@@ -62,8 +62,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2024-11-24T09:56:52Z"
-    mac: ENC[AES256_GCM,data:YR3lM1gSNq+haafuLHDV8RiZ1Z4noit+v8zPWgb6bsE2ImgxTvVrXb2B91Eac5VnGah2pgiaD+3XQEJ0hHDYt8oewimiEhzhrXI3h1AZX1E+zhGYqutoISbVo5Y7TIEt0cyQGqT0ayy5fzXkh27RihLtDiU+8tw7Nn6Sy+5UHeI=,iv:E15g7kTg4+9K1ksOCtgGnr8iJ7meox1inPfLZqiLeFg=,tag:9g3Jy1drgIOyuNtyKwQ2tw==,type:str]
+    lastmodified: "2024-12-04T01:56:55Z"
+    mac: ENC[AES256_GCM,data:2emkqkuGA1sIJgYjVK2w/QCQTwLgWJzT0aSej/Q4jxhVNelp5F/p7kj4BnPgPAJz9pAWqGiUp61968Sf5FVqxPr4O8qDs/0Cmigyhw+F5WbMS9PMmgzeEpqG2fD2toi30ASKrmbwU3cosCBnTfRLODTLy10CXj+jjSqWHmRD86g=,iv:jpa7HH1uJi7dtTCkzrmmwhv5xb6mPeCSbH9hHuJmkcI=,tag:tcUcljajvaCqlUisJdnJfQ==,type:str]
     pgp:
         - created_at: "2024-04-09T02:29:17Z"
           enc: |-

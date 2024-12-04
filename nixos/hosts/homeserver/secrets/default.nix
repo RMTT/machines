@@ -14,7 +14,7 @@
     format = "binary";
   };
 
-  sops.secrets.zoho-pass = { mode = "644"; };
+  sops.secrets.smtp-pass = { mode = "644"; };
 
   sops.secrets.godel-private = {
     mode = "0400";

@@ -63,13 +63,13 @@
         default = {
           auth = true;
           tls = true;
-          tls_starttls = false;
-          from = "notify@rmtt.tech";
-          host = "smtppro.zoho.com";
-          port = 465;
-          user = "d.rong@outlook.com";
+          tls_starttls = true;
+          from = "notification@rmtt.tech";
+          host = "smtp.mail.me.com";
+          port = 587;
+          user = "mt@rmtt.tech";
           passwordeval =
-            "${pkgs.coreutils}/bin/cat ${config.sops.secrets.zoho-pass.path}";
+            "${pkgs.coreutils}/bin/cat ${config.sops.secrets.smtp-pass.path}";
         };
       };
     };
@@ -81,7 +81,7 @@
       notifications.mail = {
         enable = true;
         recipient = "d.rong@outlook.com";
-        sender = "notify@rmtt.tech";
+        sender = "notification@rmtt.tech";
       };
     };
 
