@@ -19,7 +19,7 @@ in {
         type = types.str;
         description = "the interface strongswan will listen";
       };
-      remoteId = mkOption { type = types.string; };
+      remoteId = mkOption { type = types.str; };
       remoteAddress = mkOption {
         type = types.str;
         default = "";
