@@ -1,18 +1,18 @@
-{ pkgs, ... }: {
-  imports = [ ./desktop.nix ];
-  config = {
-    services.displayManager.sddm.enable = true;
-    services.displayManager.sddm.wayland.enable = true;
+{ pkgs, config, lib, ... }:
+let cfg = config.desktop.plasma;
+in with lib; {
+  options = { desktop.plasma.enable = mkEnableOption "enable plasma"; };
+  config = mkIf cfg.enable {
     services.desktopManager.plasma6.enable = true;
-
-    environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
     # desktop apps
     environment.systemPackages = with pkgs; [
       # plasma related
       kdePackages.yakuake
       kdePackages.filelight
-			kdePackages.isoimagewriter
+      kdePackages.isoimagewriter
+      kdePackages.kconfig
+      pkgs.kwin4-effect-geometry-change
       wl-clipboard
       wayland-utils
       kdePackages.sddm-kcm
@@ -20,10 +20,6 @@
       xdg-desktop-portal-gtk # for GTK/GNOME applications to correctly apply cursor themeing on Wayland.
     ];
 
-    services.printing = {
-      enable = true;
-      drivers = with pkgs; [ fxlinuxprint ];
-    };
     programs.kdeconnect.enable = true;
   };
 }

@@ -19,10 +19,10 @@ in with lib; {
     nix.settings.substituters = [
       "https://cache.garnix.io"
       "https://mirrors.ustc.edu.cn/nix-channels/store"
-      config.nur.repos.xddxdd._meta.cachixUrl
+      pkgs.nur.repos.xddxdd._meta.cachixUrl
     ];
     nix.settings.trusted-public-keys = [
-      config.nur.repos.xddxdd._meta.cachixPublicKey
+      pkgs.nur.repos.xddxdd._meta.cachixPublicKey
       "cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g="
     ];
     nix.settings.trusted-users = [ "root" "mt" ];

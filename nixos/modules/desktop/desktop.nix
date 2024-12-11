@@ -19,11 +19,11 @@ in with lib; {
       bitwarden
       yubikey-manager-qt
       solaar
-      obsidian
       virt-manager
       easyeffects
       motrix
 
+      fresh.obsidian
       fresh.kicad
       fresh.nextcloud-client
     ];
@@ -47,7 +47,7 @@ in with lib; {
       sarasa-gothic
       joypixels
       noto-fonts-emoji
-      (nerdfonts.override { fonts = [ "FiraCode" ]; })
+      nerd-fonts.fira-code
     ];
     fonts.fontconfig = {
       cache32Bit = true;
@@ -89,7 +89,10 @@ in with lib; {
       };
     };
 
-    xdg.portal = { enable = true; };
+    xdg.portal = {
+      enable = true;
+      xdgOpenUsePortal = true;
+    };
 
     # enable bluetooth
     hardware.bluetooth.enable = true;

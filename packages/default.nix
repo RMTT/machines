@@ -5,4 +5,6 @@
   zoom-us = pkgs.callPackage ./zoom.nix { };
   cider = pkgs.callPackage ./cider2.nix { };
   bird = pkgs.callPackage ./bird { };
+  kwin4-effect-geometry-change =
+    pkgs.callPackage ./kwin4-effect-geometry-change.nix { };
 }

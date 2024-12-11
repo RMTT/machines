@@ -4,7 +4,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-fresh.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nixpkgs-testing.url = "git+file:///home/mt/Projects/nixpkgs";
+    nixpkgs-testing.url = "github:rmtt/nixpkgs";
 
     flake-utils.url = "github:numtide/flake-utils";
 
@@ -24,7 +24,7 @@
     plasma-manager.inputs.home-manager.follows = "home-manager";
 
     daeuniverse.url = "github:daeuniverse/flake.nix";
-    daeuniverse.inputs.nixpkgs.follows = "nixpkgs-fresh";
+    daeuniverse.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =

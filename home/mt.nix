@@ -5,11 +5,13 @@
     ./modules/shell.nix
     ./modules/neovim.nix
     ./modules/plasma.nix
+    ./modules/niri.nix
     ./modules/tmux.nix
     ./modules/git.nix
     ./modules/fonts.nix
     ./modules/kitty.nix
   ];
+
   home.stateVersion = "23.05";
 
   # configure gpg

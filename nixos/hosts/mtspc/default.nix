@@ -4,15 +4,17 @@
     base
     fs
     networking
-    plasma
-    pipewire
+    desktop
     developments
     services
     docker
     godel
+
+    ./vm.nix
   ];
 
   system.stateVersion = "23.05";
+  home-manager.users.mt = pkgs.mkUser "mt";
 
   # set filesystems mount
   fs.btrfs.label = "@";
@@ -35,7 +37,6 @@
 
   base.gl.enable = true;
   services.xserver.videoDrivers = [ "amdgpu" "nvidia" ];
-  boot.initrd.kernelModules = [ "nvidia" ];
   hardware.nvidia = {
     modesetting.enable = true;
     prime = {
@@ -53,6 +54,9 @@
     open = true;
     package = config.boot.kernelPackages.nvidiaPackages.latest;
   };
+
+  desktop.niri.enable = true;
+  desktop.plasma.enable = true;
 
   # default shell
   users.users.mt.shell = pkgs.zsh;

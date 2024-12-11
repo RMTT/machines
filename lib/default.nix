@@ -1,4 +1,5 @@
-{ self, nixpkgs-fresh, home-manager, nur, sops-nix, disko, ... }@inputs:
+{ self, nixpkgs, nixpkgs-fresh, home-manager, nur, sops-nix, disko, ...
+}@inputs:
 let
   modulePath = ../nixos/modules;
   secretsPath = ../secrets/secrets.nix;
@@ -7,9 +8,8 @@ let
     base = modulePath + "/base.nix";
     fs = modulePath + "/fs.nix";
     networking = modulePath + "/networking.nix";
-    plasma = modulePath + "/plasma.nix";
+    desktop = modulePath + "/desktop";
     nvidia = modulePath + "/nvidia.nix";
-    pipewire = modulePath + "/pipewire.nix";
     developments = modulePath + "/developments.nix";
     services = modulePath + "/services.nix";
     docker = modulePath + "/docker.nix";
@@ -19,6 +19,21 @@ let
     godel = modulePath + "/godel";
     secrets = secretsPath;
   };
+
+  hmMoudles = name: [
+    {
+      nixpkgs.overlays = [ overlay-libvterm overlay-ownpkgs ];
+      nixpkgs.config = { allowUnfree = true; };
+      programs.home-manager.enable = true;
+    }
+    inputs.plasma-manager.homeManagerModules.plasma-manager
+    nur.modules.homeManager.default
+    {
+      home.username = name;
+      home.homeDirectory = "/home/${name}";
+    }
+    ../home/${name}.nix
+  ];
 
   overlay-libvterm = final: prev: {
     libvterm-neovim = prev.libvterm-neovim.overrideAttrs
@@ -31,6 +46,14 @@ let
       });
   };
 
+  overlay-fresh = final: prev: {
+    fresh = import nixpkgs-fresh {
+      system = prev.system;
+      config.allowUnfree = true;
+    };
+  };
+
+  overlay-ownpkgs = final: prev: import ../packages prev;
 in {
   mkSystem = name: system: nixpkgs:
     let
@@ -38,27 +61,40 @@ in {
         [ input ] ++ builtins.concatMap collectFlakeInputs
         (builtins.attrValues (input.inputs or { }));
 
-      overlay-fresh = final: prev: {
-        fresh = import nixpkgs-fresh {
-          inherit system;
-          config.allowUnfree = true;
-        };
+      overlay-lib = final: prev: {
+        mkUser = name:
+          { lib, ... }: {
+            imports = hmMoudles name;
+            _module.args.pkgs = lib.mkForce (import nixpkgs-fresh {
+              inherit system;
+              config.allowUnfree = true;
+            });
+          };
       };
-
-      overlay-ownpkgs = final: prev: self.packages.${system};
     in nixpkgs.lib.nixosSystem {
       inherit system;
-      specialArgs = { modules = modules; };
+      specialArgs = {
+        modules = modules;
+        inherit inputs;
+      };
       modules = [
         ../nixos/hosts/${name}/default.nix
-        nur.nixosModules.nur
+        nur.modules.nixos.default
         sops-nix.nixosModules.sops
         home-manager.nixosModules.home-manager
         disko.nixosModules.disko
         inputs.daeuniverse.nixosModules.dae
         inputs.daeuniverse.nixosModules.daed
+        {
+          # home-manager settings
+          home-manager.extraSpecialArgs = { inherit inputs; };
+        }
         ({ ... }: {
-          nixpkgs.overlays = [ overlay-fresh overlay-ownpkgs ];
+          nixpkgs.overlays = [
+            overlay-fresh
+            overlay-ownpkgs
+            overlay-lib
+          ];
 
           # keep flake sources in system closure
           # https://github.com/NixOS/nix/issues/3995
@@ -76,19 +112,11 @@ in {
 
   mkUser = name: system:
     home-manager.lib.homeManagerConfiguration {
-      pkgs = import nixpkgs-fresh { inherit system; };
-      extraSpecialArgs.sops = sops-nix.homeManagerModules.sops;
-      modules = [
-        {
-          nixpkgs.overlays = [ overlay-libvterm ];
-          home.username = name;
-          home.homeDirectory = "/home/${name}";
-          programs.home-manager.enable = true;
-        }
-        inputs.plasma-manager.homeManagerModules.plasma-manager
-        inputs.nur.hmModules.nur
-        ../home/${name}.nix
-      ];
+      pkgs = import nixpkgs-fresh {
+        inherit system;
+        config.allowUnfree = true;
+      };
+      extraSpecialArgs = { inherit inputs; };
+      modules = hmMoudles name;
     };
 }
-

@@ -6,7 +6,6 @@
       theme = "breeze-dark";
     };
     shortcuts = {
-      "services/net.local.kitty.desktop"."_launch" = "Meta+Return";
       "kwin"."Switch to Desktop 1" = "Meta+1";
       "kwin"."Switch to Desktop 2" = "Meta+2";
       "kwin"."Switch to Desktop 3" = "Meta+3";
@@ -18,9 +17,10 @@
       "kwin"."Window to Desktop 2" = "Meta+@";
       "kwin"."Window to Desktop 3" = "Meta+#";
       "kwin"."Window to Desktop 4" = "Meta+$";
+
       "org.kde.dolphin.desktop"."_launch" = "Meta+E";
       "org.kde.krunner.desktop"."_launch" = [ "Meta+R" "Search" ];
-      "services/org.kde.spectacle.desktop"."RecordRegion" = "Meta+Shift+R";
+      "services/net.local.kitty.desktop"."_launch" = "Meta+Return";
       "org.kde.spectacle.desktop"."RectangularRegionScreenShot" =
         "Meta+Shift+S";
       "yakuake"."toggle-window-state" = [ "Meta+`" ];
@@ -36,6 +36,12 @@
       "kwinrc"."Desktops"."Name_4" = "Game";
       "kwinrc"."Desktops"."Number" = 4;
       "kwinrc"."Desktops"."Rows" = 1;
+
+      "kwinrc"."Plugins"."kwin4_effect_fadeEnabled" = true;
+      "kwinrc"."Plugins"."kwin4_effect_geometry_changeEnabled" = true;
+      "kwinrc"."Plugins"."kwin4_effect_scaleEnabled" = true;
+
+      "plasmarc"."Theme"."name" = "breeze-dark";
 
       "kdeglobals"."General"."BrowserApplication" = "firefox.desktop";
       "kdeglobals"."General"."TerminalApplication" = "kitty";
