@@ -22,6 +22,11 @@ cursor {
     hide-when-typing
 }
 
+// for testing in build-vm
+output "Virtual-1" {
+  scale 1.5
+}
+
 // Settings that influence how windows are positioned and sized.
 // Find more information on the wiki:
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Layout

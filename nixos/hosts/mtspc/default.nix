@@ -14,7 +14,6 @@
   ];
 
   system.stateVersion = "23.05";
-  home-manager.users.mt = pkgs.mkUser "mt";
 
   # set filesystems mount
   fs.btrfs.label = "@";
