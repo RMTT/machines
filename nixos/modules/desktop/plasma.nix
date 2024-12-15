@@ -12,6 +12,7 @@ in with lib; {
       kdePackages.filelight
       kdePackages.isoimagewriter
       kdePackages.kconfig
+      libsForQt5.qt5.qtwayland
       pkgs.kwin4-effect-geometry-change
       wl-clipboard
       wayland-utils

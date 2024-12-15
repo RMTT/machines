@@ -9,8 +9,16 @@
     virtualisation = {
       memorySize = 4096;
       cores = 3;
+      diskSize = 20 * 1024;
+      forwardPorts = [{
+        from = "host";
+        host.port = 2222;
+        guest.port = 22;
+      }];
     };
 
     home-manager.users.mt = pkgs.mkUser "mt";
+    desktop.gnome.enable = true;
+    desktop.plasma.enable = lib.mkForce false;
   };
 }

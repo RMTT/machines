@@ -1,10 +1,6 @@
 { lib, pkgs, config, ... }: {
-  imports = [
-    ./desktop.nix
-    ./pipewire.nix
-    ./plasma.nix
-    ./niri.nix
-  ];
+  imports =
+    [ ./desktop.nix ./pipewire.nix ./plasma.nix ./gnome.nix ./niri.nix ];
 
   config = {
     services.printing = {
@@ -13,12 +9,6 @@
     };
 
     environment.sessionVariables.NIXOS_OZONE_WL = "1";
-    environment.systemPackages = [ pkgs.catppuccin-sddm ];
-    services.displayManager.sddm = {
-      package = lib.mkForce pkgs.kdePackages.sddm;
-      enable = true;
-      wayland.enable = true;
-      theme = "catppuccin-mocha";
-    };
+    services.displayManager.ly = { enable = true; };
   };
 }

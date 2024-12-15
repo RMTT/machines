@@ -46,7 +46,7 @@ let
       });
   };
 
-  overlay-fresh = final: prev: {
+  overlay-app = final: prev: {
     fresh = import nixpkgs-fresh {
       system = prev.system;
       config.allowUnfree = true;
@@ -90,11 +90,7 @@ in {
           home-manager.extraSpecialArgs = { inherit inputs; };
         }
         ({ ... }: {
-          nixpkgs.overlays = [
-            overlay-fresh
-            overlay-ownpkgs
-            overlay-lib
-          ];
+          nixpkgs.overlays = [ overlay-app overlay-ownpkgs overlay-lib ];
 
           # keep flake sources in system closure
           # https://github.com/NixOS/nix/issues/3995

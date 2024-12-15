@@ -22,6 +22,7 @@ in with lib; {
       virt-manager
       easyeffects
       motrix
+      firefox
 
       fresh.obsidian
       fresh.kicad
@@ -31,6 +32,13 @@ in with lib; {
       enable = true;
       binfmt = true;
     };
+    systemd.services.flatpak-repo = {
+      wantedBy = [ "multi-user.target" ];
+      path = [ pkgs.flatpak ];
+      script = ''
+        flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+      '';
+    };
     services.flatpak.enable = true;
 
     # zoom will invoke "/usr/libexec/xdg-desktop-portal" for screen share
@@ -38,6 +46,22 @@ in with lib; {
       "L /usr/libexec/xdg-desktop-portal - - - - ${pkgs.xdg-desktop-portal}/libexec/xdg-desktop-portal"
     ];
 
+    # fcitx5
+    i18n.inputMethod = {
+      type = "fcitx5";
+      enable = true;
+      fcitx5 = {
+        waylandFrontend = true;
+        addons = with pkgs; [
+          fcitx5-mozc
+          fcitx5-gtk
+          fcitx5-chinese-addons
+          fcitx5-material-color
+          fcitx5-pinyin-moegirl
+          fcitx5-pinyin-zhwiki
+        ];
+      };
+    };
     # fonts
     fonts.fontDir.enable = true;
     fonts.enableDefaultPackages = true;
@@ -69,23 +93,6 @@ in with lib; {
         ];
         monospace =
           [ "Sarasa Mono SC" "Sarasa Mono TC" "Sarasa Mono J" "Sarasa Mono K" ];
-      };
-    };
-
-    # fcitx5
-    i18n.inputMethod = {
-      type = "fcitx5";
-      enable = true;
-      fcitx5 = {
-        waylandFrontend = true;
-        addons = with pkgs; [
-          fcitx5-mozc
-          fcitx5-gtk
-          fcitx5-chinese-addons
-          fcitx5-material-color
-          fcitx5-pinyin-moegirl
-          fcitx5-pinyin-zhwiki
-        ];
       };
     };
 

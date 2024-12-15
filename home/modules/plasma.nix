@@ -12,7 +12,7 @@
       "kwin"."Switch to Desktop 4" = "Meta+4";
       "kwin"."Window Close" = [ "Alt+F4" "Meta+Shift+C" ];
       "kwin"."Window Maximize" = "Meta+M";
-      "kwin"."Window Fullscreen" = [ "Meta+F" ];
+      "kwin"."Window Fullscreen" = [ "Meta+Shift+M" ];
       "kwin"."Window to Desktop 1" = "Meta+!";
       "kwin"."Window to Desktop 2" = "Meta+@";
       "kwin"."Window to Desktop 3" = "Meta+#";

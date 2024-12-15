@@ -267,9 +267,23 @@ vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 vim.opt.termguicolors = true
 
+vim.keymap.set("n", "<C-A-v>", "<cmd>vs<CR>")
+vim.keymap.set("n", "<C-A-h>", "<cmd>split<CR>")
+
+local on_attach = function(bufnr)
+  local api = require("nvim-tree.api")
+  local opts = function(desc)
+    return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+  end
+  api.config.mappings.default_on_attach(bufnr)
+  vim.keymap.set("n", "<C-v>", api.node.open.vertical, opts "Open: Vertical Split")
+  vim.keymap.set("n", "<C-h>", api.node.open.horizontal, opts "Open: Horizontal Split")
+end
+
 require('nvim-tree').setup {
   sort_by = "case_sensitive",
   sync_root_with_cwd = true,
+  on_attach = on_attach,
   view = {
     adaptive_size = true,
   },
