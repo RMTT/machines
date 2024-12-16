@@ -10,6 +10,7 @@
         "gsconnect@andyholmes.github.io"
         "paperwm@paperwm.github.com"
         "quake-terminal@diegodario88.github.io"
+        "display-brightness-ddcutil@themightydeity.github.com"
       ];
     };
 
@@ -48,6 +49,10 @@
     "org/gnome/shell/extensions/kimpanel" = {
       font = "Sarasa Mono Slab SC 11";
       vertical = false;
+    };
+
+    "org/gnome/shell/extensions/display-brightness-ddcutil" = {
+      show-all-slider = false;
     };
 
     # global keybindings
@@ -92,6 +97,7 @@
       vertical-margin-bottom = 5;
       selection-border-size = 5;
       horizontal-margin = 5;
+      window-gap = 10;
     };
     "org/gnome/shell/extensions/paperwm/keybindings" = {
       barf-out-active = [ "<Shift><Super>l" ];

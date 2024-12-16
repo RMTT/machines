@@ -23,6 +23,7 @@ in {
       gnomeExtensions.kimpanel
       gnomeExtensions.quake-terminal
       gnomeExtensions.brightness-control-using-ddcutil
+      gnomeExtensions.control-monitor-brightness-and-volume-with-ddcutil
       gnome-tweaks
       gnome-themes-extra
       gnome-software

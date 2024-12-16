@@ -18,7 +18,5 @@
     };
 
     home-manager.users.mt = pkgs.mkUser "mt";
-    desktop.gnome.enable = true;
-    desktop.plasma.enable = lib.mkForce false;
   };
 }

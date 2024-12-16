@@ -195,6 +195,7 @@ in with lib; {
         "kvm"
         "users"
         "uinput"
+        "i2c"
       ];
       initialHashedPassword =
         "$y$j9T$v3KSiMJEpJdcbN4osJbMF0$Qfgg9i/ozgLjDhOg/WZmSrg8vuiNQSrSWivWKvjATN7";

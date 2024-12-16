@@ -12,6 +12,7 @@
     wireguard
     godel
     gravity
+    desktop
   ];
 
   fileSystems = {

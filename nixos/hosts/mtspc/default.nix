@@ -56,6 +56,7 @@
 
   desktop.niri.enable = true;
   desktop.plasma.enable = true;
+  desktop.gnome.enable = true;
 
   # default shell
   users.users.mt.shell = pkgs.zsh;
