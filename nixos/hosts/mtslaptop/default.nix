@@ -4,8 +4,7 @@
     base
     fs
     networking
-    plasma
-    pipewire
+    desktop
     developments
     services
     docker
@@ -25,6 +24,7 @@
   hardware.cpu.intel.updateMicrocode = true;
 
   base.gl.enable = true;
+  desktop.plasma.enable = true;
 
   # default shell
   users.users.mt.shell = pkgs.zsh;
