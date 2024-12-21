@@ -56,7 +56,6 @@
 
   desktop.niri.enable = true;
   desktop.plasma.enable = true;
-  desktop.gnome.enable = true;
 
   # default shell
   users.users.mt.shell = pkgs.zsh;
@@ -75,8 +74,6 @@
   virtualisation.docker = { storageDriver = "btrfs"; };
 
   virtualisation.libvirtd.enable = true;
-
-  environment.variables = { NIXOS_OZONE_WL = "1"; };
 
   services.tailscale = {
     enable = true;

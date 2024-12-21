@@ -23,13 +23,13 @@
 
   hardware.cpu.intel.updateMicrocode = true;
 
+  # kernel version
+  boot.kernelPackages = pkgs.linuxKernel.packages.linux_zen;
   base.gl.enable = true;
   desktop.plasma.enable = true;
 
   # default shell
   users.users.mt.shell = pkgs.zsh;
-
-  environment.variables = { NIXOS_OZONE_WL = "1"; };
 
   services.daed.enable = true;
 
