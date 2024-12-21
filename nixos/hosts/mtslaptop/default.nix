@@ -31,9 +31,10 @@
 
   environment.variables = { NIXOS_OZONE_WL = "1"; };
 
-  programs.clash-verge = {
-    package = pkgs.fresh.clash-verge-rev;
+  services.daed.enable = true;
+
+  services.tailscale = {
     enable = true;
-    tunMode = true;
+    openFirewall = true;
   };
 }
