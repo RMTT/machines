@@ -77,6 +77,7 @@ in with lib; {
 
     # system packages
     environment.systemPackages = with pkgs; [
+      unrar
       smartmontools
       parted
       bind

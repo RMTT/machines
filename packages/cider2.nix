@@ -3,7 +3,6 @@
 let
   pname = "Cider";
   version = "2.6.0";
-  name = "${pname}-${version}";
 
   src = fetchurl {
     url = "https://cloud.rmtt.tech/s/c6XLCSq9gjR2TbG/download";
@@ -15,6 +14,8 @@ in appimageTools.wrapType2 {
 
   extraInstallCommands = ''
         install -m 444 -D ${appimageContents}/${pname}.desktop -t $out/share/applications
+        substituteInPlace $out/share/applications/${pname}.desktop \
+          --replace-fail 'Exec=${pname}' 'Exec=${pname} ''${NIXOS_OZONE_WL:+''${WAYLAND_DISPLAY:+--ozone-platform-hint=auto --enable-features=WaylandWindowDecorations --enable-wayland-ime}}'
         cp -r ${appimageContents}/usr/share/icons $out/share
     		'';
 
