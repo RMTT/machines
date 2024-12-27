@@ -12,7 +12,7 @@ spec:
       dnsPolicy: "Default"
       containers:
       - name: chat-server
-        image: lobehub/lobe-chat-database:latest
+        image: lobehub/lobe-chat-database:v1.40.3
         ports:
         - containerPort: 3210
         resources:
