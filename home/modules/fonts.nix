@@ -1,4 +1,4 @@
-{ config, ... }: {
+{ config, lib,... }: with lib; mkIf (config.nixpkgs.system == "x86_64-linux") {
   fonts.fontconfig = {
     enable = true;
     defaultFonts = {

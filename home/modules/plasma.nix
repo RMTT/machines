@@ -1,4 +1,4 @@
-{ ... }: {
+{ config, lib,... }: with lib; mkIf (config.nixpkgs.system == "x86_64-linux") {
   programs.plasma = {
     enable = true;
     workspace = {

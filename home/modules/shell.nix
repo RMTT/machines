@@ -1,4 +1,4 @@
-{ ... }: {
+{ config, ... }: {
 
   # bash configuration
   programs.bash.enable = true;
@@ -25,11 +25,16 @@
     SSH_AUTH_SOCK = "$(gpgconf --list-dirs agent-ssh-socket)";
   };
   programs.zsh.initExtra = ''
-            		if command -v kubectl &> /dev/null
-        				then
-    							source <(kubectl completion zsh)
-        				fi
-                		'';
+    if command -v kubectl &> /dev/null
+    then
+    	source <(kubectl completion zsh)
+    fi
+
+    if [ -e /opt/homebrew ]
+    then
+      eval "$(/opt/homebrew/bin/brew shellenv)"
+    fi
+                    		'';
 
   # startship configuration
   programs.starship = {

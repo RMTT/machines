@@ -1,20 +1,20 @@
-{ pkgs, config, ... }: {
+{ pkgs, config, lib, ... }: {
 
   imports = [
     ./modules/base.nix
     ./modules/shell.nix
     ./modules/neovim.nix
-    ./modules/plasma.nix
-    ./modules/gnome.nix
-    ./modules/niri.nix
-    ./modules/tmux.nix
     ./modules/git.nix
-    ./modules/fonts.nix
     ./modules/kitty.nix
+    ./modules/plasma.nix
+    ./modules/niri.nix
+    ./modules/fonts.nix
+    ./modules/homebrew.nix
   ];
 
   home.stateVersion = "23.05";
-
+  home.homeDirectory = lib.mkIf (config.nixpkgs.system == "aarch64-darwin")
+    (lib.mkForce "/Users/${config.home.username}");
   # configure gpg
   programs.gpg = {
     enable = true;
@@ -32,7 +32,8 @@
   };
 
   # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
+  programs.home-manager.enable =
+    lib.mkIf (config.nixpkgs.system == "aarch64-darwin") (lib.mkForce false);
 
   # direnv configuration
   programs.direnv = {
@@ -110,24 +111,6 @@
         indent_style = "space";
         indent_size = 2;
       };
-    };
-  };
-
-  # firefox related
-  programs.firefox = {
-    enable = true;
-    profiles.default = {
-      isDefault = true;
-      settings = {
-        "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
-        "security.webauthn.ctap2" = true;
-      };
-      userChrome = ''
-        #TabsToolbar
-        {
-            visibility: collapse;
-        }
-      '';
     };
   };
 }
