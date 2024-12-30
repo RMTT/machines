@@ -19,6 +19,7 @@ Shortcuts:
   + open searching tool(spotlight/krunner): Meta + r
   + open File Manager: Meta + e
   + open screen capture: Meta + Shift + s
+  + open drop-down terminal: Meta + `
   + ...
 
 + application specific(nvim/tmux/...):
@@ -38,3 +39,6 @@ Shortcuts:
 
 + tmux/nvim:
   + need `macos_options_as_alt` of kitty
+
++ other apps:
+  + open drop-down terminal: Meta + `

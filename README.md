@@ -49,3 +49,16 @@ In default, k3s only install one traefik instance per cluster and one servicelb(
 #### How to scale up CoreDNS
 
 via `kubectl scale --replicas x deployment -n kube-system coredns`
+
+## macOS
+
+Required apps:
++ `nix`
++ `homebrew`
++ `home-manager`
+
+Configurations steps:
++ `home-manager` switch --flake .#darwin
++ `brew` bundle --global
++ configure rectange app
++ configure skhd app

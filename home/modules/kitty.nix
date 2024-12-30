@@ -14,6 +14,7 @@
       disable_ligatures = "never";
       hide_window_decorations = "yes";
       macos_option_as_alt = "both";
+      macos_quit_when_last_window_closed = "yes";
     };
   };
 }

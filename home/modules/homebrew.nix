@@ -3,7 +3,7 @@ with lib;
 mkIf (config.nixpkgs.system == "aarch64-darwin") (let
   taps = [ ];
 
-  brews = [ ];
+  brews = [ "koekeishiya/formulae/skhd" ];
 
   casks = [
     "nextcloud"
@@ -12,6 +12,8 @@ mkIf (config.nixpkgs.system == "aarch64-darwin") (let
     "clash-verge-rev"
     "kitty"
     "tailscale"
+    "wechat"
+    "iterm2" # for drop-down term(via hotkey profile)
   ];
 
 in with lib; {
@@ -34,8 +36,5 @@ in with lib; {
       ''
 
     ) casks);
-    # onChange = ''
-    #   /opt/homebrew/bin/brew bundle install --cleanup --no-upgrade --force --no-lock --global
-    # '';
   };
 })
