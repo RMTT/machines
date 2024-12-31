@@ -112,7 +112,7 @@ in {
         inherit system;
         config.allowUnfree = true;
       };
-      extraSpecialArgs = { inherit inputs; };
+      extraSpecialArgs = { system = system; };
       modules = hmMoudles name;
     };
 }

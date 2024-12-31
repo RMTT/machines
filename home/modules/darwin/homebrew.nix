@@ -14,6 +14,7 @@ mkIf (config.nixpkgs.system == "aarch64-darwin") (let
     "tailscale"
     "wechat"
     "iterm2" # for drop-down term(via hotkey profile)
+    "kicad"
   ];
 
 in with lib; {

@@ -1,5 +1,4 @@
-{ pkgs, config, lib, ... }: {
-
+{ pkgs, config, lib, system, ... }: {
   imports = [
     ./modules/base.nix
     ./modules/shell.nix
@@ -9,15 +8,15 @@
     ./modules/plasma.nix
     ./modules/niri.nix
     ./modules/fonts.nix
-    ./modules/homebrew.nix
     ./modules/gitui.nix
     ./modules/skhd.nix
     ./modules/tmux.nix
+
+    # darwin modules
+    (if (system == "aarch64-darwin") then ./modules/darwin else null)
   ];
 
   home.stateVersion = "23.05";
-  home.homeDirectory = lib.mkIf (config.nixpkgs.system == "aarch64-darwin")
-    (lib.mkForce "/Users/${config.home.username}");
   # configure gpg
   programs.gpg = {
     enable = true;

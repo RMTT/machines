@@ -62,6 +62,7 @@ in {
     ];
     # install luanguage servers
     extraPackages = with pkgs; [
+      ripgrep
       lua-language-server
       pyright
       cmake-language-server
