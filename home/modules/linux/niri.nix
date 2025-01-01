@@ -1,8 +1,8 @@
-{ config, lib,... }: with lib; mkIf (config.nixpkgs.system == "x86_64-linux") {
+{ config, lib, pkgs, ... }: {
   xdg.configFile = {
     niri = {
       enable = true;
-      source = ../config/niri;
+      source = ../../config/niri;
     };
   };
 

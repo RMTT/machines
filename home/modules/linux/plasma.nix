@@ -1,4 +1,6 @@
-{ config, lib,... }: with lib; mkIf (config.nixpkgs.system == "x86_64-linux") {
+{ config, lib, ... }:
+with lib;
+mkIf (config.nixpkgs.system == "x86_64-linux") {
   programs.plasma = {
     enable = true;
     workspace = {
@@ -10,9 +12,10 @@
       "kwin"."Switch to Desktop 2" = "Meta+2";
       "kwin"."Switch to Desktop 3" = "Meta+3";
       "kwin"."Switch to Desktop 4" = "Meta+4";
-      "kwin"."Window Close" = [ "Alt+F4" "Meta+Shift+C" ];
+      "kwin"."Window Close" = [ "Alt+F4" "Meta+Q" ];
       "kwin"."Window Maximize" = "Meta+M";
       "kwin"."Window Fullscreen" = [ "Meta+Shift+M" ];
+      "kwin"."Walk Through Windows" = "Meta+Tab,Alt+Tab,Walk Through Windows";
       "kwin"."Window to Desktop 1" = "Meta+!";
       "kwin"."Window to Desktop 2" = "Meta+@";
       "kwin"."Window to Desktop 3" = "Meta+#";

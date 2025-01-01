@@ -52,9 +52,10 @@
         test = lib.mkSystem "test" system.x86_64-linux inputs.nixpkgs-testing;
       };
 
-      homeConfigurations = { mt = lib.mkUser "mt" system.x86_64-linux; 
-darwin = lib.mkUser "mt" system.aarch64-darwin;
-};
+      homeConfigurations = {
+        mt = lib.mkUser "mt" system.x86_64-linux;
+        darwin = lib.mkUser "mt" system.aarch64-darwin;
+      };
     in {
       nixosConfigurations = nixosConfigurations;
       homeConfigurations = homeConfigurations;

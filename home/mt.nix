@@ -5,15 +5,11 @@
     ./modules/neovim.nix
     ./modules/git.nix
     ./modules/kitty.nix
-    ./modules/plasma.nix
-    ./modules/niri.nix
-    ./modules/fonts.nix
     ./modules/gitui.nix
-    ./modules/skhd.nix
     ./modules/tmux.nix
 
     # darwin modules
-    (if (system == "aarch64-darwin") then ./modules/darwin else null)
+    (if (system == "aarch64-darwin") then ./modules/darwin else ./modules/linux)
   ];
 
   home.stateVersion = "23.05";
