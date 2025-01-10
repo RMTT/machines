@@ -23,6 +23,8 @@ in with lib; {
       easyeffects
       motrix
       firefox
+      xsettingsd
+      xorg.xrdb
 
       fresh.obsidian
       fresh.kicad

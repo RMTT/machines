@@ -80,13 +80,6 @@
     openFirewall = true;
   };
 
-  programs.clash-verge = {
-    package = pkgs.fresh.clash-verge-rev;
-    enable = true;
-    tunMode = true;
-  };
-  networking.firewall.trustedInterfaces = [ "Meta" ];
-
   services.daed = {
     enable = true;
     listen = "0.0.0.0:2023";
