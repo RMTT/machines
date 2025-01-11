@@ -20,7 +20,7 @@ let
     secrets = secretsPath;
   };
 
-  hmMoudles = name: [
+  hmMoudles = name: system: [
     {
       nixpkgs.overlays = [ overlay-libvterm overlay-ownpkgs ];
       nixpkgs.config = { allowUnfree = true; };
@@ -30,7 +30,10 @@ let
     nur.modules.homeManager.default
     {
       home.username = name;
-      home.homeDirectory = "/home/${name}";
+      home.homeDirectory = if (system == "aarch64-darwin") then
+        "/Users/${name}"
+      else
+        "/home/${name}";
     }
     ../home/${name}.nix
   ];
@@ -64,7 +67,7 @@ in {
       overlay-lib = final: prev: {
         mkUser = name:
           { lib, ... }: {
-            imports = hmMoudles name;
+            imports = hmMoudles name system;
             _module.args.pkgs = lib.mkForce (import nixpkgs-fresh {
               inherit system;
               config.allowUnfree = true;
@@ -113,6 +116,6 @@ in {
         config.allowUnfree = true;
       };
       extraSpecialArgs = { system = system; };
-      modules = hmMoudles name;
+      modules = hmMoudles name system;
     };
 }

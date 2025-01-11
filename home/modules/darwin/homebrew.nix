@@ -15,6 +15,7 @@ mkIf (config.nixpkgs.system == "aarch64-darwin") (let
     "wechat"
     "iterm2" # for drop-down term(via hotkey profile)
     "kicad"
+    "PlayCover/playcover/playcover-community"
   ];
 
 in with lib; {
