@@ -3,19 +3,19 @@ with lib;
 mkIf (config.nixpkgs.system == "aarch64-darwin") (let
   taps = [ ];
 
-  brews = [ "koekeishiya/formulae/skhd" ];
+  brews = [ "koekeishiya/formulae/skhd" "kubernetes-cli" ];
 
   casks = [
     "nextcloud"
     "obsidian"
     "telegram"
-    "clash-verge-rev"
     "kitty"
     "tailscale"
     "wechat"
     "iterm2" # for drop-down term(via hotkey profile)
     "kicad"
     "PlayCover/playcover/playcover-community"
+    "zotero"
   ];
 
 in with lib; {
