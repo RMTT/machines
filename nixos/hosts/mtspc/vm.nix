@@ -16,7 +16,5 @@
         guest.port = 22;
       }];
     };
-
-    home-manager.users.mt = pkgs.mkUser "mt";
   };
 }

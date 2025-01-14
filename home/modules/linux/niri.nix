@@ -1,4 +1,6 @@
 { config, lib, pkgs, ... }: {
+
+  imports = [ ./waybar.nix ];
   xdg.configFile = {
     niri = {
       enable = true;
@@ -6,11 +8,5 @@
     };
   };
 
-  home.pointerCursor = {
-    gtk.enable = true;
-    x11.enable = true;
-    name = "breeze_cursors";
-    size = 24;
-    package = pkgs.kdePackages.breeze-gtk;
-  };
+  home.packages = with pkgs; [ qadwaitadecorations qadwaitadecorations-qt6 ];
 }

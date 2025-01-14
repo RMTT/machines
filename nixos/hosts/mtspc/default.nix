@@ -54,7 +54,6 @@
     package = config.boot.kernelPackages.nvidiaPackages.latest;
   };
 
-  desktop.niri.enable = true;
   desktop.plasma.enable = true;
 
   # default shell

@@ -1,6 +1,9 @@
 // auto launch
-spawn-at-startup "wlsunset -l 39.9 -L 116.3"
-spawn-at-startup "xwayland-satellite"
+spawn-at-startup "wlsunset" "-l 39.9 -L 116.3"
+spawn-at-startup "blueman-tray"
+spawn-at-startup "systemctl" "--user" "start" "xwayland-satellite"
+spawn-at-startup "systemctl" "--user" "start" "xdg-desktop-portal-gtk"
+spawn-at-startup "systemctl" "--user" "start" "waybar"
 
 input {
     touchpad {
@@ -12,12 +15,14 @@ input {
 
 environment {
     QT_QPA_PLATFORM "wayland"
+    QT_WAYLAND_DECORATION "adwaita"
+    QT_QPA_PLATFORMTHEME "gtk3"
+
     DISPLAY ":0"
 }
 
 cursor {
-    xcursor-theme "breeze_cursors"
-    xcursor-size 24
+    xcursor-theme "Adwaita"
 
     hide-when-typing
 }
@@ -26,6 +31,11 @@ cursor {
 output "Virtual-1" {
   scale 1.5
 }
+
+workspace "chore"
+workspace "browser"
+workspace "code"
+workspace "game"
 
 // Settings that influence how windows are positioned and sized.
 // Find more information on the wiki:
@@ -69,8 +79,6 @@ layout {
     }
 }
 
-// spawn-at-startup "alacritty" "-e" "fish"
-
 prefer-no-csd
 
 screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
@@ -84,7 +92,9 @@ binds {
     Ctrl+Alt+L { spawn "hyprlock"; }
     Mod+E { spawn "nautilus"; }
 
-    Mod+Shift+C { close-window; }
+    Mod+F { toggle-window-floating; }
+
+    Mod+Q { close-window; }
 
     Mod+Left  { focus-column-left; }
     Mod+Down  { focus-window-down; }
@@ -195,7 +205,7 @@ binds {
     Mod+A { switch-preset-column-width; }
     Mod+Shift+R { switch-preset-window-height; }
     Mod+Ctrl+R { reset-window-height; }
-    Mod+F { maximize-column; }
+    Mod+M { maximize-column; }
     Mod+Shift+F { fullscreen-window; }
     Mod+C { center-column; }
 

@@ -7,4 +7,5 @@
   bird = pkgs.callPackage ./bird { };
   kwin4-effect-geometry-change =
     pkgs.callPackage ./kwin4-effect-geometry-change.nix { };
+  xdg-desktop-portal-gtk = pkgs.callPackage ./xdg-desktop-portal-gtk.nix { };
 }
