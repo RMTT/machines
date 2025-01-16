@@ -8,5 +8,17 @@
     };
   };
 
-  home.packages = with pkgs; [ qadwaitadecorations qadwaitadecorations-qt6 ];
+  home.packages = with pkgs; [
+    qadwaitadecorations
+    qadwaitadecorations-qt6
+
+    swww
+
+    # for screencast
+    slurp
+    grim
+    satty
+    (pkgs.writeScriptBin "screenshot"
+      ''grim -g "$(slurp)" -t ppm - | satty --filename -'')
+  ];
 }

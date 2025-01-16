@@ -16,5 +16,8 @@
         guest.port = 22;
       }];
     };
+
+    desktop.niri.enable = lib.mkForce false;
+    desktop.plasma.enable = true;
   };
 }

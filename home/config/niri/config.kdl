@@ -1,9 +1,6 @@
 // auto launch
 spawn-at-startup "wlsunset" "-l 39.9 -L 116.3"
-spawn-at-startup "blueman-tray"
-spawn-at-startup "systemctl" "--user" "start" "xwayland-satellite"
-spawn-at-startup "systemctl" "--user" "start" "xdg-desktop-portal-gtk"
-spawn-at-startup "systemctl" "--user" "start" "waybar"
+spawn-at-startup "swww-daemon"
 
 input {
     touchpad {
@@ -42,7 +39,7 @@ workspace "game"
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Layout
 layout {
     // Set gaps around windows in logical pixels.
-    gaps 16
+    gaps 8
 
     // When to center a column when changing focus, options are:
     // - "never", default behavior, focusing an off-screen column will keep at the left
@@ -91,6 +88,8 @@ binds {
     Mod+R { spawn "fuzzel"; }
     Ctrl+Alt+L { spawn "hyprlock"; }
     Mod+E { spawn "nautilus"; }
+
+    Mod+Shift+S { spawn "screenshot"; }
 
     Mod+F { toggle-window-floating; }
 

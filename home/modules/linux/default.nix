@@ -1,5 +1,5 @@
 { pkgs, ... }: {
-  imports = [ ./plasma.nix ./fonts.nix ];
+  imports = [ ./plasma.nix ./niri.nix ./fonts.nix ];
 
   gtk = {
     enable = true;

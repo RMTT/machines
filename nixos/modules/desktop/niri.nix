@@ -15,7 +15,6 @@ in with lib; {
       xwayland-satellite
       nautilus
       wlsunset
-      gammastep
 
       kdePackages.qtwayland
       libsForQt5.qt5.qtwayland
@@ -25,8 +24,6 @@ in with lib; {
     ];
 
     services.displayManager.sessionPackages = with pkgs.fresh; [ niri ];
-    services.geoclue2.enable = true;
-    services.avahi.enable = true;
 
     programs.xwayland = {
       enable = true;

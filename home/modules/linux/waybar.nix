@@ -6,15 +6,24 @@
     settings.main = {
       "layer" = "top";
       "position" = "top";
-      "modules-left" = [ "niri/workspaces" ];
+      "modules-left" = [ "niri/workspaces" "niri/window" ];
       "modules-center" = [ "custom/music" ];
-      "modules-right" =
-        [ "pulseaudio" "custom/brightness" "battery" "clock" "tray" "custom/lock" ];
+      "modules-right" = [
+        "pulseaudio"
+        "custom/brightness"
+        "battery"
+        "clock"
+        "tray"
+        "custom/lock"
+      ];
       "niri/workspaces" = {
         "disable-scroll" = true;
         "sort-by-name" = true;
         "format" = " {icon} ";
         "format-icons" = { "default" = ""; };
+      };
+      "niri/window" = {
+        icon = true;
       };
       "tray" = {
         "icon-size" = 20;
@@ -29,14 +38,15 @@
         "on-click" = "playerctl play-pause";
         "max-length" = 50;
       };
-      "custom/brightness" = {
-        "format" = " {}%";
-        "exec" = "wl-gammarelay-rs watch {bp}";
-        "on-scroll-up" =
-          "busctl --user -- call rs.wl-gammarelay / rs.wl.gammarelay UpdateBrightness d +0.02";
-        "on-scroll-down" =
-          "busctl --user -- call rs.wl-gammarelay / rs.wl.gammarelay UpdateBrightness d -0.02";
-      };
+      "custom/brightness" =  {
+        "exec"= "ddcutil getvcp 10 -t | perl -nE 'if (/ C (\\d+) /) { say $1; }'";
+        "exec-if"= "sleep 1";
+        "format"= "{icon} {}%";
+        "format-icons"= [""];
+        "interval"= "once";
+        "on-scroll-up"= "ddcutil setvcp 10 + 10";
+        "on-scroll-down"= "ddcutil setvcp 10 - 10";
+    };
       "clock" = {
         "timezone" = "Asia/Shanghai";
         "tooltip-format" = ''
@@ -101,19 +111,18 @@
         font-family: FiraCode Nerd Font;
         font-size: 17px;
         min-height: 0;
+        margin: 1px 0px 0px 0;
       }
 
       #waybar {
         background: transparent;
         color: @text;
-        margin: 5px 5px;
       }
 
       #workspaces {
-        border-radius: 1rem;
-        margin: 5px;
+        border-radius: 0rem 1rem 1rem 0rem;
         background-color: @surface0;
-        margin-left: 1rem;
+        margin-right: 1rem;
       }
 
       #workspaces button {
@@ -132,7 +141,15 @@
         border-radius: 1rem;
       }
 
+      #window {
+        padding: 0.4rem;
+        border-radius: 1rem;
+        background-color: @surface0;
+      }
+
       #custom-music,
+      #workspaces,
+      #window,
       #tray,
       #custom-brightness,
       #clock,
@@ -142,7 +159,6 @@
       #custom-power {
         background-color: @surface0;
         padding: 0.5rem 1rem;
-        margin: 5px 0;
       }
 
       #clock {
@@ -180,6 +196,8 @@
       #custom-music {
         color: @mauve;
         border-radius: 1rem;
+        margin-right: 1rem;
+        margin-left: 1rem;
       }
 
       #custom-lock {

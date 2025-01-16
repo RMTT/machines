@@ -54,7 +54,7 @@
     package = config.boot.kernelPackages.nvidiaPackages.latest;
   };
 
-  desktop.plasma.enable = true;
+  desktop.niri.enable = true;
 
   # default shell
   users.users.mt.shell = pkgs.zsh;

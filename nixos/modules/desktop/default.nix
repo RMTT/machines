@@ -15,6 +15,17 @@
     '';
 
     environment.sessionVariables.NIXOS_OZONE_WL = "1";
-    services.displayManager.ly = { enable = true; };
+    services.displayManager.sddm = {
+      enable = true;
+      wayland.enable = true;
+      theme = "Sweet";
+      extraPackages = with pkgs; [ sweet-nova ];
+    };
+
+    services.geoclue2 = {
+      enable = true;
+      geoProviderUrl = "https://beacondb.net/v1/geolocate";
+    };
+    services.avahi.enable = true;
   };
 }
