@@ -1,6 +1,6 @@
 # https://github.com/catppuccin/dunst/blob/main/themes/mocha.conf
 [global]
-font = "Monospace 14"
+font = "Monospace 12"
 frame_color = "#89b4fa"
 separator_color= frame
 highlight = "#89b4fa"

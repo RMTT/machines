@@ -3,6 +3,15 @@ spawn-at-startup "wlsunset" "-l 39.9 -L 116.3"
 spawn-at-startup "swww-daemon"
 spawn-at-startup "dunst"
 spawn-at-startup "waybar"
+spawn-at-startup "xwayland-satellite" ":0"
+
+window-rule {
+  // floating windows
+    match app-id="org.telegram.desktop"
+    match app-id="steam"
+    match app-id="steam_app.+"
+    open-floating true
+}
 
 input {
     touchpad {

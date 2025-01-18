@@ -9,7 +9,9 @@
       "modules-center" = [ "custom/music" ];
       "modules-right" = [
         "pulseaudio"
+        "upower"
         "custom/brightness"
+        "cpu"
         "battery"
         "clock"
         "tray"
@@ -25,6 +27,12 @@
         "icon" = true;
         "max-length" = 30;
       };
+      "upower" = {
+        format = "";
+        "hide-if-empty" = true;
+        "tooltip" = true;
+      };
+      "cpu" = { format = " {usage}%"; };
       "tray" = {
         "icon-size" = 20;
         "spacing" = 4;
@@ -155,6 +163,8 @@
       #custom-music,
       #workspaces,
       #window,
+      #upower,
+      #cpu,
       #tray,
       #custom-brightness,
       #clock,

@@ -12,7 +12,6 @@ in with lib; {
       kitty
       alacritty
       xwayland-satellite
-      nautilus
       wlsunset
       wl-clipboard-rs
 
@@ -23,7 +22,8 @@ in with lib; {
       blueman
       dunst
 
-      # gnome apps
+      # apps
+      nautilus
       seahorse
       loupe
     ];
@@ -32,15 +32,12 @@ in with lib; {
     services.gvfs.enable = true;
     services.gnome.gnome-keyring.enable = true;
 
+    services.upower.enable = true;
+
     services.displayManager.sessionPackages = with pkgs.fresh; [ niri ];
 
     security.polkit.enable = true;
     security.pam.services.hyprlock = { };
-
-    programs.xwayland = {
-      enable = true;
-      package = pkgs.xwayland-satellite;
-    };
 
     xdg.portal = {
       enable = true;

@@ -11,6 +11,18 @@
       enable = true;
       source = ../../config/dunst;
     };
+
+    fuzzel = {
+      enable = true;
+      source = ../../config/fuzzel;
+    };
+  };
+
+  # https://fcitx-im.org/wiki/Using_Fcitx_5_on_Wayland
+  home.sessionVariables = {
+    GTK_IM_MODULE = "fcitx";
+    QT_IM_MODULE = "fcitx";
+    XMODIFIERS = "@im=fcitx";
   };
 
   home.packages = with pkgs; [

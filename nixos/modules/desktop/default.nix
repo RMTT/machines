@@ -12,6 +12,7 @@
       ddcutil
       sddm-astronaut
       libnotify
+      qpwgraph
     ];
 
     boot.kernelModules = [ "i2c-dev" ];
