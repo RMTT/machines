@@ -17,6 +17,7 @@ spec:
     spec:
       nodeSelector:
         "kubernetes.io/hostname": homeserver
+      dnsPolicy: "Default"
       # to mark bittorrent traffic
       initContainers:
       - image: alpine
