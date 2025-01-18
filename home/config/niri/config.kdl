@@ -1,6 +1,8 @@
 // auto launch
 spawn-at-startup "wlsunset" "-l 39.9 -L 116.3"
 spawn-at-startup "swww-daemon"
+spawn-at-startup "dunst"
+spawn-at-startup "waybar"
 
 input {
     touchpad {

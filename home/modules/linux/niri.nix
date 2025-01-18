@@ -1,10 +1,15 @@
 { config, lib, pkgs, ... }: {
 
-  imports = [ ./waybar.nix ];
+  imports = [ ./waybar.nix ./hyprlock.nix ];
   xdg.configFile = {
     niri = {
       enable = true;
       source = ../../config/niri;
+    };
+
+    dunst = {
+      enable = true;
+      source = ../../config/dunst;
     };
   };
 

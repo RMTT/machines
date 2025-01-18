@@ -1,8 +1,7 @@
 { pkgs, ... }: {
-  home.packages = with pkgs; [ playerctl pavucontrol wl-gammarelay-rs ];
+  home.packages = with pkgs; [ playerctl pavucontrol ddcui ];
   programs.waybar = {
     enable = true;
-    systemd.enable = true;
     settings.main = {
       "layer" = "top";
       "position" = "top";
@@ -23,7 +22,8 @@
         "format-icons" = { "default" = ""; };
       };
       "niri/window" = {
-        icon = true;
+        "icon" = true;
+        "max-length" = 30;
       };
       "tray" = {
         "icon-size" = 20;
@@ -36,17 +36,19 @@
         "tooltip" = false;
         "exec" = "playerctl metadata --format='{{ title }}'";
         "on-click" = "playerctl play-pause";
-        "max-length" = 50;
+        "max-length" = 25;
       };
-      "custom/brightness" =  {
-        "exec"= "ddcutil getvcp 10 -t | perl -nE 'if (/ C (\\d+) /) { say $1; }'";
-        "exec-if"= "sleep 1";
-        "format"= "{icon} {}%";
-        "format-icons"= [""];
-        "interval"= "once";
-        "on-scroll-up"= "ddcutil setvcp 10 + 10";
-        "on-scroll-down"= "ddcutil setvcp 10 - 10";
-    };
+      "custom/brightness" = {
+        "exec" =
+          "ddcutil getvcp 10 -t | perl -nE 'if (/ C (\\d+) /) { say $1; }'";
+        "exec-if" = "sleep 1";
+        "format" = "{icon} {}%";
+        "format-icons" = [ "" ];
+        "interval" = "once";
+        "on-scroll-up" = "ddcutil setvcp 10 + 10";
+        "on-scroll-down" = "ddcutil setvcp 10 - 10";
+        "on-click" = "ddcui";
+      };
       "clock" = {
         "timezone" = "Asia/Shanghai";
         "tooltip-format" = ''
@@ -74,7 +76,7 @@
       };
       "custom/lock" = {
         "tooltip" = false;
-        "on-click" = "sh -c '(sleep 0.5s; swaylock --grace 0)' & disown";
+        "on-click" = "hyprlock";
         "format" = "";
       };
     };
@@ -109,7 +111,7 @@
 
       * {
         font-family: FiraCode Nerd Font;
-        font-size: 17px;
+        font-size: 14px;
         min-height: 0;
         margin: 1px 0px 0px 0;
       }
@@ -142,9 +144,12 @@
       }
 
       #window {
-        padding: 0.4rem;
         border-radius: 1rem;
         background-color: @surface0;
+      }
+
+      window#waybar.empty #window {
+        background:none;
       }
 
       #custom-music,
