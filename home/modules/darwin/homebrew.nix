@@ -16,6 +16,8 @@ mkIf (config.nixpkgs.system == "aarch64-darwin") (let
     "kicad"
     "PlayCover/playcover/playcover-community"
     "zotero"
+    "firefox"
+    "bitwarden"
   ];
 
 in with lib; {

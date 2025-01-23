@@ -60,5 +60,5 @@ Required apps:
 Configurations steps:
 + `home-manager` switch --flake .#darwin
 + `brew` bundle --global
-+ configure rectange app
++ configure rectangle app
 + configure skhd app

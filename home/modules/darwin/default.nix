@@ -5,6 +5,6 @@ with lib; {
   config = {
     programs.home-manager.enable = lib.mkForce false;
 
-    home.packages = with pkgs; [ nerd-fonts.fira-code sshuttle ];
+    home.packages = with pkgs; [ nerd-fonts.fira-code sshuttle colima docker htop ];
   };
 }
