@@ -19,10 +19,12 @@ with lib; {
       pkg-config
       gettext
       perl
-      python3
       gperf
       flex
       bison
+      rustup
+
+      (pkgs.python3.withPackages (python-pkgs: [ ]))
     ];
   };
 }
