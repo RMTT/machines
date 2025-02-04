@@ -19,6 +19,7 @@ spec:
         "kubernetes.io/hostname": homeserver
       containers:
       - name: jproxy
+        imagePullPolicy: "Always"
         image: luckypuppy514/jproxy
         env:
           - name: TZ

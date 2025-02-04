@@ -1,15 +1,19 @@
 resources:
-  - namespace.yaml
-  - volumes.yaml
-  - qbittorrent.yaml
-  - overseerr.yaml
-  - jproxy.yaml
-  - prowlarr.yaml
-  - flaresolverr.yaml
-  - sonarr.yaml
-  - radarr.yaml
-  - bazarr.yaml
+- namespace.yaml
+- volumes.yaml
+- qbittorrent.yaml
+- overseerr.yaml
+- jproxy.yaml
+- prowlarr.yaml
+- flaresolverr.yaml
+- sonarr.yaml
+- radarr.yaml
+- bazarr.yaml
 
 namespace: servarr
-commonLabels:
-  app: servarr
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+labels:
+- includeSelectors: true
+  pairs:
+    app: servarr

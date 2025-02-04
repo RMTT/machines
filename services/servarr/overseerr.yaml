@@ -19,6 +19,7 @@ spec:
         "kubernetes.io/hostname": homeserver
       containers:
       - name: overseerr
+        imagePullPolicy: "Always"
         image: lscr.io/linuxserver/overseerr
         env:
           - name: TZ

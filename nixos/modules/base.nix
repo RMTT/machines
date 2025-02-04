@@ -123,6 +123,7 @@ in with lib; {
       moreutils
       kubernetes
       kubernetes-helm
+      kustomize
       sshuttle
     ];
 

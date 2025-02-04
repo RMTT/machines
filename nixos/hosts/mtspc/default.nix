@@ -80,10 +80,10 @@
     openFirewall = true;
   };
 
-  services.daed = {
-    enable = true;
-    listen = "0.0.0.0:2023";
-  };
+  # services.daed = {
+  #   enable = true;
+  #   listen = "0.0.0.0:2023";
+  # };
 
   services.meshcentral.enable = true;
 }

@@ -19,6 +19,7 @@ spec:
         "kubernetes.io/hostname": homeserver
       containers:
       - name: flaresolverr
+        imagePullPolicy: "Always"
         image: ghcr.io/flaresolverr/flaresolverr
         env:
           - name: TZ

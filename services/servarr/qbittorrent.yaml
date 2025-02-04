@@ -31,6 +31,7 @@ spec:
           privileged: true
       containers:
       - name: qbittorrent
+        imagePullPolicy: "Always"
         image: lscr.io/linuxserver/qbittorrent
         ports:
         - containerPort: 8080
