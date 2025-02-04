@@ -1,6 +1,5 @@
 # global configurations
-{ ... }:
-{
+{ ... }: {
   networking.extraHosts = builtins.readFile ./hosts;
   networking.firewall = {
     trustedSubnets = {
@@ -9,7 +8,6 @@
         "192.168.128.0/24" # local net of my infra
       ];
     };
-
 
     allowedUDPPorts = [
       68 # DHCP
