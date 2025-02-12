@@ -18,6 +18,7 @@ mkIf (config.nixpkgs.system == "aarch64-darwin") (let
     "zotero"
     "firefox"
     "bitwarden"
+    "ghostty"
   ];
 
 in with lib; {

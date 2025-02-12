@@ -23,6 +23,7 @@ with lib; {
       flex
       bison
       rustup
+      bear
 
       (pkgs.python3.withPackages (python-pkgs: [ ]))
     ];
