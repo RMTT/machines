@@ -24,6 +24,7 @@ with lib; {
       bison
       rustup
       bear
+      sops
 
       (pkgs.python3.withPackages (python-pkgs: [ ]))
     ];
