@@ -64,6 +64,7 @@ in {
     extraPackages = with pkgs; [
       ripgrep
       lua-language-server
+      ruff
       pyright
       cmake-language-server
       tree-sitter

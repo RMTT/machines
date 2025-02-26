@@ -26,8 +26,6 @@
   fs.swap.label = "@SWAP";
 
   boot.kernel.sysctl = { "kernel.yama.ptrace_scope" = 0; };
-  boot.extraModulePackages =
-    [ config.boot.kernelPackages.lenovo-legion-module ];
   boot.kernelParams = [ "amd_pstate=guided" ];
   hardware.cpu.amd.updateMicrocode = true;
 

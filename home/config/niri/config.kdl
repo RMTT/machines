@@ -10,6 +10,7 @@ window-rule {
     match app-id="org.telegram.desktop"
     match app-id="steam"
     match app-id="steam_app.+"
+    match app-id="wechat"
     open-floating true
 }
 

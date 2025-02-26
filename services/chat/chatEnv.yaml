@@ -14,7 +14,7 @@ data:
     AUTH_AUTHENTIK_ID: ENC[AES256_GCM,data:bAETWl6N9KVdELj3LR2im5phlyVRmXys41+uZsIYmCr7oMX9QwdTfg==,iv:xTSK2Umtb2a7MGYf7EoUSW1mNBsMb/+fb9v8KlqwMwc=,tag:HtHCkmPkVDUl+DM16P6ZFQ==,type:str]
     AUTH_AUTHENTIK_SECRET: ENC[AES256_GCM,data:rPc9zwAXHSpSmfDHILZ7ZzTr56cU/rdNThxiL4VPf27dwURpC0Afi4DvDSFPoYlhBbs8FhAHnZpADANt7ROcZFxZzcNb5MzzajMrO5VaGOJ3o7ZQ3tXGKUhDcZbhI6VcKaGwMttWSlwjrHIMfP2xyHC6FD33fKoyEZR7PLtMMtQ=,iv:cE3VYyqL983UJ/HlS5zWx8StIrPGpf8Xb4qbdQZ7ka8=,tag:iklXyA8r9ZmKjfXcQvN3Hw==,type:str]
     AUTH_AUTHENTIK_ISSUER: ENC[AES256_GCM,data:uL3AjP6EIy46aySLoFs+twJgzGE5vamKjiqeGSAIx14ccC2WoZ5y/eQ/3Q==,iv:7/kn50fT6ByFKYPj1TuUrgxGGKA8G3WHkmQ463LRBes=,tag:OVsjgMWaqalC/CphR57GPQ==,type:str]
-    NEXTAUTH_URL: ENC[AES256_GCM,data:1V1E0Tl4bkr8NBG7bwRcfZdFTVzhriXerrkLpk0=,iv:1AKosfTMXOY1vShQlIiBdm35JjI6LT3j1KOIyUHIlNQ=,tag:UTphtBUXlbpRoA216lRg+w==,type:str]
+    NEXTAUTH_URL: ENC[AES256_GCM,data:HUYX5SeW70KNQhpw1AfdvRZPZDFgRBBsho/8GuQ=,iv:YLnOYLKv0ZPuRSNChF6SAr6MLz9B8MBM+XW8nl/y8QA=,tag:G8aPqdePvyZVbXyaiQcakA==,type:str]
     #ENC[AES256_GCM,data:Iq8S13P7o2MCEA==,iv:WX/v6aVHtG0R/o/O9djxkU5rvQ6aes68w5MMAz8jDgs=,tag:GQPJ3ofh5FbOXoNob/v//Q==,type:comment]
     S3_ACCESS_KEY_ID: ENC[AES256_GCM,data:riyjxFxzGJ4A+Gb/rKe8+zhokxnT+EIeaDH/xfYyH/k=,iv:ztPF8trKorwkZtDb1pX1fB+lhC2+UGBqAxlb1XD/h8I=,tag:WOHmsek95hiYgv2NWKSM+g==,type:str]
     S3_SECRET_ACCESS_KEY: ENC[AES256_GCM,data:wZY4A2L5XHOZHQCa0sbgwWuFygm8wXZZe7R/2GDyuOI2+2F3JMAguEmT+MqafLODVKU42q8IoI85TpRQjnMiag==,iv:aehyg83g499h1pIHIJ18TdGllIaCMj1IWWNfQoyiYZA=,tag:r/ipr65QV/l+vVnbXUCpEg==,type:str]
@@ -27,8 +27,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2024-12-02T09:09:21Z"
-    mac: ENC[AES256_GCM,data:uJirinUNGlfr5Cubndkrb/Kbp//BkD+3cM2QZ5ZpY3dxH0wBdDqbrkM9CLB9Pfbc2LfmMOOsB1oWcie/nmrAZLzxYmWwEESrpS3zEvsbpQobbYTkn4vNRfsBLTDeiFXqLGHsO3BYgX2BOyVfbC06Quy+O0G3K+wfxDPSs8xgwr4=,iv:MFtCjoxLUYG+bjg1uHWXMTNA24OihLvMCd1azsnNHkI=,tag:6deRhUqYFnl4ma/UhXHThg==,type:str]
+    lastmodified: "2025-02-26T02:23:31Z"
+    mac: ENC[AES256_GCM,data:Kbya0Lnf+p1bTwJCqNUNsxdOpMIYCcneHaGzVlABD1N7NoUJpW1V3/hv2nUQO8ubgTsCKXy3P20ro+JUifE2p1zSg255agaxkGfKg4EYpKa4Z1Iiu++Y5+XyXnRg5q6516DyVsiw3GCjD0KM/jg9CUD47Yhjpyu/IFH8nW+mqZw=,iv:remPhjVA3rqxJgDlyLcrZ4/LO+WRxOdE3/j432lVOA4=,tag:qCkz+gfoWDrFr9YBJIcZlA==,type:str]
     pgp:
         - created_at: "2024-11-29T10:00:21Z"
           enc: |-
@@ -45,4 +45,4 @@ sops:
             -----END PGP MESSAGE-----
           fp: F01B47BAD5FC895EE1F1B9E59FAD79271D7D461C
     unencrypted_suffix: _unencrypted
-    version: 3.9.1
+    version: 3.9.4

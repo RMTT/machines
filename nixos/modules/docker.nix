@@ -2,8 +2,7 @@
 let
   cfg = config.virtualisation.docker;
   portainerYml = ./config/portainer.yml;
-in
-with lib; {
+in with lib; {
   options = {
     virtualisation.docker.listenTcp = {
       enable = mkOption {

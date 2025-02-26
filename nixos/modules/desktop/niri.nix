@@ -26,6 +26,9 @@ in with lib; {
       nautilus
       seahorse
       loupe
+      file-roller
+      evince
+      loupe
     ];
 
     #to use gnome apps

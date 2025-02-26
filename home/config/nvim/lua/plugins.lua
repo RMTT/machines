@@ -154,11 +154,27 @@ cmp.setup.filetype('gitcommit', {
 })
 ---- end ----
 
----- config lsp server ----
+---- config python lsp server
 -- pyright
-lspconfig.pyright.setup {
-  capabilities = capabilities,
+-- for completion
+require('lspconfig').pyright.setup {
+  settings = {
+    pyright = {
+      -- Using Ruff's import organizer
+      disableOrganizeImports = true,
+    },
+    python = {
+      analysis = {
+        -- Ignore all files for analysis to exclusively use Ruff for linting
+        ignore = { '*' },
+      },
+    },
+  },
 }
+
+-- for linting and formating
+require('lspconfig').ruff.setup({})
+---- end
 
 -- lua language server
 require 'lspconfig'.lua_ls.setup {
@@ -195,17 +211,14 @@ lspconfig.efm.setup {
   capabilities = capabilities,
   init_options = { documentFormatting = true },
   settings = {
-    rootMarkers = { 'pyproject.toml', '.git' },
+    rootMarkers = { '.git' },
     languages = {
-      python = {
-        { formatCommand = 'black --quiet -', formatStdin = true },
-      },
       sh = {
         { formatCommand = 'shfmt -s', formatStdin = true }
       }
     }
   },
-  filetypes = { 'python', 'sh' },
+  filetypes = { 'sh' },
   single_file_support = true
 }
 ---- end ----

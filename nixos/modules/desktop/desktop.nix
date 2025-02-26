@@ -24,6 +24,7 @@ in with lib; {
       motrix
       firefox
       xsettingsd
+      vlc
       xorg.xrdb
 
       fresh.obsidian

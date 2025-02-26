@@ -233,6 +233,7 @@ in with lib; {
         mesa.drivers
         vaapiVdpau
         libvdpau-va-gl
+        amdvlk
       ];
     };
 

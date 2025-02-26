@@ -16,9 +16,14 @@ helmCharts:
     releaseName: cert-manager
     namespace: cert-manager
     repo: https://charts.jetstack.io
-    version: 1.15.1
+    version: 1.17.1
     includeCRDs: true
     valuesInline:
       installCRDs: true
-      dns01RecursiveNameservers: "1.1.1.1:53,8.8.8.8:53,223.5.5.5:53"
-      dns01RecursiveNameserversOnly: true
+      podDnsPolicy: "Default"
+      nodeSelector:
+        kubernetes.io/hostname: cn2-la
+      extraArgs:
+        - --enable-certificate-owner-ref=true
+        - --dns01-recursive-nameservers-only
+        - --dns01-recursive-nameservers=8.8.8.8:53,1.1.1.1:53,223.5.5.5:53
