@@ -25,6 +25,7 @@ in {
     systemd.services.aronet = {
       description = "aronet service";
       wantedBy = [ "multi-user.target" ];
+      path = with pkgs; [ bash iproute2 nftables ];
       after = [
         "network.target"
         "NetworkManager.service"
