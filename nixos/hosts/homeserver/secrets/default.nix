@@ -33,4 +33,10 @@
     sopsFile = ./gravity.key;
     format = "binary";
   };
+
+  sops.secrets.aronet = {
+    mode = "0400";
+    sopsFile = ./aronet;
+    format = "binary";
+  };
 }

@@ -53,7 +53,6 @@
   };
 
   desktop.niri.enable = true;
-  #desktop.plasma.enable = true;
 
   # default shell
   users.users.mt.shell = pkgs.zsh;
@@ -72,6 +71,7 @@
   virtualisation.docker = { storageDriver = "btrfs"; };
 
   virtualisation.libvirtd.enable = true;
+
 
   services.tailscale = {
     enable = true;

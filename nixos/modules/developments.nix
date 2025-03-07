@@ -20,6 +20,9 @@
 			go
 			tldr
 			rustup
+      trace-cmd
+      vagrant
+      guestfs-tools
     ];
 
   };

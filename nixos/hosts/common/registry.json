@@ -1,0 +1,41 @@
+[
+  {
+    "public_key": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAD4UhkpuVz7/U2pRkKDl2ladcCwue9hnw2be8B9EvpCw=\n-----END PUBLIC KEY-----",
+    "organization": "rmtt.tech",
+    "nodes": [
+      {
+        "common_name": "homeserver",
+        "endpoints": [
+          {
+            "address_family": "ip4",
+            "address": null,
+            "serial_number": 0,
+            "port": 12025
+          }
+        ],
+        "remarks": {
+          "network": "fd97:1208:0:1::1/64",
+          "prefixs": [
+            "192.168.128.200/32"
+          ]
+        }
+      },
+      {
+        "common_name": "cn2-la",
+        "endpoints": [
+          {
+            "address": "103.94.185.60",
+            "port": 12025
+          }
+        ],
+        "remarks": {
+          "network": "fd97:1208:0:2::1/64",
+          "prefixs": [
+            "192.168.128.201/32"
+          ]
+        }
+      }
+    ]
+  }
+]
+

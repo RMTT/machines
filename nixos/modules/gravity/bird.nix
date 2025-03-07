@@ -14,7 +14,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    services.bird2 = {
+    services.bird = {
       enable = true;
       config = ''
         ipv6 sadr table sadr6;
@@ -51,7 +51,6 @@ in
           randomize router id;
           interface "gn*" {
             type tunnel;
-            link quality etx;
             rxcost 32;
             hello interval 20 s;
             rtt cost 1024;

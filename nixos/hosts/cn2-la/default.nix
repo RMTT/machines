@@ -6,6 +6,7 @@ with lib; {
     globals
     gravity
     godel
+    services
     ./disk-config.nix
     ./secrets
   ];
@@ -86,6 +87,11 @@ with lib; {
       internet = true;
       remoteId = "homeserver.infra.rmtt.host";
       interface = "${wan}";
+    };
+    services.aronet = {
+      enable = true;
+      config = config.sops.secrets.aronet.path;
+      registry = ../common/registry.json;
     };
   };
 }

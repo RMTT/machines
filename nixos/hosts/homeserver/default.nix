@@ -180,5 +180,10 @@
         prefix = "2a0c:b641:69c:5224:0:4::/96";
       };
     };
+    services.aronet = {
+      enable = true;
+      config = config.sops.secrets.aronet.path;
+      registry = ../common/registry.json;
+    };
   };
 }

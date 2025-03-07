@@ -5,3 +5,4 @@
 services/**/charts
 result
 *.qcow2
+build

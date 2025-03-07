@@ -30,6 +30,7 @@ in with lib; {
       fresh.obsidian
       fresh.kicad
       fresh.nextcloud-client
+      fresh.libreoffice-qt6
     ];
     programs.appimage = {
       enable = true;

@@ -19,12 +19,9 @@ in with lib; {
     nix.settings.substituters = [
       "https://cache.garnix.io"
       "https://mirrors.ustc.edu.cn/nix-channels/store"
-      pkgs.nur.repos.xddxdd._meta.cachixUrl
     ];
-    nix.settings.trusted-public-keys = [
-      pkgs.nur.repos.xddxdd._meta.cachixPublicKey
-      "cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g="
-    ];
+    nix.settings.trusted-public-keys =
+      [ "cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g=" ];
     nix.settings.trusted-users = [ "root" "mt" ];
     nix.optimise.automatic = true;
     nix.gc.automatic = true;
@@ -54,6 +51,9 @@ in with lib; {
       "rtsx_pci_sdmmc"
       "btrfs"
     ];
+
+    # sysctl
+    boot.kernel.sysctl = { "net.core.devconf_inherit_init_net" = 1; };
 
     # timezone
     time.timeZone = "Asia/Shanghai";
@@ -198,6 +198,8 @@ in with lib; {
         "users"
         "uinput"
         "i2c"
+        (mkIf config.virtualisation.libvirtd.enable "libvirt")
+        (mkIf config.virtualisation.virtualbox.host.enable "vboxusers")
       ];
       initialHashedPassword =
         "$y$j9T$v3KSiMJEpJdcbN4osJbMF0$Qfgg9i/ozgLjDhOg/WZmSrg8vuiNQSrSWivWKvjATN7";
