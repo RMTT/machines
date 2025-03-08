@@ -1,22 +1,7 @@
 { config, pkgs, lib, inputs, ... }:
 with lib;
-let
-  cfg = config.services.gravity;
+let cfg = config.services.gravity;
 
-  ranet = pkgs.rustPlatform.buildRustPackage rec {
-    pname = "ranet";
-    version = "v0.11.0";
-
-    src = pkgs.fetchFromGitHub {
-      owner = "NickCao";
-      repo = pname;
-      rev = version;
-      hash = "sha256-GB8FXnHzaM06MivfpYEFFIp4q0WfH3a7+jmoC3Tpwbs=";
-    };
-
-    cargoHash = "sha256-+f793L/qYdHaVP3S3wCn0d4URbXzGzgRwwCo5mrIEq8=";
-    checkFlags = [ "--skip=address::test::remote" ];
-  };
 in {
   imports = [ ./strongswan.nix ./bird.nix ./divi.nix ./networkd.nix ];
 
@@ -118,7 +103,22 @@ in {
         wantedBy = [ "timers.target" ];
       };
     })
-    (mkIf cfg.ipsec.enable {
+    (mkIf cfg.ipsec.enable (let
+      ranet = pkgs.rustPlatform.buildRustPackage rec {
+        pname = "ranet";
+        version = "v0.11.0";
+
+        src = pkgs.fetchFromGitHub {
+          owner = "NickCao";
+          repo = pname;
+          rev = version;
+          hash = "sha256-GB8FXnHzaM06MivfpYEFFIp4q0WfH3a7+jmoC3Tpwbs=";
+        };
+
+        cargoHash = "sha256-+f793L/qYdHaVP3S3wCn0d4URbXzGzgRwwCo5mrIEq8=";
+        checkFlags = [ "--skip=address::test::remote" ];
+      };
+    in {
       environment.systemPackages = [ pkgs.strongswan ];
       environment.etc."ranet/config.json".source =
         (pkgs.formats.json { }).generate "config.json" {
@@ -162,6 +162,6 @@ in {
         wantedBy = [ "multi-user.target" ];
         reloadTriggers = [ config.environment.etc."ranet/config.json".source ];
       };
-    })
+    }))
   ]);
 }

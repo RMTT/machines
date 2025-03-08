@@ -7,6 +7,7 @@
     ./modules/kitty.nix
     ./modules/gitui.nix
     ./modules/tmux.nix
+    ./modules/ghostty.nix
 
     # darwin modules
     (if (system == "aarch64-darwin") then ./modules/darwin else ./modules/linux)

@@ -1,0 +1,5 @@
+font-family = "FiraCode Nerd Font Mono"
+quick-terminal-position = top
+quick-terminal-autohide = true
+macos-option-as-alt = left
+keybind = global:cmd+grave_accent=toggle_quick_terminal
