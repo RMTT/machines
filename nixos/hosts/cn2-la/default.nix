@@ -9,7 +9,7 @@ with lib; {
     services
     ./disk-config.nix
     ./secrets
-    "${pkgs}/nixos/modules/virtualisation/qemu-vm.nix"
+    (modulesPath + "/profiles/qemu-guest.nix")
   ];
 
   config = let
