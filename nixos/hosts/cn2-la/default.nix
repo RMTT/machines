@@ -9,6 +9,7 @@ with lib; {
     services
     ./disk-config.nix
     ./secrets
+    "${pkgs}/nixos/modules/virtualisation/qemu-vm.nix"
   ];
 
   config = let
@@ -18,18 +19,6 @@ with lib; {
     system.stateVersion = "24.11";
 
     hardware.cpu.intel.updateMicrocode = true;
-    boot.initrd.availableKernelModules = [
-      "ata_piix"
-      "uhci_hcd"
-      "virtio_pci"
-      "virtio_scsi"
-      "virtio_blk"
-      "virtio_net"
-      "virtio"
-      "sd_mod"
-      "sr_mod"
-    ];
-
     networking.useNetworkd = true;
 
     boot.loader.systemd-boot.enable = lib.mkForce false;
