@@ -1,10 +1,10 @@
-{ pkgs, lib, config, modules, ... }:
+{ pkgs, lib, config, modules, modulesPath, ... }:
 with lib; {
   imports = with modules; [
     base
     networking
     globals
-    "${pkgs}/nixos/modules/virtualisation/qemu-vm.nix"
+    (modulesPath + "/profiles/qemu-guest.nix")
   ];
 
   config = let
