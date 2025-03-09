@@ -1,1 +1,1 @@
-cmd - return : open -na /Applications/Ghostty.app
+cmd - return : open -a /Applications/Ghostty.app

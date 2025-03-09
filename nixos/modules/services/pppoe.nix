@@ -20,8 +20,8 @@ in {
     };
   };
 
-  config = {
-    services.pppd = mkIf cfg.enable {
+  config = mkIf cfg.enable {
+    services.pppd = {
       enable = true;
       peers.main = {
         enable = true;

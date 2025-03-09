@@ -43,7 +43,9 @@
 
         cn2-la = lib.mkSystem "cn2-la" system.x86_64-linux nixpkgs;
 
-        cn2-box = lib.mkSystem "cn2-la" system.x86_64-linux nixpkgs;
+        cn2-box = lib.mkSystem "cn2-box" system.x86_64-linux nixpkgs;
+
+        de-hz = lib.mkSystem "de-hz" system.x86_64-linux nixpkgs;
 
         mtslaptop = lib.mkSystem "mtslaptop" system.x86_64-linux nixpkgs;
 

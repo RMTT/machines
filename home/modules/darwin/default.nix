@@ -8,9 +8,9 @@ with lib; {
     home.packages = with pkgs; [
       nerd-fonts.fira-code
       sshuttle
-      colima
-      docker
+      lima # for running x86 vms and containers
       htop
+      nixos-rebuild
 
       # dev tools
       autoconf

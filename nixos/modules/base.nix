@@ -103,10 +103,6 @@ in with lib; {
       gnupg
       bitwarden-cli
       sops
-      yubikey-manager
-      yubikey-touch-detector
-      yubikey-personalization
-      yubico-pam
       jq
       unzip
       zip
@@ -121,9 +117,6 @@ in with lib; {
       lm_sensors
       iperf
       moreutils
-      kubernetes
-      kubernetes-helm
-      kustomize
       sshuttle
     ];
 

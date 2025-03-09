@@ -14,15 +14,18 @@
       clang-tools
       pkg-config
       pgcli
-			yq-go
-			gh
-			distrobox
-			go
-			tldr
-			rustup
+      yq-go
+      gh
+      distrobox
+      go
+      tldr
+      rustup
       trace-cmd
       vagrant
       guestfs-tools
+      kubernetes
+      kubernetes-helm
+      kustomize
     ];
 
   };

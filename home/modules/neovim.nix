@@ -53,10 +53,6 @@ in {
       nvim-dap-virtual-text
       nvim-dap-go
       nvim-window-picker
-      (fromGitHub "master" "e30e3de6c791a05cdc08f5346c9be56adf17f1fe"
-        "cappyzawa/starlark.vim")
-      (fromGitHub "master" "bafa8feb15066d58a9de9a52719906343fb3af73"
-        "carvel-dev/ytt.vim")
       promise-async
       nvim-ufo
     ];

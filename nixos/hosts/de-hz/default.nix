@@ -2,38 +2,28 @@
 with lib; {
   imports = with modules; [
     base
-    fs
     networking
     globals
     services
+    ./disk-config.nix
     (modulesPath + "/profiles/qemu-guest.nix")
     ./secrets
   ];
 
   config = let
-    infra_node_ip = "192.168.128.6";
-    wan = "eth0";
+    infra_node_ip = "192.168.128.7";
+    wan = "enp1s0";
   in {
-    system.stateVersion = "25.05";
+    system.stateVersion = "24.11";
 
-    hardware.cpu.amd.updateMicrocode = true;
+    hardware.cpu.intel.updateMicrocode = true;
     networking.useNetworkd = true;
 
     boot.loader.systemd-boot.enable = lib.mkForce false;
     boot.loader.grub.enable = lib.mkForce true;
-    boot.loader.grub.device = "/dev/sda";
     boot.loader.efi.canTouchEfiVariables = lib.mkForce false;
 
     base.gl.enable = false;
-    fs.normal.volumes = {
-      "/" = {
-        fsType = "ext4";
-        label = "@";
-        options =
-          [ "noatime" "data=writeback" "barrier=0" "nobh" "errors=remount-ro" ];
-      };
-    };
-    fs.swap.label = "@swap";
 
     services.aronet = {
       enable = true;
@@ -41,5 +31,4 @@ with lib; {
       registry = ../common/registry.json;
     };
   };
-
 }

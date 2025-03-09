@@ -26,6 +26,10 @@ in with lib; {
       xsettingsd
       vlc
       xorg.xrdb
+      yubikey-manager
+      yubikey-touch-detector
+      yubikey-personalization
+      yubico-pam
 
       fresh.obsidian
       fresh.kicad

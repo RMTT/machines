@@ -1,11 +1,11 @@
 { python3Packages, fetchFromGitHub, meson, ncurses, readline, ninja, automake
 , autoconf, libtool, gnumake, pkg-config, gettext, perl, gperf, flex, bison
-, openssl, git, cacert, keepBuildTree }:
+, openssl, git, cacert, iproute2 }:
 python3Packages.buildPythonApplication {
   name = "aronet";
   version = "v0.1-beta";
   pyproject = true;
-  buildInputs = [ ncurses readline openssl ];
+  buildInputs = [ iproute2 openssl ncurses readline ];
   nativeBuildInputs = [
     ninja
     automake
@@ -18,16 +18,10 @@ python3Packages.buildPythonApplication {
     flex
     gettext
     gnumake
-    keepBuildTree
     perl
   ];
 
-  dependencies = with python3Packages; [
-    cryptography
-    pyroute2
-    jsonschema
-
-  ];
+  dependencies = with python3Packages; [ cryptography pyroute2 jsonschema ];
   build-system = with python3Packages; [ build meson-python ];
 
   postPatch = ''
@@ -45,8 +39,8 @@ python3Packages.buildPythonApplication {
   src = fetchFromGitHub {
     owner = "RMTT";
     repo = "aronet";
-    rev = "633ed9dea78ed755776b1dd40cba120c61d49cf8";
-    hash = "sha256-2tlry0JXyaVRC9RyT3o+a1an7kSIbuiywZBBpzxRKYk=";
+    rev = "b371d237297c262d31233da37b7b09136201394b";
+    hash = "sha256-1z+e2sV5j+b1550h4hOMkRc9nZVcK9g0YxZy8w/OMyI=";
     nativeBuildInputs = [ git meson cacert ];
     postFetch = ''
       cd "$out"

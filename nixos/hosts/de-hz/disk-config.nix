@@ -5,7 +5,7 @@
         device = "/dev/sda";
         type = "disk";
         content = {
-          type = "mbr";
+          type = "gpt";
           partitions = {
             boot = {
               size = "1M";

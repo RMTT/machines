@@ -25,6 +25,7 @@ with lib; {
     boot.loader.grub.enable = lib.mkForce true;
     boot.loader.efi.canTouchEfiVariables = lib.mkForce false;
 
+    base.gl.enable = false;
     services.gravity = {
       enable = true;
       ipsec = {
