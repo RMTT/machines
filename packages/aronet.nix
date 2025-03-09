@@ -39,8 +39,8 @@ python3Packages.buildPythonApplication {
   src = fetchFromGitHub {
     owner = "RMTT";
     repo = "aronet";
-    rev = "b371d237297c262d31233da37b7b09136201394b";
-    hash = "sha256-1z+e2sV5j+b1550h4hOMkRc9nZVcK9g0YxZy8w/OMyI=";
+    rev = "65ccb3e00303369b51b6583db350b5054d7e0b56";
+    hash = "sha256-mefb7YXafK7uGb+T48aHe4I/8/g7fLnLXpfX/OlJFBo=";
     nativeBuildInputs = [ git meson cacert ];
     postFetch = ''
       cd "$out"

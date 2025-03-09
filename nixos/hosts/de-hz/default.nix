@@ -4,7 +4,7 @@ with lib; {
     base
     networking
     globals
-    services
+    godel
     ./disk-config.nix
     (modulesPath + "/profiles/qemu-guest.nix")
     ./secrets
@@ -12,6 +12,7 @@ with lib; {
 
   config = let
     infra_node_ip = "192.168.128.7";
+    infra_network = "fd97:1208:0:4::1/64";
     wan = "enp1s0";
   in {
     system.stateVersion = "24.11";
@@ -25,10 +26,13 @@ with lib; {
 
     base.gl.enable = false;
 
-    services.aronet = {
+    services.godel = {
       enable = true;
-      config = config.sops.secrets.aronet.path;
-      registry = ../common/registry.json;
+      network = infra_network;
+      netns = true;
+      prefixs = [ "${infra_node_ip}/32" ];
+      extra_ip = [ "${infra_node_ip}/32" ];
+      public = true;
     };
   };
 }

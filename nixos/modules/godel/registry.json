@@ -1,0 +1,43 @@
+[
+  {
+    "public_key": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAD4UhkpuVz7/U2pRkKDl2ladcCwue9hnw2be8B9EvpCw=\n-----END PUBLIC KEY-----",
+    "organization": "rmtt.tech",
+    "nodes": [
+      {
+        "common_name": "cn2-box",
+        "endpoints": [
+          {
+            "address_family": "ip4",
+            "address": "cn2-box.rmtt.host",
+            "port": 12025,
+            "serial_number": 0
+          }
+        ],
+        "remarks": {
+          "network": "fd97:1208:0:3::1/64",
+          "prefixs": [
+            "192.168.128.6/32"
+          ]
+        }
+      },
+      {
+        "common_name": "de-hz",
+        "endpoints": [
+          {
+            "address_family": "ip4",
+            "address": "de-hz.rmtt.host",
+            "port": 12025,
+            "serial_number": 0
+          }
+        ],
+        "remarks": {
+          "network": "fd97:1208:0:4::1/64",
+          "prefixs": [
+            "192.168.128.7/32"
+          ]
+        }
+      }
+    ]
+  }
+]
+

@@ -1,6 +1,6 @@
 { pkgs, config, ... }: {
   # TODO: complete this module
-  imports = [ ./strongswan.nix ];
+  imports = [ ./aronet.nix ./secrets.nix ];
 
   config = {
     systemd.services.k3s.path = with pkgs; [ nftables ];

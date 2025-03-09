@@ -5,13 +5,14 @@ with lib; {
     fs
     networking
     globals
-    services
+    godel
     (modulesPath + "/profiles/qemu-guest.nix")
     ./secrets
   ];
 
   config = let
     infra_node_ip = "192.168.128.6";
+    infra_network = "fd97:1208:0:3::1/64";
     wan = "eth0";
   in {
     system.stateVersion = "25.05";
@@ -35,11 +36,12 @@ with lib; {
     };
     fs.swap.label = "@swap";
 
-    services.aronet = {
+    services.godel = {
       enable = true;
-      config = config.sops.secrets.aronet.path;
-      registry = ../common/registry.json;
+      network = infra_network;
+      prefixs = [ "${infra_node_ip}/32" ];
+      extra_ip = [ "${infra_node_ip}/32" ];
+      public = true;
     };
   };
-
 }
