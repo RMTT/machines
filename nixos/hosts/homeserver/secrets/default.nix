@@ -16,12 +16,6 @@
 
   sops.secrets.smtp-pass = { mode = "644"; };
 
-  sops.secrets.godel-private = {
-    mode = "0400";
-    sopsFile = ./godel.key;
-    format = "binary";
-  };
-
   sops.secrets.header = {
     mode = "0400";
     sopsFile = ./header;
@@ -31,12 +25,6 @@
   sops.secrets.gravity-private = {
     mode = "0400";
     sopsFile = ./gravity.key;
-    format = "binary";
-  };
-
-  sops.secrets.aronet = {
-    mode = "0400";
-    sopsFile = ./aronet;
     format = "binary";
   };
 }

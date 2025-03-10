@@ -12,6 +12,7 @@
 
   config = let
     infra_node_ip = "192.168.128.4";
+    infra_network = "fd97:1208:0:1::1/64";
     wan = "enp2s0";
   in {
     system.stateVersion = "23.05";
@@ -122,26 +123,18 @@
       };
     };
 
-    services.k3s = {
-      enable = true;
-      configPath = ./config/k3s.yaml;
-      role = "server";
-      extraFlags = [
-        "--node-ip ${infra_node_ip}"
-        "--node-external-ip ${infra_node_ip}"
-        "--flannel-backend host-gw"
-        "--flannel-external-ip"
-        "--flannel-iface godel"
-      ];
-    };
     services.godel = {
       enable = true;
-      cert = ./secrets/godel.cert;
-      privateKey = config.sops.secrets.godel-private.path;
-      address = "${infra_node_ip}";
-      remoteId = "cn2-la.infra.rmtt.host";
-      remoteAddress = "cn2-la.rmtt.host";
-      interface = "${wan}";
+      network = infra_network;
+      prefixs = [ "${infra_node_ip}/32" "10.42.0.0/24" ];
+      extra_ip = [ "${infra_node_ip}/32" ];
+      netns = true;
+      k3s = {
+        enable = true;
+        node-ip = infra_node_ip;
+        node-labels = [ "intel.feature.node.kubernetes.io/gpu=true" ];
+        role = "server";
+      };
     };
 
     services.gravity = {
@@ -179,11 +172,6 @@
         enable = true;
         prefix = "2a0c:b641:69c:5224:0:4::/96";
       };
-    };
-    services.aronet = {
-      enable = true;
-      config = config.sops.secrets.aronet.path;
-      registry = ../common/registry.json;
     };
   };
 }

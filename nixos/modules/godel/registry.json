@@ -4,6 +4,42 @@
     "organization": "rmtt.tech",
     "nodes": [
       {
+        "common_name": "homeserver",
+        "endpoints": [
+          {
+            "address_family": "ip4",
+            "address": null,
+            "port": 12025,
+            "serial_number": 0
+          }
+        ],
+        "remarks": {
+          "network": "fd97:1208:0:1::1/64",
+          "prefixs": [
+            "192.168.128.4/32",
+            "10.42.0.0/24"
+          ]
+        }
+      },
+      {
+        "common_name": "cn2-la",
+        "endpoints": [
+          {
+            "address_family": "ip4",
+            "address": "cn2-la.rmtt.host",
+            "port": 12025,
+            "serial_number": 0
+          }
+        ],
+        "remarks": {
+          "network": "fd97:1208:0:2::1/64",
+          "prefixs": [
+            "192.168.128.5/32",
+            "10.42.1.0/24"
+          ]
+        }
+      },
+      {
         "common_name": "cn2-box",
         "endpoints": [
           {
@@ -33,7 +69,8 @@
         "remarks": {
           "network": "fd97:1208:0:4::1/64",
           "prefixs": [
-            "192.168.128.7/32"
+            "192.168.128.7/32",
+            "10.42.2.0/24"
           ]
         }
       }

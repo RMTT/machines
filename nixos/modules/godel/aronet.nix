@@ -21,6 +21,7 @@ in {
   };
 
   config = mkIf cfg.enable {
+    networking.firewall.trustedInterfaces = [ "godel" ];
     services.aronet = let
       json = pkgs.formats.json { };
       customConfig = {

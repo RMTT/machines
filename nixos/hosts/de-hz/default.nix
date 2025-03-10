@@ -30,9 +30,15 @@ with lib; {
       enable = true;
       network = infra_network;
       netns = true;
-      prefixs = [ "${infra_node_ip}/32" ];
+      prefixs = [ "${infra_node_ip}/32" "10.42.2.0/24" ];
       extra_ip = [ "${infra_node_ip}/32" ];
       public = true;
+
+      k3s = {
+        enable = true;
+        node-ip = infra_node_ip;
+        role = "agent";
+      };
     };
   };
 }

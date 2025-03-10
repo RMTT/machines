@@ -19,9 +19,8 @@ in {
   };
 
   config = mkIf cfg.enable {
-    networking.firewall.trustedInterfaces = [ "aronet" ];
     environment.systemPackages = [ pkgs.aronet ];
-    networking.firewall.allowedUDPPorts = [ 12025 ];
+    networking.firewall.allowedUDPPorts = [ 12025 6696 ];
     systemd.services.aronet = {
       description = "aronet service";
       wantedBy = [ "multi-user.target" ];

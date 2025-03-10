@@ -14,6 +14,7 @@ with lib; {
 
   config = let
     infra_node_ip = "192.168.128.5";
+    infra_network = "fd97:1208:0:2::1/64";
     wan = "ens3";
   in {
     system.stateVersion = "24.11";
@@ -59,29 +60,19 @@ with lib; {
       };
     };
 
-    services.k3s = {
-      enable = true;
-      configPath = config.sops.secrets.k3s.path;
-      role = "agent";
-      extraFlags = [
-        "--node-ip ${infra_node_ip}"
-        "--node-external-ip ${infra_node_ip}"
-        "--flannel-iface godel"
-      ];
-    };
     services.godel = {
       enable = true;
-      cert = ./secrets/godel.cert;
-      privateKey = config.sops.secrets.godel-private.path;
-      address = "${infra_node_ip}";
-      internet = true;
-      remoteId = "homeserver.infra.rmtt.host";
-      interface = "${wan}";
-    };
-    services.aronet = {
-      enable = true;
-      config = config.sops.secrets.aronet.path;
-      registry = ../common/registry.json;
+      network = infra_network;
+      netns = true;
+      prefixs = [ "${infra_node_ip}/32" "10.42.1.0/24" ];
+      extra_ip = [ "${infra_node_ip}/32" ];
+      public = true;
+
+      k3s = {
+        enable = true;
+        node-ip = infra_node_ip;
+        role = "agent";
+      };
     };
   };
 }
