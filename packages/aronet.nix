@@ -3,7 +3,7 @@
 , openssl, git, cacert, iproute2 }:
 python3Packages.buildPythonApplication {
   name = "aronet";
-  version = "v0.1-beta";
+  version = "v0.1-beta1";
   pyproject = true;
   buildInputs = [ iproute2 openssl ncurses readline ];
   nativeBuildInputs = [
@@ -39,8 +39,8 @@ python3Packages.buildPythonApplication {
   src = fetchFromGitHub {
     owner = "RMTT";
     repo = "aronet";
-    rev = "5c1ee8beb51db0a025a70e25265eb6b1b7356261";
-    hash = "sha256-n4/lZFINp7vswe5CzUxxqdDAeFd1tV2tyaQRhB/HCrc=";
+    rev = "v0.1-beta1";
+    hash = "sha256-2ouJ5P8ntwDBh1EGkcH6T3fTZj4zaBeXWPq5PtUp3p4=";
     nativeBuildInputs = [ git meson cacert ];
     postFetch = ''
       cd "$out"

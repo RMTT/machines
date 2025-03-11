@@ -5,10 +5,10 @@ in {
   options = {
     services.godel.k3s = {
       enable = mkEnableOption "enable k3s";
-      node-ip = mkOption { type = types.string; };
-      role = mkOption { type = types.string; };
+      node-ip = mkOption { type = types.str; };
+      role = mkOption { type = types.str; };
       node-labels = mkOption {
-        type = types.listOf types.string;
+        type = types.listOf types.str;
         default = [ ];
       };
     };
