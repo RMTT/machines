@@ -1,0 +1,47 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: searxng
+spec:
+  replicas: 1
+  template:
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: cn2-la
+      dnsPolicy: "Default"
+      containers:
+      - name: searxng
+        image: searxng/searxng:latest
+        env:
+        - name: INSTANCE_NAME
+          value: mt-searxng
+        volumeMounts:
+        - name: config
+          mountPath: /etc/searxng
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: searxng
+spec:
+  type: NodePort
+  ports:
+    - port: 8080
+      nodePort: 31888
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: config
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 50Mi

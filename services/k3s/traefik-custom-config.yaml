@@ -25,6 +25,6 @@ spec:
       kubernetesCRD:
         allowCrossNamespace: true
     deployment:
-      replicas: 2
+      replicas: 3
     service:
       type: NodePort

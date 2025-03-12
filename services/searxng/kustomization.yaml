@@ -1,0 +1,9 @@
+resources:
+  - namespace.yaml
+  - deployment.yaml
+
+namespace: searxng
+labels:
+  - pairs:
+      app: searxng
+    includeSelectors: true
