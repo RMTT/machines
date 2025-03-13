@@ -74,5 +74,7 @@ with lib; {
         role = "agent";
       };
     };
+
+    services.prometheus = { exporters.node.enable = true; };
   };
 }

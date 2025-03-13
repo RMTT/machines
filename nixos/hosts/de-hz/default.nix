@@ -40,5 +40,61 @@ with lib; {
         role = "agent";
       };
     };
+
+    services.prometheus = {
+      globalConfig.scrape_interval = "1m";
+      enable = true;
+      scrapeConfigs = [
+        {
+          job_name = "prometheus";
+          static_configs = [{
+            targets = [
+              "de-hz.infra.rmtt.host:${
+                toString config.services.prometheus.port
+              }"
+            ];
+          }];
+        }
+        {
+          job_name = "node";
+          static_configs = [{
+            targets = [
+              "de-hz.infra.rmtt.host:${
+                toString config.services.prometheus.exporters.node.port
+              }"
+
+              "homeserver.infra.rmtt.host:${
+                toString config.services.prometheus.exporters.node.port
+              }"
+
+              "cn2-la.infra.rmtt.host:${
+                toString config.services.prometheus.exporters.node.port
+              }"
+            ];
+          }];
+        }
+        {
+          job_name = "smartctl";
+          static_configs = [{
+            targets = [
+              "homeserver.infra.rmtt.host:${
+                toString config.services.prometheus.exporters.smartctl.port
+              }"
+            ];
+          }];
+        }
+      ];
+
+      remoteWrite = [{
+        url =
+          "https://prometheus-prod-49-prod-ap-northeast-0.grafana.net/api/prom/push";
+        basic_auth = {
+          username = "2319367";
+          password_file = config.sops.secrets.grafana-token.path;
+        };
+      }];
+
+      exporters.node.enable = true;
+    };
   };
 }

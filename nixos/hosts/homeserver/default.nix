@@ -173,5 +173,13 @@
         prefix = "2a0c:b641:69c:5224:0:4::/96";
       };
     };
+
+    services.prometheus = {
+      exporters.node.enable = true;
+      exporters.smartctl = {
+        enable = true;
+        user = "root";
+      };
+    };
   };
 }
