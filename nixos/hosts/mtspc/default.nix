@@ -9,6 +9,7 @@
     services
     docker
     godel
+    netflow
 
     ./vm.nix
   ];

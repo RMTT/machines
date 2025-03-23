@@ -1,0 +1,26 @@
+{
+	"data": "ENC[AES256_GCM,data:TI1w10MKBihbfLnc43kfKIjsPilS1StvVj8kbkX+/bCDsoULdV0hyuvI+RLQEur3z9k0XLeQgfWv8DY6vvf0aNcWChDbjT2FXE6EYAbcb30iJ9zRD2U2+KqBl8wSXUp6OnjHrB8Lyo7m1NslRXSn272j0JTs9vqlhE/pENPlOnGwlucZMqUtemAyynuC69jcqoBrmBdRyNxGOcKZloYVkawZPgcsOBFvX93HvCz7UcDFCW5SmdkPQFhOF3MnlLB07QPptP+jDf1SR0i8GLrvov0i7nXd9kE0E2TRX3y9Q3849fwC5Z3+uEZkdzpmDlHX7q4f/31wDF45TKj6VZdZKj1pp+bje07JAmKTi47U+MsPYIp8yWHJP+0cgNNYUjexAtWYJfYf47bPEnt1lBXD4OBrLYfLldX/ZZ/ZNoMWio7JdR/OjlTi6CqLOxsS8Q9cVEiYpB4c3UGmoITUujy7hzgYCfyoaI5hCrfv9qjqDRqRq29y57doqe4XbGfTZqtAERU/+DnC/+yCuk9HZH0aGDdnTiyjG5cssTtlTiUdCeVaeXImIlqKscbELPO3RxU8sW2VVwm2lmGjR0tByA0415rKSaqIhaI4j3YmpvFsABvGxEDe4YG0djrG1ps6ukvXH+WHuUjPE9ttXOZAP8Z1YsEODnDo/28tSRNeNBmi8KWkofRnuvDiWFDvT2SigaIrzLiLsyOaXCsGop+LvU82HLYMV3ZXIDNNRDJhNFBslBVDqb6LjTZ/mEudbfZYk10Q3rDLOUddP4QzwsYmlcnFWRp0bVpk/CDRgK3TJA+Au6oA+IqY/7UWQsCyKSEgAEBhjs9dhbPKWE0q35oSFUUYhIL1WcdZIJlEXsMtBCBGWFNpB2bwkiFDiRuSZBQ+dwA5M1OFmG5Cd7bfpRmNibDcrQLl5v0A4CALOq2k9Y+mPyTzYU8O3HsnkyBsPmoi8v9TLLqjwd4ZqDJ/zpuJ9rjUY/T9jh3UD2jdTAr5oXBXPQnO0PkhuiWUbx4SnKnfT5GUAiV5YPVzr+DrOREIHigwR3NFR30tJqupwFCm7TGDl7e8xg7dLH6U91yMRvwSDoiOZVrGzZ1zHnQSpMg5doXGvGWGe0rtQLP7wCtcB4xSUo56bigWB4iUexbV34qi8hs4vZrMjmQtMx6q1vevoCOiLF5+nPduVA/kxrmwVTGNFyxNdEFOXznAHowfgSSVP+z6YGRsPedJag32xmIiLqFa,iv:zHdSycuICda+gVKNwItNGJwaOHljXIbzC1coQLR2YfE=,tag:3AuIVD+gtoxX6Txkeo97jQ==,type:str]",
+	"sops": {
+		"kms": null,
+		"gcp_kms": null,
+		"azure_kv": null,
+		"hc_vault": null,
+		"age": [
+			{
+				"recipient": "age1u4gjwdwevlzwfy94lvw69t32rueujk4evypc0r6fuq0nvmua94esge30uk",
+				"enc": "-----BEGIN AGE ENCRYPTED FILE-----\nYWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBhQVR0RkdEN0hlWUxhd25m\nNWt2T3FDaGR1OGtDcm5ZQ09UNmlCdEF6ejIwCkx4OFRsbTBIL2kvTXoyM2pHOXlS\nN3hHejVnellnb0d4alp6R0wwbjhOTTgKLS0tIGFaeGRMU2drM0VQYjFRNWFrRHQv\nMEFhRFBQZUlGMDR6cUpFUXJxNVRKWm8KWBCBf8s8dwbt8Tyj7xOL/Bq/+ic6l4cQ\nuIyluqaLRuSOKdJpGrItZFjfk/ff3EPPf0WmwSxg5tyESkR11yRZlw==\n-----END AGE ENCRYPTED FILE-----\n"
+			}
+		],
+		"lastmodified": "2025-03-23T03:38:45Z",
+		"mac": "ENC[AES256_GCM,data:Ls45lR/4Qt0Q9JJ6/I7LyooRy7wymZ4VET2HPTOrpFqdgBT1nKkTb01oJKwcHl8w9ie3sISTRIJukJI5kehSKgk+/d+noWYi+DmbacbYgk9Q26ubBGxfWoOxwOOIThW6Iyv4NKQfK1W7Jw7ZYjF7qeHxgRWrlB9uWnKKOxQYgEE=,iv:SGUcLzXrNb2FZm4a5nzizp7AcikRgeNliLXVcCjZFPk=,tag:aK/jT0GdqJS/Y1y6ATgkOA==,type:str]",
+		"pgp": [
+			{
+				"created_at": "2025-03-23T03:38:45Z",
+				"enc": "-----BEGIN PGP MESSAGE-----\n\nhMIDn615Jx19RhwSBCMEAbytKDVh8EiCeoMBoYdNonXXOvhg4NEQAw408CMSd6PU\nT5/N5EF8u6fFFdH65K5EL3n9DVA2QA4QlmiTiVNvLewWAUj2Ac8ZpO5qKJaL8uMb\n1svxC+xVWV/f5AtRRdMfrw1mOkISzUy1Mjzy5W4LpdPt3s4e6Vvke6PeSE4F72PU\n4KbbMC5nj0Ve/1rEJVI/GvbKsKe0nHJtbcFeSfc7SSqYoe3IuHxC+ZPlZNmJqvgz\nZmimDtJcAZKd8nwLpeKcYENZQhvs9GlPNIlUbJM3RdlqHYzmk9wI2g1kdWeMCvbs\nti0cTUEYu3VU8DwpgpKscCsvs+CRYEKigcVXk1Ioc4LDNK/G2dn9dyqw7WnEsLlg\nPFw=\n=A+hy\n-----END PGP MESSAGE-----",
+				"fp": "F01B47BAD5FC895EE1F1B9E59FAD79271D7D461C"
+			}
+		],
+		"unencrypted_suffix": "_unencrypted",
+		"version": "3.9.4"
+	}
+}

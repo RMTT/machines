@@ -11,6 +11,7 @@ with lib; {
       lima # for running x86 vms and containers
       htop
       nixos-rebuild
+      wget
 
       # dev tools
       autoconf

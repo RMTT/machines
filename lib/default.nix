@@ -17,6 +17,7 @@ let
     gravity = modulePath + "/gravity";
     globals = modulePath + "/globals";
     godel = modulePath + "/godel";
+    netflow = modulePath + "/netflow";
     secrets = secretsPath;
   };
 
