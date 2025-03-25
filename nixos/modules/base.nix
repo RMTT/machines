@@ -118,6 +118,7 @@ in with lib; {
       iperf
       moreutils
       sshuttle
+      mtr
     ];
 
     # set XDG viarables

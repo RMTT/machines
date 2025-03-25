@@ -1,0 +1,56 @@
+# vim: set ft=yaml:
+
+log:
+    level: info
+
+plugins:
+    - tag: direct_list
+      type: "domain_set"
+      args:
+        files:
+          - /var/lib/netflow/chnlist.txt
+          - /var/lib/netflow/direct_domains.txt
+
+    - args:
+        upstreams:
+          - addr: 127.0.0.1:1253 # clash dns with cache
+      tag: forward_proxy
+      type: forward
+
+    - args:
+        upstreams:
+          - addr: https://223.5.5.5/dns-query
+          - addr: https://223.6.6.6/dns-query
+      tag: forward_cn
+      type: forward
+
+    - type: sequence
+      tag: direct
+      args:
+        - exec: cache 2048
+        - matches:
+          - "!has_resp"
+          exec: $forward_cn
+
+    - type: sequence
+      tag: proxy
+      args:
+        - exec: cache 2048
+        - matches:
+          - "!has_resp"
+          exec: $forward_proxy
+        - exec: nftset inet,netflow,proxy4,ipv4_addr,32 inet,netflow,proxy6,ipv6_addr,128
+
+    - type: sequence
+      tag: main
+      args:
+        - matches:
+            - qname $direct_list
+          exec: goto direct
+        - exec: goto proxy
+
+    - args:
+        entry: main
+        listen: 0.0.0.0:3353
+      tag: udp_server
+      type: udp_server

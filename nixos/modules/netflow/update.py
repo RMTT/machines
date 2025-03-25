@@ -1,68 +1,55 @@
-import json
-import time
+import logging
 import sys
 import argparse
-from urllib.request import urlopen
-from typing import Dict
+import requests
 
-
-BYPASS_OUTBOUND_TYPE = ["direct", "block", "ssh", "selector", "dns"]
+logger = logging.getLogger(__name__)
 
 
 def parse_arg():
     parser = argparse.ArgumentParser()
-    parser.add_argument("-t", "--template")
-    parser.add_argument("-u", "--url")
-    parser.add_argument("-o", "--output")
+    parser.add_argument("outpath")
 
     return parser.parse_args(sys.argv[1:])
 
 
-def render(template: Dict, url: str, output: str):
-    retry_count = 3
+def update_chn_domain_list(outpath: str):
+    def get_domains_from(url: str, timeout=30):
+        logger.info(f"fetching {url}")
 
-    config = None
-    err = None
-    for i in range(retry_count):
-        try:
-            config = json.loads(urlopen(url).read())
-            break
-        except Exception as e:
-            err = e
-            time.sleep(3)
+        domains = []
+        with requests.get(url, timeout=timeout, verify=True) as res:
+            if res.status_code != 200:
+                res.close()
+                raise Exception(f"status code :{res.status_code}")
 
-    if config is None:
-        raise err
+            lines = res.text.splitlines()
+            for line in lines:
+                try:
+                    if line.find("server=/") != -1:
+                        elems = line.split("/")
+                        domain = elems[1]
+                        domains.append(domain)
+                except IndexError:
+                    logger.warning(f"unexpected format: {line}")
 
-    for outbound in template["outbounds"]:
-        if outbound["tag"] == "select":
-            selector = outbound
+        return domains
 
-    default_candidate = None
-    for outbound in config["outbounds"]:
-        if outbound["type"] not in BYPASS_OUTBOUND_TYPE:
-            if "outbounds" not in selector:
-                selector["outbounds"] = []
+    urls = [
+        "https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/accelerated-domains.china.conf",
+    ]
 
-            template["outbounds"].append(outbound)
-            selector["outbounds"].append(outbound["tag"])
+    save_to = outpath
+    domains = []
 
-            if (
-                "当前流量" not in outbound["tag"]
-                and "到期时间" not in outbound["tag"]
-                and not default_candidate
-            ):
-                default_candidate = outbound["tag"]
-                print(default_candidate)
+    for url in urls:
+        domains = domains + get_domains_from(url)
 
-    if "default" not in selector and default_candidate:
-        selector["default"] = default_candidate
+    with open(save_to, "wt") as f:
+        f.writelines([f"{x}\n" for x in domains])
 
-    with open(output, "w") as f:
-        f.write(json.dumps(template, ensure_ascii=False))
+    logger.info("all done")
 
 
 args = parse_arg()
-with open(args.template, "r") as f:
-    s = f.read()
-    render(json.loads(s), args.url, args.output)
+update_chn_domain_list(args.outpath)

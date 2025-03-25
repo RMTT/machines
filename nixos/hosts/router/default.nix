@@ -1,12 +1,6 @@
 { pkgs, lib, modules, config, ... }:
 with lib; {
-  imports = with modules; [
-    services
-    base
-    fs
-    networking
-    ./secrets.nix
-  ];
+  imports = with modules; [ services base fs networking netflow ./secrets.nix ];
 
   config = let
     lan = [ "enp1s0" "enp2s0" "enp3s0" ];
@@ -17,8 +11,6 @@ with lib; {
     lan_ip_subnet = "192.168.6.0/24";
     lan_ip_start = "192.168.6.10";
     lan_ip_end = "192.168.6.233";
-
-    infra_node_ip = "192.168.128.3";
   in {
     system.stateVersion = "23.05";
     base.gl.enable = false;
@@ -89,7 +81,7 @@ with lib; {
       };
     };
     services.resolved.extraConfig = ''
-            DNS = 127.0.0.1 ::1 223.5.5.5 223.6.6.6
+            DNS = 127.0.0.1
             DNSStubListener = false
       			DNSSEC = false
     '';
@@ -101,12 +93,7 @@ with lib; {
       externalInterface = "wan";
     };
 
-    # enable daed and adguardhome (for DNS and dhcp)
-    services.daed = {
-      enable = true;
-      listen = "0.0.0.0:2023";
-    };
-
+    # enable adguardhome (for DNS and dhcp)
     services.adguardhome = {
       enable = true;
       allowDHCP = true;
@@ -162,6 +149,7 @@ with lib; {
       };
     };
 
+    services.netflow.interface = "wan";
     services.tailscale = {
       enable = true;
       openFirewall = true;
