@@ -120,14 +120,14 @@ in {
         chain output {
           type route hook output priority mangle; policy accept;
 
+          oifname != ${cfg.interface} return
+          meta mark $PROXY_MARK return comment "traffic from proxy"
+
+          # common rules
           meta l4proto != $proxy_protocols return comment "filter protocols to proxy"
 
           ip dscp 4 return comment "direct traffic"
           ip6 dscp 4 return comment "direct traffic"
-
-          oifname != ${cfg.interface} return
-
-          meta mark $PROXY_MARK return comment "traffic from proxy"
 
           fib daddr type {local,broadcast,anycast,multicast} return
 
@@ -143,12 +143,13 @@ in {
         chain prerouting {
           type filter hook prerouting priority mangle; policy accept;
 
+          iifname ${cfg.interface} return comment "packets from internet"
+
+          # common rules
           meta l4proto != $proxy_protocols return comment "filter protocols to proxy"
 
           ip dscp 4 return comment "direct traffic"
           ip6 dscp 4 return comment "direct traffic"
-
-          iifname ${cfg.interface} return comment "packets from internet"
 
           fib daddr type {local,broadcast,anycast,multicast} return
 
