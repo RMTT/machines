@@ -1,6 +1,8 @@
 { lib, config, pkgs, modules, ... }:
 with lib;
-let cfg = config.services.godel;
+let
+  cfg = config.services.godel;
+  port = 12025;
 in {
   imports = with modules; [ services ];
   options = {
@@ -38,20 +40,20 @@ in {
         endpoints = if (cfg.public) then [{
           address_family = "ip4";
           address = "${config.networking.hostName}.rmtt.host";
-          port = 12025;
+          port = port;
           serial_number = 0;
         }] else [
           {
             address_family = "ip4";
             address = null;
             serial_number = 0;
-            port = 12025;
+            port = port;
           }
           {
             address_family = "ip6";
             address = null;
             serial_number = 1;
-            port = 12025;
+            port = port;
           }
         ];
       };
