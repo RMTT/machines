@@ -67,9 +67,8 @@ in {
         old_md5=$(md5sum ${stateDir}/chnlist.txt)
         new_md5=$(md5sum ${stateDir}/chnlist.txt.new)
 
-        if [ "$old_md5" = "$new_md5" ]; then
+        if [ "$old_md5" != "$new_md5" ]; then
           mv ${stateDir}/chnlist.txt.new ${stateDir}/chnlist.txt
-          systemctl restart mosdns || true
         fi
       '';
       serviceConfig = { Type = "oneshot"; };
@@ -90,6 +89,13 @@ in {
       path = [ pkgs.mosdns ];
       script = "mosdns start -c ${./mosdns.yaml}";
       serviceConfig = { Type = "simple"; };
+    };
+    systemd.paths.chnlist = {
+      after = [ "mihomo.service" "netflow.service" "netflow-update.service" ];
+      pathConfig = {
+        PathChanged = "${stateDir}";
+        Unit = "mosdns.service";
+      };
     };
 
     networking.nftables.tables.netflow = {

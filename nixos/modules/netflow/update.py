@@ -26,6 +26,8 @@ def update_chn_domain_list(outpath: str):
             lines = res.text.splitlines()
             for line in lines:
                 try:
+                    if line.startswith("#"):
+                        continue
                     if line.find("server=/") != -1:
                         elems = line.split("/")
                         domain = elems[1]
