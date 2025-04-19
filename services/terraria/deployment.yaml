@@ -11,7 +11,8 @@ spec:
         kubernetes.io/hostname: homeserver
       containers:
       - name: main
-        image: tmodloader
+        image: tmodloader:latest
+        imagePullPolicy: IfNotPresent
         volumeMounts:
         - name: data
           mountPath: /home/tml/.local/share/Terraria/tModLoader

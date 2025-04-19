@@ -45,7 +45,7 @@
     networking.useNetworkd = true;
 
     # networking related
-    networking.firewall.allowedTCPPorts = [ 1443 ];
+    networking.firewall.allowedTCPPorts = [ 1443 7770 ];
 
     services.resolved.extraConfig = ''
                   DNSStubListener = false
