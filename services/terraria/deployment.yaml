@@ -13,6 +13,8 @@ spec:
       - name: main
         image: tmodloader:latest
         imagePullPolicy: IfNotPresent
+        tty: true
+        stdin: true
         volumeMounts:
         - name: data
           mountPath: /home/tml/.local/share/Terraria/tModLoader
