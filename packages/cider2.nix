@@ -2,11 +2,11 @@
 
 let
   pname = "Cider";
-  version = "2.6.0";
+  version = "3.0.2";
 
   src = fetchurl {
-    url = "https://cloud.rmtt.tech/s/c6XLCSq9gjR2TbG/download";
-    sha256 = "sha256-q9ulXYha5PSZbYZ/oxOvGvK5XGn0TlAGMymju5fXwmU=";
+    url = "https://cloud.rmtt.tech/s/MQJF8y9qbk9Wx6H/download";
+    sha256 = "sha256-XVBhMgSNJAYTRpx5GGroteeOx0APIzuHCbf+kINT2eU=";
   };
   appimageContents = appimageTools.extract { inherit pname src version; };
   ciderBin = writeScript "cider" ''
