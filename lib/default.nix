@@ -1,5 +1,4 @@
-{ self, nixpkgs, nixpkgs-fresh, home-manager, nur, sops-nix, disko, ...
-}@inputs:
+{ self, home-manager, nur, sops-nix, disko, nixpkgs-fresh, ... }@inputs:
 let
   modulePath = ../nixos/modules;
   secretsPath = ../secrets/secrets.nix;
@@ -21,24 +20,6 @@ let
     secrets = secretsPath;
   };
 
-  hmMoudles = name: system: [
-    {
-      nixpkgs.overlays = [ overlay-libvterm overlay-ownpkgs ];
-      nixpkgs.config = { allowUnfree = true; };
-      programs.home-manager.enable = true;
-    }
-    inputs.plasma-manager.homeManagerModules.plasma-manager
-    nur.modules.homeManager.default
-    {
-      home.username = name;
-      home.homeDirectory = if (system == "aarch64-darwin") then
-        "/Users/${name}"
-      else
-        "/home/${name}";
-    }
-    ../home/${name}.nix
-  ];
-
   overlay-libvterm = final: prev: {
     libvterm-neovim = prev.libvterm-neovim.overrideAttrs
       (finalAttrs: oldAttrs: {
@@ -50,7 +31,7 @@ let
       });
   };
 
-  overlay-app = final: prev: {
+  overlay-fresh = final: prev: {
     fresh = import nixpkgs-fresh {
       system = prev.system;
       config.allowUnfree = true;
@@ -64,17 +45,6 @@ in {
       collectFlakeInputs = input:
         [ input ] ++ builtins.concatMap collectFlakeInputs
         (builtins.attrValues (input.inputs or { }));
-
-      overlay-lib = final: prev: {
-        mkUser = name:
-          { lib, ... }: {
-            imports = hmMoudles name system;
-            _module.args.pkgs = lib.mkForce (import nixpkgs-fresh {
-              inherit system;
-              config.allowUnfree = true;
-            });
-          };
-      };
     in nixpkgs.lib.nixosSystem {
       inherit system;
       specialArgs = {
@@ -87,14 +57,8 @@ in {
         sops-nix.nixosModules.sops
         home-manager.nixosModules.home-manager
         disko.nixosModules.disko
-        inputs.daeuniverse.nixosModules.dae
-        inputs.daeuniverse.nixosModules.daed
-        {
-          # home-manager settings
-          home-manager.extraSpecialArgs = { inherit inputs; };
-        }
         ({ ... }: {
-          nixpkgs.overlays = [ overlay-app overlay-ownpkgs overlay-lib ];
+          nixpkgs.overlays = [ overlay-fresh overlay-ownpkgs ];
 
           # keep flake sources in system closure
           # https://github.com/NixOS/nix/issues/3995
@@ -110,13 +74,28 @@ in {
       ];
     };
 
-  mkUser = name: system:
+  mkUser = name: system: nixpkgs:
     home-manager.lib.homeManagerConfiguration {
-      pkgs = import nixpkgs-fresh {
+      pkgs = import nixpkgs {
         inherit system;
         config.allowUnfree = true;
       };
       extraSpecialArgs = { system = system; };
-      modules = hmMoudles name system;
+      modules = [
+        {
+          nixpkgs.overlays = [ overlay-libvterm overlay-ownpkgs ];
+          nixpkgs.config = { allowUnfree = true; };
+          programs.home-manager.enable = true;
+        }
+        nur.modules.homeManager.default
+        {
+          home.username = name;
+          home.homeDirectory = if (system == "aarch64-darwin") then
+            "/Users/${name}"
+          else
+            "/home/${name}";
+        }
+        ../home/${name}.nix
+      ];
     };
 }

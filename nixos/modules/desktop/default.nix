@@ -1,6 +1,6 @@
 { lib, pkgs, config, ... }: {
   imports =
-    [ ./desktop.nix ./pipewire.nix ./plasma.nix ./gnome.nix ./niri.nix ];
+    [ ./desktop.nix ./pipewire.nix ./niri.nix ];
 
   config = {
     services.printing = {

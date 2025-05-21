@@ -6,7 +6,7 @@ in with lib; {
 
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
-      fresh.niri
+      niri
       fuzzel
       hyprlock
       kitty
@@ -37,14 +37,14 @@ in with lib; {
 
     services.upower.enable = true;
 
-    services.displayManager.sessionPackages = with pkgs.fresh; [ niri ];
+    services.displayManager.sessionPackages = with pkgs; [ niri ];
 
     security.polkit.enable = true;
     security.pam.services.hyprlock = { };
 
     xdg.portal = {
       enable = true;
-      configPackages = [ pkgs.fresh.niri ];
+      configPackages = [ pkgs.niri ];
       extraPortals = with pkgs; [
         xdg-desktop-portal-gnome
         xdg-desktop-portal-gtk

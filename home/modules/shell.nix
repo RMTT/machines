@@ -24,7 +24,7 @@
   programs.zsh.localVariables = {
     SSH_AUTH_SOCK = "$(gpgconf --list-dirs agent-ssh-socket)";
   };
-  programs.zsh.initExtra = ''
+  programs.zsh.initContent = ''
     if command -v kubectl &> /dev/null
     then
     	source <(kubectl completion zsh)

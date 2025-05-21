@@ -18,24 +18,17 @@
 
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
-
-    plasma-manager.url = "github:pjones/plasma-manager";
-    plasma-manager.inputs.nixpkgs.follows = "nixpkgs";
-    plasma-manager.inputs.home-manager.follows = "home-manager";
-
-    daeuniverse.url = "github:daeuniverse/flake.nix";
-    daeuniverse.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs =
-    { self, nixpkgs, flake-utils, home-manager, nur, sops-nix, ... }@inputs:
+  outputs = { self, nixpkgs, nixpkgs-fresh, flake-utils, ... }@inputs:
     with flake-utils.lib;
     let
 
       lib = import ./lib inputs;
 
       nixosConfigurations = {
-        mtspc = lib.mkSystem "mtspc" system.x86_64-linux nixpkgs;
+        mtspc = lib.mkSystem "mtspc" system.x86_64-linux nixpkgs-fresh;
+        mtslaptop = lib.mkSystem "mtslaptop" system.x86_64-linux nixpkgs-fresh;
 
         homeserver = lib.mkSystem "homeserver" system.x86_64-linux nixpkgs;
 
@@ -47,8 +40,6 @@
 
         de-hz = lib.mkSystem "de-hz" system.x86_64-linux nixpkgs;
 
-        mtslaptop = lib.mkSystem "mtslaptop" system.x86_64-linux nixpkgs;
-
         # for nixd language server
         nixd = lib.mkSystem "nixd" system.x86_64-linux nixpkgs;
 
@@ -57,8 +48,8 @@
       };
 
       homeConfigurations = {
-        mt = lib.mkUser "mt" system.x86_64-linux;
-        darwin = lib.mkUser "mt" system.aarch64-darwin;
+        mt = lib.mkUser "mt" system.x86_64-linux nixpkgs-fresh;
+        darwin = lib.mkUser "mt" system.aarch64-darwin nixpkgs-fresh;
       };
     in {
       nixosConfigurations = nixosConfigurations;

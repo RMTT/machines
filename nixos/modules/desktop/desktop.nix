@@ -17,7 +17,6 @@ in with lib; {
       anki
       tela-icon-theme
       bitwarden
-      yubikey-manager-qt
       solaar
       virt-manager
       easyeffects
@@ -26,15 +25,16 @@ in with lib; {
       xsettingsd
       vlc
       xorg.xrdb
+      yubioath-flutter
       yubikey-manager
       yubikey-touch-detector
       yubikey-personalization
       yubico-pam
 
-      fresh.obsidian
-      fresh.kicad
-      fresh.nextcloud-client
-      fresh.libreoffice-qt6
+      obsidian
+      kicad
+      nextcloud-client
+      libreoffice-qt6
     ];
     programs.appimage = {
       enable = true;
