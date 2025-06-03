@@ -29,7 +29,7 @@
     qadwaitadecorations
     qadwaitadecorations-qt6
 
-    swww
+    swww # for wallpapaer
 
     # for screencast
     slurp

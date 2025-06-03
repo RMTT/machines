@@ -103,6 +103,8 @@ binds {
 
     Mod+Shift+S { spawn "screenshot"; }
 
+    Mod+grave { spawn "kitten" "quick-access-terminal"; }
+
     Mod+F { toggle-window-floating; }
 
     Mod+Q { close-window; }
