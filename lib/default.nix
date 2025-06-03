@@ -20,17 +20,6 @@ let
     secrets = secretsPath;
   };
 
-  overlay-libvterm = final: prev: {
-    libvterm-neovim = prev.libvterm-neovim.overrideAttrs
-      (finalAttrs: oldAttrs: {
-        src = prev.fetchgit {
-          url = "https://github.com/RMTT/libvterm";
-          rev = "f85948154c22549d126a2ef3ebdf09952c6b237c";
-          hash = "sha256-iC6LC5B7ZcRIFwTaHxSq9Ax59NBpEfS0LwMEB1b+fvw=";
-        };
-      });
-  };
-
   overlay-fresh = final: prev: {
     fresh = import nixpkgs-fresh {
       system = prev.system;
@@ -83,7 +72,7 @@ in {
       extraSpecialArgs = { system = system; };
       modules = [
         {
-          nixpkgs.overlays = [ overlay-libvterm overlay-ownpkgs ];
+          nixpkgs.overlays = [ overlay-ownpkgs ];
           nixpkgs.config = { allowUnfree = true; };
           programs.home-manager.enable = true;
         }
