@@ -7,11 +7,6 @@
       source = ../../config/niri;
     };
 
-    dunst = {
-      enable = true;
-      source = ../../config/dunst;
-    };
-
     fuzzel = {
       enable = true;
       source = ../../config/fuzzel;
@@ -29,8 +24,6 @@
     qadwaitadecorations
     qadwaitadecorations-qt6
 
-    swww # for wallpapaer
-
     # for screencast
     slurp
     grim
@@ -38,4 +31,24 @@
     (pkgs.writeScriptBin "screenshot"
       ''grim -g "$(slurp)" -t ppm - | satty --filename -'')
   ];
+
+  services.swayidle = {
+    enable = true;
+    timeouts = [
+      {
+        timeout = 599;
+        command = "${pkgs.niri}/bin/niri msg action power-off-monitors";
+      }
+      {
+        timeout = 600;
+        command = "${pkgs.hyprlock}/bin/hyprlock";
+      }
+    ];
+  };
+
+  services.swww.enable = true; # for wallpapaer
+  services.dunst = {
+    enable = true;
+    configFile = ../../config/dunst/dunstrc;
+  };
 }

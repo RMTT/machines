@@ -20,7 +20,6 @@ in with lib; {
 
       networkmanagerapplet
       blueman
-      dunst
 
       # apps
       nautilus
