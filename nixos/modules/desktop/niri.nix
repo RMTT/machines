@@ -33,6 +33,7 @@ in with lib; {
     #to use gnome apps
     services.gvfs.enable = true;
     services.gnome.gnome-keyring.enable = true;
+    programs.gnome-disks.enable = true;
 
     services.upower.enable = true;
 

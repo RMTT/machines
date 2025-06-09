@@ -1,7 +1,5 @@
 // auto launch
 spawn-at-startup "wlsunset" "-l 39.9 -L 116.3"
-spawn-at-startup "dunst"
-spawn-at-startup "waybar"
 spawn-at-startup "xwayland-satellite" ":0"
 
 window-rule {
@@ -10,6 +8,7 @@ window-rule {
     match app-id="steam"
     match app-id="steam_app.+"
     match app-id="wechat"
+    match app-id="Cider"
     open-floating true
 }
 

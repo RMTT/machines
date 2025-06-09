@@ -2,6 +2,10 @@
   home.packages = with pkgs; [ playerctl pavucontrol ddcui ];
   programs.waybar = {
     enable = true;
+    systemd = {
+      enable = true;
+      target = "niri.service";
+    };
     settings.main = {
       "layer" = "top";
       "position" = "top";
