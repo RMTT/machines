@@ -52,6 +52,8 @@
         darwin = lib.mkUser "mt" system.aarch64-darwin nixpkgs-fresh;
       };
     in {
+      templates = import ./templates;
+
       nixosConfigurations = nixosConfigurations;
       homeConfigurations = homeConfigurations;
     } // eachSystem [ system.x86_64-linux ] (system:
